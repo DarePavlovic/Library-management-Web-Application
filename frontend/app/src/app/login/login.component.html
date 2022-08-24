@@ -1,0 +1,33 @@
+<div class="header">
+    <h1>LOGIN</h1>
+</div>
+<h2>Dobrodosli u Galeriju</h2>
+
+<h3>Prijavite se u sistem</h3>
+<form name="log">
+<table>
+    <tr>
+        <td>Username:</td>
+        <td><input type="text" name="username" [(ngModel)]="username">
+            </td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td>
+            <input type="password" name="password" [(ngModel)]="password">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button (click)="login()" >Login</button>
+        </td>
+    </tr>
+</table>
+{{errorMessage}}
+</form>
+
+<a routerLink="/register">Sign up for a new account</a>
+
+<div class="footer">
+    
+</div>

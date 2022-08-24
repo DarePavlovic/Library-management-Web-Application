@@ -1,0 +1,64 @@
+<div class="header">
+    <h1>Register</h1>
+</div>
+<h3>Registracija novog korisnika</h3>
+<form name="Reg">
+<table>
+    <tr>
+        <td>Firstname: </td>
+        <td><input type="text" name="firstname" [(ngModel)]="firstname" required></td>
+    </tr>
+    <tr>
+        <td>Lastname: </td>
+        <td><input type="text" name="lastname" [(ngModel)]="lastname" ng-required="lastname"></td>
+    </tr>
+    <tr>
+        <td>Username: </td>
+        <td><input type="text" name="username" [(ngModel)]="username" ng-required="username"></td>
+    </tr>
+    <tr>
+        <td>Password: </td>
+        <td><input type="password" name="password" [(ngModel)]="password" ng-required="password">
+            <span style="color:red">{{passMessage}}</span></td>
+    </tr>
+    <tr>
+        <td>Repeat Password: </td>
+        <td><input type="password" name="passwordR" [(ngModel)]="passwordR" ng-required="passwordR"><span style="color:red">{{passRepeat}}</span></td>
+    </tr>
+    <tr>
+        <td>Address: (Street and house number)</td>
+        <td><input type="text" name="street" [(ngModel)]="street" ng-required="street"></td>
+    </tr>
+    <tr>
+        <td>City: </td>
+        <td><input type="text" name="city" [(ngModel)]="city" ng-required="city"></td>
+    </tr>
+    <tr>
+        <td>E-mail: </td>
+        <td>
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter your email</mat-label>
+                  <input matInput placeholder="mat@mail.com" [formControl]="email" required>
+                  <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+    </tr>
+    <tr>
+        <td>Phone_number: </td>
+        <td><input type="text" name="phone_number" [(ngModel)]="phone_number" ng-required="phone_number">
+            </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button (click)="register()">Register</button>
+        </td>
+    </tr>
+</table>
+<div class="message">{{message}}
+    <!-- <h4 ng-if="!Reg.phone_number.$valid">The input field cannot be empty</h4> -->
+</div>
+</form>
+<div class="footer">
+    <h3>Logout</h3>
+</div>
