@@ -27,6 +27,9 @@ let User = new Schema(
         },
         picture:{
             type:String
+        },
+        type:{
+            type:String
         }
     }
 )

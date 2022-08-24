@@ -17,8 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CommonModule } from '@angular/common';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +31,10 @@ import { CommonModule } from '@angular/common';
     UserComponent,
     AdminComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +47,16 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     MatMenuModule,
     MatSidenavModule,
-    
-
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule
+  ],
+  exports:[
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule
   ],
   
   providers: [],

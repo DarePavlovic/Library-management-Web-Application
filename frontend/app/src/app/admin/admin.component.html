@@ -1,1 +1,27 @@
-<p>admin works!</p>
+<div class="header">
+    <h1>LOGIN</h1>
+</div>
+<h2>Dobrodosli Admine</h2>
+
+<h3>Prijavite se u sistem</h3>
+<form name="log">
+<table>
+    <tr>
+        <td>Username:</td>
+        <td><input type="text" name="username" [(ngModel)]="username">
+            </td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td>
+            <input type="password" name="password" [(ngModel)]="password">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button (click)="login()" >Login</button>
+        </td>
+    </tr>
+</table>
+<div style="color: red;">{{errorMessage}}</div>
+</form>

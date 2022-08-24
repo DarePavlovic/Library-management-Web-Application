@@ -29,6 +29,9 @@ let User = new Schema({
     },
     picture: {
         type: String
+    },
+    type: {
+        type: String
     }
 });
 exports.default = mongoose_1.default.model('UserModel', User, 'user');

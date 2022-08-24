@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu';
 
 
@@ -9,10 +9,13 @@ import {MatMenuModule} from '@angular/material/menu';
 })
 export class HomeComponent implements OnInit {
 
+
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
   
 }

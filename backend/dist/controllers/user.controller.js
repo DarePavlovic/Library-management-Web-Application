@@ -26,7 +26,8 @@ class UserController {
                 address: req.body.address,
                 phone_number: req.body.phone_number,
                 email: req.body.email,
-                picture: req.body.picture
+                picture: req.body.picture,
+                type: "reader"
             });
             user.save((err, resp) => {
                 if (err) {
