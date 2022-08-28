@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { SidenavAdminComponent } from './navigation/sidenav-admin/sidenav-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     HomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    SidenavAdminComponent
   ],
   imports: [
     BrowserModule,
