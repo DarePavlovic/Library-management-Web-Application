@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
       if(user !=null){
         if(user.type=="admin"){
         localStorage.setItem('ulogovan', JSON.stringify(user));
-        this.router.navigate(['user']);
+        this.router.navigate(['adminPage']);
         }
         else{
           this.errorMessage="Only admin can log in";

@@ -1,11 +1,49 @@
-a{
-    text-decoration: none;
-    color: white;
+mat-toolbar{
+    background-color: navy;
+    color:white;
 }
-a:hover, a:active{
-    color: lightgray;
+
+mat-sidenav{
+    margin:16px;
+    width:200px;
+    border-right: none;
+    background-color: navy;
+    color:white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
 }
-.nav-caption{
-    display: inline-block;
-    padding-left: 6px;
+.content{
+    
+    height: calc(100vh - 98px);
+    margin:16px;
+    margin-left:32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2rem;
+    color:lightgrey;
+
+    border-radius: 10px;
+    
 }
+
+.menu-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    
+}
+mat-icon {
+    margin-right:8px;
+}
+
+
+mat-sidenav-container{
+    height: calc(100vh - 65px);
+}
+

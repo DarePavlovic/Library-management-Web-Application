@@ -1,9 +1,41 @@
-<div class="header">
-    <h1>Register</h1>
-</div>
-<h3>Registracija novog korisnika</h3>
+
+
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+
+    Biblioteka
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav">
+        
+    <button mat-button class="menu-button" (click)="saljiKuci()">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+       </button>
+   <button mat-button class="menu-button" (click)="saljiLogin()">
+    <mat-icon>person</mat-icon>
+    <span>Profile</span>
+   </button>
+   <button mat-button class="menu-button" (click)="saljiRegister()">
+    <mat-icon>assignment_ind</mat-icon>
+    <span>Register</span>
+   </button>
+   <button mat-button class="menu-button" (click)="saljiSearch()">
+    <mat-icon>search</mat-icon>
+    <span>Search</span>
+   </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z4">
+            
+<p class="header">Registracija novog korisnika</p>
 <form name="Reg">
-<table>
+<table class="formica">
     <tr>
         <td>Firstname: </td>
         <td><input type="text" name="firstname" [(ngModel)]="firstname" required></td>
@@ -59,6 +91,7 @@
     <!-- <h4 ng-if="!Reg.phone_number.$valid">The input field cannot be empty</h4> -->
 </div>
 </form>
-<div class="footer">
-    <h3>Logout</h3>
-</div>
+
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

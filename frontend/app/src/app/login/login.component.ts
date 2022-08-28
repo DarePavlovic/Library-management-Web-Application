@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../user.service';
 import {User} from '../models/User'
 import {  Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,7 +11,10 @@ import {  Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService:UserService, private router:Router) { }
+  @ViewChild(MatSidenav)
+  sidenav!:MatSidenav
+
+  constructor(private userService:UserService, private router:Router, private observer: BreakpointObserver) { }
 
   ngOnInit(): void {
   }
@@ -17,6 +22,7 @@ export class LoginComponent implements OnInit {
   errorMessage:string;
   username: string;
   password:string;
+
  
 
   login(){
@@ -31,8 +37,32 @@ export class LoginComponent implements OnInit {
       
     })
   }
+  saljiKuci(){
+    this.router.navigate(['home']);
+  }
+  saljiLogin(){
+    this.router.navigate(['login']);
+  }
+  saljiRegister(){
+    this.router.navigate(['register']);
+  }
+  saljiSearch(){
+    this.router.navigate(['user']);
+  }
 
   
   
-  
+  //za sidenavigation
+  ngAfterViewInit(){
+    this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{
+      if(res.matches){
+        this.sidenav.mode='over';
+        this.sidenav.close();
+      }
+      else{
+        this.sidenav.mode='side';
+        this.sidenav.open();
+      }
+    })
+  }
 }

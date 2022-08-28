@@ -16,7 +16,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +24,8 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SidenavAdminComponent } from './navigation/sidenav-admin/sidenav-admin.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,26 +40,21 @@ import { SidenavAdminComponent } from './navigation/sidenav-admin/sidenav-admin.
     SidenavAdminComponent
   ],
   imports: [
+    MatSidenavModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatMenuModule,
-    MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
-  ],
-  exports:[
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDividerModule
   ],
   
   providers: [],

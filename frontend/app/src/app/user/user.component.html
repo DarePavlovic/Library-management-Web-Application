@@ -1,1 +1,47 @@
-<p>user works!</p>
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+    Responsive sidebar navigation
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav  #sidenav="matSidenav">
+        <img class="avatar mat-elevation-z8" src="../../assets/maca.jpg">
+        <h4 class="name">Darko Pavlovic</h4>
+        <p class="designation">Software Engineer</p>
+        <mat-divider></mat-divider>
+
+
+        <button mat-button class="menu-button" routerLink="home">
+            <mat-icon>home</mat-icon>
+            <span>Home page</span>
+           </button>
+       <button mat-button class="menu-button" routerLink="login">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+       </button>
+       <button mat-button class="menu-button" router-link="register">
+        <mat-icon>search</mat-icon>
+        <span>Search</span>
+       </button>
+       <button mat-button class="menu-button">
+        <mat-icon>library_add</mat-icon>
+        <span>Apply book</span>
+       </button>
+       <button mat-button class="menu-button">
+        <mat-icon>library_books</mat-icon>
+        <span>Books taken</span>
+       </button>
+       <button mat-button class="menu-button">
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+       </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z4">
+            Main content
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
