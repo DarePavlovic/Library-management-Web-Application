@@ -29,10 +29,6 @@ let Book = new Schema(
         picture:{
             type:String  
         }
-
-
-
-        
     }
 )
 

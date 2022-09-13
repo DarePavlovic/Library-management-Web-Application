@@ -3,24 +3,24 @@
         <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
         <mat-icon *ngIf="sidenav.opened">close</mat-icon>
     </button>
-    Responsive sidebar navigation
+    <p class="header">Biblioteka</p>
 </mat-toolbar>
 
 <mat-sidenav-container>
     <mat-sidenav  #sidenav="matSidenav">
-        <img class="avatar mat-elevation-z8" src="../../assets/maca.jpg">
-        <h4 class="name">Darko Pavlovic</h4>
-        <p class="designation">Software Engineer</p>
+        <img class="avatar mat-elevation-z8" [src]="picture" (click)="showProfile()">
+        <h4 class="name">{{fullname}}</h4>
+        <p class="designation">{{email}}</p>
         <mat-divider></mat-divider>
 
 
-        <button mat-button class="menu-button" routerLink="home">
+        <button mat-button class="menu-button" (click)="dodjiKuci()">
             <mat-icon>home</mat-icon>
             <span>Home page</span>
            </button>
-       <button mat-button class="menu-button" routerLink="login">
-        <mat-icon>person</mat-icon>
-        <span>Profile</span>
+       <button mat-button class="menu-button" (click)="menjajPass()">
+        <mat-icon>password</mat-icon>
+        <span>Change password</span>
        </button>
        <button mat-button class="menu-button" router-link="register">
         <mat-icon>search</mat-icon>

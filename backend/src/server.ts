@@ -3,8 +3,10 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose';
 import userRouter from './routes/user.routes'
+import userDatabaseRouter from './routes/userDatabase.routes';
 const app = express();
 app.use(cors());
+app.use(express.json({limit: '50mb'}));
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost:27017/Galerija');
@@ -15,6 +17,7 @@ connection.once('open',()=>{
 
 const router = express.Router();
 router.use('/user', userRouter);
+router.use('/userDatabase', userDatabaseRouter);
 
 
 app.use('/', router);

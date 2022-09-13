@@ -27,6 +27,7 @@ class UserController {
                 phone_number: req.body.phone_number,
                 email: req.body.email,
                 picture: req.body.picture,
+                //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
                 type: "reader"
             });
             user.save((err, resp) => {
@@ -56,6 +57,44 @@ class UserController {
                     console.log(err);
                 else
                     res.json(user);
+            });
+        };
+        this.getPassword = (req, res) => {
+            let username = req.body.username;
+            let password = req.body.password;
+            User_1.default.findOne({ 'username': username, 'password': password }, (err, user) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(user);
+            });
+        };
+        this.changePassword = (req, res) => {
+            let username = req.body.username;
+            let password = req.body.password;
+            User_1.default.updateOne({ 'username': username }, { $set: { 'password': password } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
+            });
+        };
+        this.delete = (req, res) => {
+            let username = req.body.username;
+            User_1.default.deleteOne({ 'username': username }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json({ 'message': 'ok' });
+            });
+        };
+        this.getAllUsers = (req, res) => {
+            User_1.default.find({}, (err, users) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(users);
             });
         };
     }

@@ -18,12 +18,12 @@ mat-sidenav{
     height: calc(100vh - 98px);
     margin:16px;
     margin-left:32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    justify-content: flex-start;
+    text-align: center;
 
-    font-size: 2rem;
-    color:lightgrey;
+    font-size: 1.5rem;
+    color:black;
 
     border-radius: 10px;
     

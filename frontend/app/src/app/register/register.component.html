@@ -19,7 +19,7 @@
        </button>
    <button mat-button class="menu-button" (click)="saljiLogin()">
     <mat-icon>person</mat-icon>
-    <span>Profile</span>
+    <span>Login</span>
    </button>
    <button mat-button class="menu-button" (click)="saljiRegister()">
     <mat-icon>assignment_ind</mat-icon>
@@ -81,6 +81,14 @@
         <td><input type="text" name="phone_number" [(ngModel)]="phone_number" ng-required="phone_number">
             </td>
     </tr>
+    <tr>
+        <td>
+            <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+        </td>
+        {{slikaPoruka}}
+        <img *ngIf="slikaSacuvana" [src]="putdoslike()" alt="Red dot" />
+    </tr>
+   
     <tr>
         <td colspan="2">
             <button (click)="register()">Register</button>

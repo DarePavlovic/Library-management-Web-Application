@@ -1,0 +1,124 @@
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+
+    Biblioteka
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav">
+        
+    <button mat-button class="menu-button" (click)="saljiKuci()">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+       </button>
+   
+   <button mat-button class="menu-button" (click)="saljiRegister()">
+    <mat-icon>assignment_ind</mat-icon>
+    <span>Register</span>
+   </button>
+   <button mat-button class="menu-button" (click)="saljiAzuriraj()">
+    <mat-icon>person</mat-icon>
+    <span>Update profile</span>
+   </button>
+   <button mat-button class="menu-button" (click)="saljiBrisi()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete profile</span>
+   </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z4">
+            
+            <!-- <select [(ngModel)]="lastname">
+                <option *ngFor="let u of users" [ngValue]="u.lastname">{{u.username}}</option>
+            </select> -->
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>Phone number</th>
+                    <th>Email</th>
+                    <th>Picture</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                <tr *ngFor="let u of users">
+                    <td>{{u.username}}</td>
+                    <td>{{u.firstname}}</td>
+                    <td>{{u.lastname}}</td>
+                    <td>{{u.address}}</td>
+                    <td>{{u.phone_number}}</td>
+                    <td>{{u.email}}</td>
+                    <td><img id="profile" [src]="u.picture"></td>
+                    <td><button (click)="promena(u)">Update</button></td>
+                    <td><button (click)="deleteUser(u)">Remove</button></td>
+                </tr>
+            </table>
+
+
+
+            <div *ngIf="bo">
+                <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
+                <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
+                <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+                <label>Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
+                <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
+                <label>Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
+                <label>Picture</label><img id="profile" [src]="picture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                
+                {{slikaPoruka}} Nova profilna ->
+                <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
+                <label>Type</label>
+                <select [(ngModel)]="tip">
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="reader">Reader</option>
+                </select>
+                <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
+                
+            </div>
+            <button (click)="update()">Update all data</button>
+            <!-- <div *ngIf="!bo">
+                <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
+                <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>
+                <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+                <label>Address</label><input type="text" name="address" [(ngModel)]="address" disabled="true"><br>
+                <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" disabled="true"><br>
+                <label>Email</label><input type="text" name="email" [(ngModel)]="email" disabled="true"><br>
+                <label>Picture</label><img id="profile" [src]="picture"><br>
+                <label>Type</label><input type="text" name="type" [(ngModel)]="type" disabled="true"><br>
+                
+                
+                
+            </div> -->
+            <!-- <mat-form-field appearance="fill">
+                    <mat-label>Firstname</mat-label>
+                    <input matInput [(ngModel)]="firstname" name="first" >
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                    <mat-label>Lastname</mat-label>
+                    <input matInput [(ngModel)]="lastname" name="lastname">
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                    <mat-label>Address</mat-label>
+                    <input matInput [(ngModel)]="address" name="address">
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                    <mat-label>Phone number</mat-label>
+                    <input matInput [(ngModel)]="phone_number" name="phone_number">
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput [(ngModel)]="email" name="email">
+            </mat-form-field><br>
+                  <label>Picture:</label>
+                  <img  name="profile" id="profile" [src]="picture"> -->
+   
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

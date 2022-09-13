@@ -26,6 +26,10 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SidenavAdminComponent } from './navigation/sidenav-admin/sidenav-admin.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SearchComponent } from './search/search.component';
+import { ChangePassComponent } from './userC/change-pass/change-pass.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +41,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     HeaderComponent,
     SidenavListComponent,
     AdminPageComponent,
-    SidenavAdminComponent
+    SidenavAdminComponent,
+    SearchComponent,
+    ChangePassComponent,
+    UserUpdateComponent,
+    UserProfileComponent
   ],
   imports: [
     MatSidenavModule,

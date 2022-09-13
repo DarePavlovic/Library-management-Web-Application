@@ -1,0 +1,86 @@
+mat-toolbar{
+    background-color: navy;
+    color:white;
+}
+
+mat-sidenav{
+    margin:16px;
+    width:200px;
+    border-right: none;
+    background-color: navy;
+    color:white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+.content{
+    
+    height: calc(100vh - 98px);
+    margin:20px;
+    margin-left:32px;
+    
+    justify-content: flex-end;
+    text-align: center;
+
+    font-size: 1.2rem;
+    color:black;
+
+    border-radius: 10px;
+    
+}
+
+.menu-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    
+}
+mat-icon {
+    margin-right:8px;
+}
+
+
+mat-sidenav-container{
+    height: calc(100vh - 65px);
+}
+
+.avatar {
+    margin-top: 16px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+
+.name{
+    margin:0px;
+    margin-top: 8px;
+    font-weight: normal;
+}
+
+.designation{
+    margin-top: 2px;
+    font-size: 0.7rem;
+    color:lightgrey;
+}
+
+mat-divider{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.header{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2rem;
+    padding-top: 0.8rem;
+    font-style: oblique;
+}
+#profile{
+    width: 40px;
+    height: 40px;
+    padding-left: 20px;
+}

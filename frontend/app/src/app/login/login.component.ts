@@ -4,6 +4,7 @@ import {User} from '../models/User'
 import {  Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { UserDatabaseService } from '../user-database.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
 
-  constructor(private userService:UserService, private router:Router, private observer: BreakpointObserver) { }
+  constructor(private userService:UserService, private router:Router, private userDatabaseService:UserDatabaseService, private observer: BreakpointObserver) { }
 
   ngOnInit(): void {
   }
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
  
 
   login(){
-    this.userService.login(this.username, this.password).subscribe((user:User)=>{
+    this.userDatabaseService.login(this.username, this.password).subscribe((user:User)=>{
       if(user !=null){
         localStorage.setItem('ulogovan', JSON.stringify(user));
         this.router.navigate(['user']);

@@ -5,16 +5,24 @@ import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { SearchComponent } from './search/search.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 import { UserComponent } from './user/user.component';
+import { ChangePassComponent } from './userC/change-pass/change-pass.component';
 
 const routes: Routes = [
   {path:"", component:HomeComponent},
   {path:"home", component:HomeComponent},
   {path:"login", component:LoginComponent},
   {path:"user", component:UserComponent},
+  {path:"change", component:ChangePassComponent},
   {path:"admin", component:AdminComponent},
   {path:"register", component:RegisterComponent},
   {path:"adminPage", component:AdminPageComponent},
+  {path:"search", component:SearchComponent},
+  {path:"userUpdate", component:UserUpdateComponent},
+  {path:"userProfile", component:UserProfileComponent},
   {path:"**", component:HomeComponent}
 ];
 

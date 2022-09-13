@@ -4,8 +4,8 @@ export class User{
     firstname:string;
     lastname:string;
     address:string;
-    mail:string;
     phone_number:number;
+    email:string;
     picture:string;
     type:string;
 }
