@@ -8,17 +8,17 @@
 
 <mat-sidenav-container>
     <mat-sidenav  #sidenav="matSidenav">
-        <img class="avatar mat-elevation-z8" [src]="picture">
+        <img class="avatar mat-elevation-z8" [src]="picture" (click)="showProfile()">
         <h4 class="name">{{fullname}}</h4>
-        <!-- <p class="designation">Software Engineer</p> -->
+        <p class="designation">{{email}}</p>
         <mat-divider></mat-divider>
 
 
-        <button mat-button class="menu-button" routerLink="home">
+        <button mat-button class="menu-button" (click)="dodjiKuci()">
             <mat-icon>home</mat-icon>
             <span>Home page</span>
            </button>
-       <button mat-button class="menu-button" routerLink="change">
+       <button mat-button class="menu-button" (click)="menjajPass()">
         <mat-icon>password</mat-icon>
         <span>Change password</span>
        </button>

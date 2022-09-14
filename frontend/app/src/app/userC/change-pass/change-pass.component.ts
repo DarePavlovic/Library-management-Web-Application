@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/user.service';
 
@@ -13,13 +14,15 @@ export class ChangePassComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
 
-  constructor(private observer: BreakpointObserver, private userService:UserService) { }
+  constructor(private observer: BreakpointObserver,private router:Router,private userService:UserService) { }
 
   ngOnInit(): void {
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
     this.username=this.user.username;
     this.fullname = this.user.firstname + ' ' +this.user.lastname;
     this.picture = this.user.picture;
+    
+    this.email = this.user.email;
   }
 
   ngAfterViewInit(){
@@ -36,6 +39,7 @@ export class ChangePassComponent implements OnInit {
   }
   user:User;
   username:string;
+  email:string;
   fullname:string;
   picture:string;
   pass1:string;
@@ -44,6 +48,17 @@ export class ChangePassComponent implements OnInit {
   message:string;
   passPattern = new RegExp("^[A-Za-z](?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,12}$");
   
+  menjajPass(){
+    this.router.navigate(['change']);
+  }
+  dodjiKuci(){
+    
+    this.router.navigate(['user']);
+  }
+
+  showProfile(){
+    this.router.navigate(['userProfile']);
+  }
 
   promeniLozinku(){
     if(!this.passPattern.test(this.pass2)){

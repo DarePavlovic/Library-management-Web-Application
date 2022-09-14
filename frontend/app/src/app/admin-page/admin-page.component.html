@@ -11,7 +11,7 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav">
         
-    <button mat-button class="menu-button" (click)="saljiKuci()">
+    <button mat-button class="menu-button" (click)="saljiKuci();showUsers=true; updateBook=false">
         <mat-icon>home</mat-icon>
         <span>Home</span>
        </button>
@@ -24,13 +24,14 @@
     <mat-icon>person</mat-icon>
     <span>Update profile</span>
    </button>
-   <button mat-button class="menu-button" (click)="saljiBrisi()">
-    <mat-icon>delete</mat-icon>
-    <span>Delete profile</span>
+   <button mat-button class="menu-button" (click)="updateBook=true;showUsers=false">
+    <mat-icon>library_books</mat-icon>
+    <span>Update books</span>
    </button>
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
+            <div *ngIf="showUsers">
             <table>
                 <tr>
                     <th>Username</th>
@@ -49,6 +50,60 @@
                     <td><button (click)="deleteUser(u)">Remove</button></td>
                 </tr>
             </table>
+        </div>
+            
+                <div *ngIf="updateBook" class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Book name</th>
+                            <th>Writers</th>
+                            <th>Styles</th>
+                            <th>Publisher</th>
+                            <th>Year</th>
+                            <th>Language</th>
+                            <th>Picture</th>
+                            <th>Available</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let b of books">
+                            <td>{{b.name}}</td>
+                            <td>{{b.writer}}</td>
+                            <td>{{b.style}}</td>
+                            <td>{{b.publisher}}</td>
+                            <td>{{b.year}}</td>
+                            <td>{{b.language}}</td>
+                            <td><img id="profile" [src]="b.picture"></td>
+                            <td>{{b.number}}</td>
+                            <td><button (click)="promena(b)">Update</button></td>
+                            <td><button (click)="deleteBook(b)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                    </table>
+        
+        
+        
+                    <div *ngIf="bo">
+                        <label>Book name</label><input type="text" name="name" [(ngModel)]="name" ><br>
+                        <label>Writers</label><input type="text" name="writer" [(ngModel)]="writer" ><br>
+                        <label>Styles</label><input type="text" name="style" [(ngModel)]="style"><br>
+                        <label>Publisher</label><input type="text" name="publisher" [(ngModel)]="publisher" ><br>
+                        <label>Year</label><input type="text" name="year" [(ngModel)]="year" ><br>
+                        <label>Language</label><input type="text" name="language" [(ngModel)]="language" ><br>
+                        <label>Picture</label><img id="profile" [src]="bookPicture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                        <label>Available</label><input type="text" name="number" [(ngModel)]="number" ><br>
+                        {{slikaPoruka}} Nova profilna ->
+                        <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
+                        
+                        <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
+                        
+                    </div>
+                    <button (click)="update()">Update all data</button>
+                </div>
+                
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

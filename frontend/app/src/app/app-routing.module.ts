@@ -4,6 +4,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { ModeratorComponent } from './moderator/moderator.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchComponent } from './search/search.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path:"search", component:SearchComponent},
   {path:"userUpdate", component:UserUpdateComponent},
   {path:"userProfile", component:UserProfileComponent},
+  {path:"moderator",component:ModeratorComponent},
   {path:"**", component:HomeComponent}
 ];
 

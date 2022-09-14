@@ -101,9 +101,18 @@ export class UserUpdateComponent implements OnInit {
 
   user:User;
   users:User[]=[];
+  upd:boolean;
 
-  saljiKuci(){
+  saljiUpdate(){
+    this.upd=true;
     this.router.navigate(['adminPage']);
+    localStorage.setItem("update", JSON.stringify(this.upd))
+  }
+  saljiKuci(){
+    this.upd=false;
+    this.router.navigate(['adminPage']);
+    localStorage.setItem("update", JSON.stringify(this.upd))
+
   }
   saljiAzuriraj(){
     this.router.navigate(['userUpdate']);

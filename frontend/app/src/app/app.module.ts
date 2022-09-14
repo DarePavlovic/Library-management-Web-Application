@@ -30,6 +30,7 @@ import { SearchComponent } from './search/search.component';
 import { ChangePassComponent } from './userC/change-pass/change-pass.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ModeratorComponent } from './moderator/moderator.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SearchComponent,
     ChangePassComponent,
     UserUpdateComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ModeratorComponent
   ],
   imports: [
     MatSidenavModule,

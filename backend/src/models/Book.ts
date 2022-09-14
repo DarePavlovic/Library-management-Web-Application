@@ -1,11 +1,12 @@
+import { ObjectID } from "bson";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
 let Book = new Schema(
     {
-        idBook:{
-            type:Number
+        _id:{
+            type:ObjectID
         },
         name:{
             type:String
@@ -23,13 +24,16 @@ let Book = new Schema(
             type:Number
         },
         language:{
-            type:Number
+            type:String
         },
         
         picture:{
             type:String  
+        },
+        number:{
+            type:Number
         }
     }
 )
 
-export default mongoose.model('BookModel', Book, 'book');
+export default mongoose.model('BookModel', Book, 'books');

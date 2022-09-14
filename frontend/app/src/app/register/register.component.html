@@ -86,7 +86,7 @@
             <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
         </td>
         {{slikaPoruka}}
-        <img *ngIf="slikaSacuvana" [src]="putdoslike()" alt="Red dot" />
+        <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" />
     </tr>
    
     <tr>

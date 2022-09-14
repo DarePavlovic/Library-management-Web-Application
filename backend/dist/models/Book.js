@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const bson_1 = require("bson");
 const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 let Book = new Schema({
-    idBook: {
-        type: Number
+    _id: {
+        type: bson_1.ObjectID
     },
     name: {
         type: String
@@ -25,11 +26,14 @@ let Book = new Schema({
         type: Number
     },
     language: {
-        type: Number
+        type: String
     },
     picture: {
         type: String
+    },
+    number: {
+        type: Number
     }
 });
-exports.default = mongoose_1.default.model('BookModel', Book, 'book');
+exports.default = mongoose_1.default.model('BookModel', Book, 'books');
 //# sourceMappingURL=Book.js.map

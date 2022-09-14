@@ -30,13 +30,18 @@ export class LoginComponent implements OnInit {
     this.userDatabaseService.login(this.username, this.password).subscribe((user:User)=>{
       if(user !=null){
         localStorage.setItem('ulogovan', JSON.stringify(user));
-        this.router.navigate(['user']);
-      }
+        if(user.type=="reader"){
+          this.router.navigate(['user']);
+        }else if(user.type=="moderator"){
+          this.router.navigate(['moderator']);
+
+      }}
       else{
         this.errorMessage="Wrong username or password";
       }
-      
-    })
+    }
+    
+    )
   }
   saljiKuci(){
     this.router.navigate(['home']);

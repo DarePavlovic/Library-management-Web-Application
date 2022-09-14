@@ -7,44 +7,38 @@ import { BookService } from '../book.service';
 import { Book } from '../models/Book';
 import { OID } from '../models/Oid';
 import { User } from '../models/User';
-import { UserDatabaseService } from '../user-database.service';
-import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-admin-page',
-  templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.css']
+  selector: 'app-moderator',
+  templateUrl: './moderator.component.html',
+  styleUrls: ['./moderator.component.css']
 })
-export class AdminPageComponent implements OnInit {
+export class ModeratorComponent implements OnInit {
 
+  
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
+  constructor(private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router) { }
 
-  constructor(private observer: BreakpointObserver,private bookService:BookService,private domSanitizer:DomSanitizer, private router:Router, private userService:UserService, private userDatabaseService:UserDatabaseService) { }
-
-  tmp:boolean;
   ngOnInit(): void {
-  this.userService.getAllUsers().subscribe((user:User[])=>{
-    this.users=user;
-  })
 
-  this.showUsers=true;
-  this.tmp=JSON.parse(localStorage.getItem("update"));
-  if(this.tmp==true){
+    this.user=JSON.parse(localStorage.getItem('ulogovan'));
+    this.username=this.user.username;
+    this.fullname = this.user.firstname + ' ' +this.user.lastname;
+    this.email = this.user.email;
+    this.picture = this.user.picture;
 
-    this.updateBook=this.tmp;
-    this.showUsers=!this.tmp;
+    this.bookService.getAllBooks().subscribe((bok:Book[])=>{
+      this.books=bok;
+    })
   }
-  else{
-    this.updateBook=this.tmp;
-    this.showUsers=!this.tmp;
 
-  }
-  this.bookService.getAllBooks().subscribe((bok:Book[])=>{
-    this.books=bok;
-  })
-  }
-  showUsers:boolean;
+  user:User;
+  email:string;
+  username:string;
+  fullname:string;
+  picture:string;
+  addBook:boolean;
   ngAfterViewInit(){
     this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{
       if(res.matches){
@@ -58,59 +52,44 @@ export class AdminPageComponent implements OnInit {
     })
   }
 
-  saljiKuci(){
-    this.router.navigate(['adminPage']);
+  menjajPass(){
+    this.router.navigate(['change']);
   }
-  saljiAzuriraj(){
-    this.router.navigate(['userUpdate']);
-  }
-  saljiRegister(){
-    this.router.navigate(['register']);
-  }
-  saljiBrisi(){
+  dodjiKuci(){
+    
     this.router.navigate(['user']);
   }
-  username:string;
 
-
-  deleteUser(user:User){
-    this.userService.deleteUser(user.username).subscribe((resp)=>{
-      alert(resp['message']);
-      this.ngOnInit()
-    })
+  showProfile(){
+    
+    this.router.navigate(['userProfile']);
   }
 
-  message:string;
+  // unesiW(){
+  //   if(this.writer!=this.writerOld){
+  //     this.writerOld=this.writer;
+  //     this.idW=this.idW+1;
+  //     this.writers.push({'id':this.idWO,'text':this.writer});
+  //     this.idWO=this.idW;
+  //     console.log(this.writers);
+  //     this.writer="";
+  //   }
+  // }
+  // unesiS(){
+  //   if(this.style!=this.styleOld){
+  //     this.styleOld=this.style;
+  //     this.idS=this.idS+1;
+  //     this.styles.push({'id':this.idSO,'text':this.style});
+  //     console.log(this.styles);
+  //     this.idSO=this.idS;
+  //     this.style="";
+  //   }
+  // }
 
-  registerUser(u:User){
-    this.userDatabaseService.register(u.firstname,u.lastname,u.username,u.password, u.address, u.phone_number, u.email, u.picture).subscribe(resp=>{
-      if(resp['message']=='ok'){
-          this.userService.deleteUser(u.username).subscribe((resp)=>{
-            if(resp['message']=='ok'){
-              alert('User added');
-              this.ngOnInit()
-            }
-            else{
-              alert(resp['message']);
-              this.ngOnInit()
-              return;
-            }
-          })
-       
-       }
-      else{
-        alert(resp['message']);
-        this.ngOnInit()
-         return;
-      }
-     })
-
-  }
-
-  users:User[] = [];
-
-
-  //Knjige
+  // idW:number;
+  // idWO:number;
+  // idS:number;
+  // idSO:number;
   book(){
     this.writersN = this.writer.split(',');
     this.styleN = this.style.split(',');
@@ -236,28 +215,12 @@ export class AdminPageComponent implements OnInit {
       if(resp['message']=='ok'){
         alert('Knjiga je azurirana');
         this.slikaPromenjena=false;
-        this.writer=undefined;
-        this.style=undefined;
         this.bo=false;
         this.ngOnInit()
       }
       else{
         alert(resp['message']);
         this.ngOnInit()
-        return;
-      }
-    })
-  }
-
-  deleteBook(bok:Book){
-    this._id=bok._id;
-    this.bookService.deleteBook(this._id).subscribe(resp=>{
-      if(resp['message']=='ok'){
-        alert('Knjiga je obrisana');
-        this.ngOnInit();
-      }
-      else{
-        alert(resp['message']);
         return;
       }
     })
