@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { Book } from '../models/Book';
+import defaultKnjiga from '../models/DefaultBook';
 import { OID } from '../models/Oid';
 import { User } from '../models/User';
 
@@ -31,6 +32,8 @@ export class ModeratorComponent implements OnInit {
     this.bookService.getAllBooks().subscribe((bok:Book[])=>{
       this.books=bok;
     })
+
+    
   }
 
   user:User;
@@ -91,11 +94,14 @@ export class ModeratorComponent implements OnInit {
   // idS:number;
   // idSO:number;
   book(){
+    if(this.slika==null){
+      this.slika=defaultKnjiga;
+    }
     this.writersN = this.writer.split(',');
     this.styleN = this.style.split(',');
     console.log(this.writersN);
     
-    this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika).subscribe(resp=>{
+    this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika, this.number).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
         this.ngOnInit();
@@ -160,7 +166,7 @@ export class ModeratorComponent implements OnInit {
   updateBook:boolean;
   bookPicture:string;
   bo:boolean;
-  _id:Array<OID>;
+  _id:Object;
   number:number;
 
   promena(book:Book){
@@ -211,10 +217,13 @@ export class ModeratorComponent implements OnInit {
     //dovuci sve knjige iz baze
     this.writersN = this.writer.split(',');
     this.styleN = this.style.split(',');
+    //this.styleN.length = 3;
     this.bookService.updateBook(this._id,this.name, this.writersN,this.styleN,this.publisher,this.year,this.language,this.slika, this.number).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je azurirana');
         this.slikaPromenjena=false;
+        this.writer=undefined;
+        this.style=undefined;
         this.bo=false;
         this.ngOnInit()
       }
@@ -225,4 +234,16 @@ export class ModeratorComponent implements OnInit {
       }
     })
   }
+
+
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
+  }
+
+
+
+
+  defaultSlika:string;
+  
 }

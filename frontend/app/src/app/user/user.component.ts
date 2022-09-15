@@ -54,4 +54,9 @@ export class UserComponent implements OnInit {
     
     this.router.navigate(['userProfile']);
   }
+
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
+  }
 }

@@ -12,7 +12,7 @@ export class BookService {
 
 
  
-  addBook(name, writer, style, publisher, year, language, picture){
+  addBook(name, writer, style, publisher, year, language, picture, number){
     const data = {
       name:name,
       writer:writer,
@@ -20,7 +20,8 @@ export class BookService {
       publisher:publisher,
       year:year,
       language:language,
-      picture:picture
+      picture:picture,
+      number:number
     }
     
     return this.http.post(`${this.uri}/books/addBook`, data);

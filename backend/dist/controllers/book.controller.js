@@ -8,7 +8,10 @@ const Book_1 = __importDefault(require("../models/Book"));
 class BookController {
     constructor() {
         this.addBook = (req, res) => {
+            var ObjectID = require('bson').ObjectID;
+            var id = new ObjectID();
             let book = new Book_1.default({
+                _id: id,
                 name: req.body.name,
                 writer: req.body.writer,
                 style: req.body.style,
@@ -16,7 +19,7 @@ class BookController {
                 year: req.body.year,
                 language: req.body.language,
                 picture: req.body.picture,
-                number: 1
+                number: req.body.number
             });
             book.save((err, resp) => {
                 if (err) {

@@ -37,6 +37,10 @@ export class ChangePassComponent implements OnInit {
       }
     })
   }
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
+  }
   user:User;
   username:string;
   email:string;

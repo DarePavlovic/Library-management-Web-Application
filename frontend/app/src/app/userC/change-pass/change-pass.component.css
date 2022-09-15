@@ -14,7 +14,7 @@ mat-sidenav{
     text-align: center;
 }
 .content{
-    
+    padding: 10%;
     height: calc(100vh - 98px);
     margin:20px;
     margin-left:32px;

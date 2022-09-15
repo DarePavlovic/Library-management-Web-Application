@@ -1,11 +1,14 @@
 import express from 'express'
+import { ObjectId } from 'mongodb'
 import mongoose from 'mongoose'
 import Book from '../models/Book'
 export class BookController{
 
     addBook = (req:express.Request, res:express.Response)=>{
-
+        var ObjectID = require('bson').ObjectID;
+        var id  = new ObjectID();
         let book = new Book({
+            _id:id,
             name:req.body.name,
             writer:req.body.writer,
             style:req.body.style,
@@ -13,7 +16,7 @@ export class BookController{
             year:req.body.year,
             language:req.body.language,
             picture:req.body.picture,
-            number:1
+            number:req.body.number
         })
         
 

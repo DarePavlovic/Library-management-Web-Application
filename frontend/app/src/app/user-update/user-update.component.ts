@@ -105,13 +105,13 @@ export class UserUpdateComponent implements OnInit {
 
   saljiUpdate(){
     this.upd=true;
+    localStorage.setItem('update', JSON.stringify(this.upd))
     this.router.navigate(['adminPage']);
-    localStorage.setItem("update", JSON.stringify(this.upd))
   }
   saljiKuci(){
     this.upd=false;
+    localStorage.setItem('update', JSON.stringify(this.upd))
     this.router.navigate(['adminPage']);
-    localStorage.setItem("update", JSON.stringify(this.upd))
 
   }
   saljiAzuriraj(){
@@ -122,6 +122,10 @@ export class UserUpdateComponent implements OnInit {
   }
   saljiBrisi(){
     this.router.navigate(['user']);
+  }
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
   }
 
 

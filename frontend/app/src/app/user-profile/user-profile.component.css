@@ -14,15 +14,15 @@ mat-sidenav{
     text-align: center;
 }
 .content{
-    
+    padding: 7%;
     height: calc(100vh - 98px);
     margin:20px;
     margin-left:32px;
     
     justify-content: flex-end;
-    text-align: center;
+    text-align:left;
 
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color:black;
 
     border-radius: 10px;
@@ -80,7 +80,7 @@ mat-divider{
     font-style: oblique;
 }
 #profile{
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 100px;
     padding-left: 20px;
 }

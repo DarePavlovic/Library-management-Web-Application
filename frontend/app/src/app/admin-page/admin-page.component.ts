@@ -28,8 +28,9 @@ export class AdminPageComponent implements OnInit {
     this.users=user;
   })
 
-  this.showUsers=true;
-  this.tmp=JSON.parse(localStorage.getItem("update"));
+  // this.showUsers=true;
+  // this.updateBook=false;
+  this.tmp=JSON.parse(localStorage.getItem('update'));
   if(this.tmp==true){
 
     this.updateBook=this.tmp;
@@ -67,8 +68,9 @@ export class AdminPageComponent implements OnInit {
   saljiRegister(){
     this.router.navigate(['register']);
   }
-  saljiBrisi(){
-    this.router.navigate(['user']);
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
   }
   username:string;
 
@@ -116,7 +118,7 @@ export class AdminPageComponent implements OnInit {
     this.styleN = this.style.split(',');
     console.log(this.writersN);
     
-    this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika).subscribe(resp=>{
+    this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika, this.number).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
         this.ngOnInit();

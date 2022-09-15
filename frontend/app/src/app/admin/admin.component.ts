@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/User';
+import { UserDatabaseService } from '../user-database.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,20 +11,23 @@ import { UserService } from '../user.service';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private userService:UserService, private router:Router) { }
+  constructor(private userDatabaseService:UserDatabaseService, private router:Router) { }
 
   ngOnInit(): void {
   }
   errorMessage:string;
   username: string;
   password:string;
- 
+  upd:boolean;
 
   login(){
-    this.userService.login(this.username, this.password).subscribe((user:User)=>{
+    this.userDatabaseService.login(this.username, this.password).subscribe((user:User)=>{
       if(user !=null){
         if(user.type=="admin"){
         localStorage.setItem('ulogovan', JSON.stringify(user));
+        
+        this.upd=false;
+        localStorage.setItem('update', JSON.stringify(this.upd))
         this.router.navigate(['adminPage']);
         }
         else{

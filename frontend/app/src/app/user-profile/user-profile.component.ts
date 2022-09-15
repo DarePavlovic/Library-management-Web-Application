@@ -30,6 +30,10 @@ export class UserProfileComponent implements OnInit {
     this.phone_number=this.user.phone_number;
     this.type=this.user.type;
   }
+  odjava(){
+    localStorage.removeItem('ulogovan')
+    this.router.navigate(['home']);
+  }
 
   user:User;
   email:string;
