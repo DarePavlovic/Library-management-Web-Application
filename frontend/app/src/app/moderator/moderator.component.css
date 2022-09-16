@@ -15,7 +15,8 @@ mat-sidenav{
 }
 .content{
     
-    height: calc(100vh - 98px);
+    /* height: calc(100vh - 98px); */
+    height: auto;
     margin:16px;
     margin-left:32px;
     justify-content: flex-start;
@@ -86,3 +87,9 @@ mat-divider{
     height: 80px;
     padding-left: 20px;
   }
+
+  #bookPict{
+    height: 99px;
+    width: 99px;
+    padding: 1%;
+}

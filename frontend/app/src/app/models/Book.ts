@@ -12,4 +12,5 @@ export class Book{
     language:string;
     picture:string;
     number:number;
+    taken:number;
 }

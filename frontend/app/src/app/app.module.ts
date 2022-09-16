@@ -31,6 +31,7 @@ import { ChangePassComponent } from './userC/change-pass/change-pass.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ModeratorComponent } from './moderator/moderator.component';
+import { BookPageComponent } from './book-page/book-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { ModeratorComponent } from './moderator/moderator.component';
     ChangePassComponent,
     UserUpdateComponent,
     UserProfileComponent,
-    ModeratorComponent
+    ModeratorComponent,
+    BookPageComponent
   ],
   imports: [
     MatSidenavModule,

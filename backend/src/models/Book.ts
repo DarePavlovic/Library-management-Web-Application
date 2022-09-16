@@ -32,6 +32,9 @@ let Book = new Schema(
         },
         number:{
             type:Number
+        },
+        taken:{
+            type:Number
         }
     }
 )

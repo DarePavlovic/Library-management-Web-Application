@@ -15,15 +15,16 @@ mat-sidenav{
 }
 .content{
     
-    height: calc(100vh - 98px);
+    height: auto;
+    
     margin:16px;
     margin-left:32px;
-    display: flex;
     justify-content: center;
     align-items: center;
-
+    text-align: center;
+    padding: 5%;
     font-size: 2rem;
-    color:lightgrey;
+    color:black;
 
     border-radius: 10px;
     
@@ -78,4 +79,16 @@ mat-divider{
     font-size: 2rem;
     padding-top: 0.8rem;
     font-style: oblique;
+}
+
+#bookPict{
+    height: 99px;
+    width: 99px;
+    padding: 1%;
+}
+
+#pic{
+    max-width: 300px;
+    max-height: 480px;
+    padding: 5%;
 }

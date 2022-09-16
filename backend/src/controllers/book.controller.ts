@@ -16,7 +16,8 @@ export class BookController{
             year:req.body.year,
             language:req.body.language,
             picture:req.body.picture,
-            number:req.body.number
+            number:req.body.number,
+            taken:0
         })
         
 
@@ -66,6 +67,23 @@ export class BookController{
         Book.deleteOne({'_id':_id},(err,resp)=>{
             if(err)console.log(err);
             else res.json({'message':'ok'});
+        })
+    }
+
+    searchBookByName = (req:express.Request, res:express.Response)=>{
+        let searchParams = req.query.param;
+
+        Book.find({'name': {$regex:searchParams}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
+        })
+    }
+    searchBookByWriter = (req:express.Request, res:express.Response)=>{
+        let searchParams = req.query.param;
+
+        Book.find({'writer': {$regex:searchParams}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
         })
     }
 }

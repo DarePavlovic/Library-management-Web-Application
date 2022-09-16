@@ -14,7 +14,7 @@
         <mat-divider></mat-divider>
 
 
-        <button mat-button class="menu-button" (click)="dodjiKuci()">
+        <button mat-button class="menu-button" (click)="dodjiKuci();showBook=true;updateBook=false;addBook=false">
             <mat-icon>home</mat-icon>
             <span>Home page</span>
            </button>
@@ -26,12 +26,12 @@
         <mat-icon>search</mat-icon>
         <span>Search</span>
        </button>
-       <button mat-button class="menu-button" (click)="addBook=true;updateBook=false">
+       <button mat-button class="menu-button" (click)="addB()">
         <mat-icon>library_add</mat-icon>
         <span>Add book</span>
        </button>
-       <button mat-button class="menu-button" (click)="addBook=false;updateBook=true">
-        <mat-icon>library_update</mat-icon>
+       <button mat-button class="menu-button" (click)="addBook=false;updateBook=true;showBook=false">
+        <mat-icon>update</mat-icon>
         <span>Update book</span>
        </button>
        <button mat-button class="menu-button">
@@ -49,7 +49,17 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
+            <div *ngIf="showBook">
+                <h3>Knjiga dana</h3><hr>
+            <img id="bookPict" [src]="bookD.picture"><hr>
+            <div style="font-size: 1rem;">
+            <label>Naziv knjige:</label>{{bookD.name}}<br>
+            <label>Autori knjige:</label>{{writerD}}<br>
+            <label>Uspesnost:</label>{{bookD.taken}}<br></div>
+            </div>
             <div *ngIf="addBook">
+                
+            <hr>
                 <p>Ovde je dodavanje knjige</p>
                 <label>Naziv knjige</label><input type="text" name="name" [(ngModel)]="name"><br>
                 <label>Unesi writera</label><input type="text" name="writer" [(ngModel)]="writer"><br>
@@ -93,7 +103,7 @@
                         <td><img id="profile" [src]="b.picture"></td>
                         
                         <td>{{b.number}}</td>
-                        <td><button (click)="promena(b)">Update</button></td>
+                        <td><button (click)="promena(b);showBook=false">Update</button></td>
                         <!-- <td><button (click)="deleteUser(u)">Remove</button></td> -->
                     </tr>
                 </tbody>

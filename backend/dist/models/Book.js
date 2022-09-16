@@ -33,6 +33,9 @@ let Book = new Schema({
     },
     number: {
         type: Number
+    },
+    taken: {
+        type: Number
     }
 });
 exports.default = mongoose_1.default.model('BookModel', Book, 'books');

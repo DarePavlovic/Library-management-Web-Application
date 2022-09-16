@@ -57,4 +57,13 @@ export class BookService {
     }
     return this.http.post(`${this.uri}/books/deleteBook`, data)
   }
+
+
+  searchBookByWriter(writer){
+    return this.http.get(`${this.uri}/books/searchBookByWriter?param=${writer}`)
+  }
+  searchBookByName(name){
+    return this.http.get(`${this.uri}/books/searchBookByName?param=${name}`)
+
+  }
 }

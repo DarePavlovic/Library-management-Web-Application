@@ -1,0 +1,13 @@
+Detalji o Knjizi {{book.name}}
+<br>
+<br>
+<img id="pic" [src]="book.picture">
+<div id="every">
+<label>Book name: </label>{{book.name}}<br>
+<label>Writers: </label>{{writerBook}}<br>
+<label>Styles: </label>{{styleBook}}<br>
+<label>Publisher: </label>{{book.publisher}}<br>
+<label>Year: </label>{{book.year}}<br>
+<label>Language: </label>{{book.language}}<br>
+<label>Available: </label>{{book.number}}<br></div>
+<button *ngIf="uzmi" (click)="zaduzi()">Zaduzi knjigu</button>

@@ -21,5 +21,15 @@ bookRouter.route('/deleteBook').post(
 )
 
 
+bookRouter.route('/searchBookByName').get(
+    (req, res)=> new BookController().searchBookByName(req,res)
+)
+
+
+bookRouter.route('/searchBookByWriter').get(
+    (req, res)=> new BookController().searchBookByWriter(req,res)
+)
+
+
 
 export default bookRouter;

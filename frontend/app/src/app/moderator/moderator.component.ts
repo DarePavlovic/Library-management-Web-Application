@@ -28,14 +28,29 @@ export class ModeratorComponent implements OnInit {
     this.fullname = this.user.firstname + ' ' +this.user.lastname;
     this.email = this.user.email;
     this.picture = this.user.picture;
+    this.addHome=true;
+    this.showBook=true;
+
 
     this.bookService.getAllBooks().subscribe((bok:Book[])=>{
       this.books=bok;
+
+      this.seed = ((new Date().getDate())*(new Date().getFullYear())*(new Date().getMonth())+1)%bok.length;
+      this.writerD=undefined;
+      this.bookD=this.books[this.seed];
+      this.bookD.writer.forEach((value)=>{
+        if(this.writerD==undefined){
+          this.writerD = value.toString();       
+        }
+        else{
+          this.writerD = this.writerD + ',' + value.toString() ; 
+        }
+      })
     })
 
     
   }
-
+  showBook:boolean;
   user:User;
   email:string;
   username:string;
@@ -60,14 +75,16 @@ export class ModeratorComponent implements OnInit {
   }
   dodjiKuci(){
     
-    this.router.navigate(['user']);
+    this.router.navigate(['moderator']);
   }
 
   showProfile(){
     
     this.router.navigate(['userProfile']);
   }
-
+  seed:number;
+  bookD:Book;
+  writerD:string;
   // unesiW(){
   //   if(this.writer!=this.writerOld){
   //     this.writerOld=this.writer;
@@ -168,6 +185,7 @@ export class ModeratorComponent implements OnInit {
   bo:boolean;
   _id:Object;
   number:number;
+  addHome:boolean;
 
   promena(book:Book){
     this.bo=true;
@@ -245,5 +263,20 @@ export class ModeratorComponent implements OnInit {
 
 
   defaultSlika:string;
+
+  addB(){
+    this.addBook=true;
+    this.showBook=false;
+    this.updateBook=false;
+    this.name=undefined;
+    this.writer=undefined;
+    this.style=undefined;
+    this.publisher=undefined;
+    this.year=undefined;
+    this.language=undefined;
+    this.number=undefined;
+    this.slika=undefined;
+    this.bo=false;
+  }
   
 }

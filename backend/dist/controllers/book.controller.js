@@ -19,7 +19,8 @@ class BookController {
                 year: req.body.year,
                 language: req.body.language,
                 picture: req.body.picture,
-                number: req.body.number
+                number: req.body.number,
+                taken: 0
             });
             book.save((err, resp) => {
                 if (err) {
@@ -66,6 +67,24 @@ class BookController {
                     console.log(err);
                 else
                     res.json({ 'message': 'ok' });
+            });
+        };
+        this.searchBookByName = (req, res) => {
+            let searchParams = req.query.param;
+            Book_1.default.find({ 'name': { $regex: searchParams } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.searchBookByWriter = (req, res) => {
+            let searchParams = req.query.param;
+            Book_1.default.find({ 'writer': { $regex: searchParams } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
             });
         };
     }

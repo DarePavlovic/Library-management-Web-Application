@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminComponent } from './admin/admin.component';
+import { BookPageComponent } from './book-page/book-page.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ModeratorComponent } from './moderator/moderator.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:"userUpdate", component:UserUpdateComponent},
   {path:"userProfile", component:UserProfileComponent},
   {path:"moderator",component:ModeratorComponent},
+  {path:"bookPage", component:BookPageComponent},
   {path:"**", component:HomeComponent}
 ];
 
