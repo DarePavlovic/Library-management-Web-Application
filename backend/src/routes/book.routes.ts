@@ -46,6 +46,9 @@ bookRouter.route('/getBorrowSortName').get(
 bookRouter.route('/getBorrowSortWriter').get(
     (req, res)=> new BookController().getBorrowSortWriter(req,res)
 )
+bookRouter.route('/getTopBooks').get(
+    (req, res)=> new BookController().getTopBooks(req,res)
+)
 
 
 export default bookRouter;

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { BorrowBookService } from '../borrow-book.service';
+import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
 import { BorrowBook } from '../models/BorrowBook';
+import { Comment } from '../models/Comment';
 import { User } from '../models/User';
 
 @Component({
@@ -11,11 +13,13 @@ import { User } from '../models/User';
   styleUrls: ['./book-page.component.css']
 })
 export class BookPageComponent implements OnInit {
+  maxChars:number
 
-  constructor(private borrowBookService:BorrowBookService, private bookService:BookService) { }
+  constructor(private borrowBookService:BorrowBookService,private commentService:CommentService, private bookService:BookService) { }
 
   ngOnInit(): void {
     this.book=undefined;
+    this.maxChars=1000;
     this.book=JSON.parse(localStorage.getItem('knjiga'));
     this.user = JSON.parse(localStorage.getItem('ulogovan'));
     this.writerBook=undefined;
@@ -40,7 +44,26 @@ export class BookPageComponent implements OnInit {
       this.uzmi=true;
     }
 
+    this.commentService.getAllCommentsByBookID(this.book._id).subscribe((c:Comment[])=>{
+      this.comments=c;
+      if(c!=null){
+        this.tabela=true;
+      }
+    })
+
+    this.borrowBookService.getAllBorrowedBooks(this.user.username).subscribe((bb:BorrowBook[])=>{
+      console.log
+      bb.forEach((value)=>{
+        if(value.bookId==this.book._id){
+          this.ocena=true;
+        }
+      })
+    })
+
+
   }
+  ocena:boolean;
+  tabela:boolean;
   uzmi:boolean;
   writerBook:string;
   styleBook:string;
@@ -92,6 +115,39 @@ export class BookPageComponent implements OnInit {
       }
     })
     
-
   }
+
+  comments:Comment[]=[];
+  gradeN:number;
+  gradeS:string;
+  comme:string;
+
+  dodajKomentar(){
+    this.gradeS="";
+    for(let i=0;i<this.gradeN;i++){
+      this.gradeS = this.gradeS + '*';
+    }
+    this.commentService.getCommentByBookID(this.book._id, this.user.username).subscribe((co:Comment)=>{
+      console.log(co);
+      if(co==null){
+          this.commentService.addComment(this.user.username, this.book._id,this.gradeS,this.comme, new Date()).subscribe(resp=>{
+            if(resp['message']=='ok'){
+            alert('Komentar dodat');
+            this.gradeN=undefined;
+            this.comme=undefined;
+            this.ngOnInit();
+          }
+          else{
+            alert(resp['message']);
+            return;
+          }
+        })
+      }
+      else{
+        alert('Vec ste dodali komentar za ovu knjigu');
+        return;
+      }
+    })
+  }
+
 }

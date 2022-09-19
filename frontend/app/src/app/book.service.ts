@@ -96,4 +96,7 @@ export class BookService {
     return this.http.get(`${this.uri}/books/getBorrowSortWriter`)
 
   }
+  getTopBooks(){
+    return this.http.get(`${this.uri}/books/getTopBooks`)
+  }
 }

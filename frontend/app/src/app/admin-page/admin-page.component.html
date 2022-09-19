@@ -107,6 +107,8 @@
                         
                     </div>
                     <button (click)="update()">Update all data</button>
+                    <div *ngIf="!bo">Update broj dana koji korisnik moze da ima knjigu:<input type="number" name="dani" min="0" [(ngModel)]="dani"><button (click)="promeni()">Promeni</button>
+                    </div><br>
                 </div>
                 
         </div>

@@ -8,4 +8,5 @@ export class User{
     email:string;
     picture:string;
     type:string;
+    extendNumber:number;
 }

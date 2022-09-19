@@ -115,5 +115,12 @@ deleteUser(username){
     }
     return this.http.post(`${this.uri}/userDatabase/updateProfile`,data);
   }
+
+  updateDays(days){
+    const data = {
+      extendNumber:days
+    }
+    return this.http.post(`${this.uri}/userDatabase/updateDays`,data);
+  }
   
 }

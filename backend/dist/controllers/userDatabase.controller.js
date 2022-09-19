@@ -29,6 +29,7 @@ class UserDatabaseController {
                 picture: req.body.picture,
                 //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
                 type: "reader",
+                extendNumber: 14
             });
             user.save((err, resp) => {
                 if (err) {
@@ -113,6 +114,16 @@ class UserDatabaseController {
                     console.log(err);
                 else
                     res.json(users);
+            });
+        };
+        this.updateDays = (req, res) => {
+            let extend = req.body.extendNumber;
+            UserDatabase_1.default.updateMany({}, { $set: { 'extendNumber': extend } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
             });
         };
     }

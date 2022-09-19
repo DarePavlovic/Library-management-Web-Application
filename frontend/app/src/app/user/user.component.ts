@@ -4,8 +4,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { BorrowBookService } from '../borrow-book.service';
+import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
 import { BorrowBook } from '../models/BorrowBook';
+import { Comment } from '../models/Comment';
 import { JoinBook } from '../models/joinBook';
 import { User } from '../models/User';
 
@@ -18,7 +20,7 @@ export class UserComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookService:BookService, private router:Router) { }
+  constructor(private commentService:CommentService,private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookService:BookService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -40,6 +42,22 @@ export class UserComponent implements OnInit {
           this.writer = this.writer + ',' + value.toString() ; 
         }
       })
+      this.ocena=0;
+      this.tmp=0;
+      this.commentService.getAllCommentsByBookID(this.book._id).subscribe((b:Comment[])=>{
+        
+        if(this.book.taken!=0){
+          b.forEach((value)=>{
+            this.tmp=this.tmp+1;
+          this.ocena = this.ocena + value.grade.length;
+        })
+          this.ocena = this.ocena/this.tmp;
+          console.log(this.ocena);
+        }
+        else{
+          this.ocena=0;
+        }
+      })
     })
 
     if(this.showSearchBook){
@@ -51,6 +69,8 @@ export class UserComponent implements OnInit {
     
   }
 
+  ocena:number;
+  tmp:number;
   showBook(){
     console.log(this.seed);
     console.log(this.book);
@@ -107,13 +127,13 @@ export class UserComponent implements OnInit {
     localStorage.clear();
     localStorage.setItem('knjiga',JSON.stringify(bok));
     localStorage.setItem('ulogovan', JSON.stringify(this.user));
-    this.bookPageShow=true;
-    this.showProf=true;
+    this.showProf=false;
     this.history=false;
     this.menjaj=false;
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.bookPageShow=true;
     //this.router.navigate(['bookPage']);
   }
   showProf:boolean;
@@ -404,7 +424,7 @@ export class UserComponent implements OnInit {
     
     let start= new Date();
     let date = new Date();
-    date.setDate( date.getDate() + 14 );
+    date.setDate( date.getDate() + this.user.extendNumber);
     this.borrowBookService.updateBorrowBook(this.user.username,id,start, date).subscribe(resp=>{
       if(resp['message']=='ok'){ alert('Knjiga je produzena');this.ngOnInit();}
       else {alert(resp['message']); return;}

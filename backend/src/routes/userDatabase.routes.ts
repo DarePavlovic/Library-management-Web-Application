@@ -39,6 +39,9 @@ userDatabaseRouter.route('/getAllUsers').get(
 userDatabaseRouter.route('/updateProfile').post(
     (req,res)=>new UserDatabaseController().updateProfile(req,res)
 )
+userDatabaseRouter.route('/updateDays').post(
+    (req,res)=>new UserDatabaseController().updateDays(req,res)
+)
 
 
 export default userDatabaseRouter;

@@ -30,6 +30,9 @@ let UserDatabase = new Schema(
         },
         type:{
             type:String
+        },
+        extendNumber:{
+            type:Number
         }
 
     }

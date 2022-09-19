@@ -16,5 +16,6 @@ userDatabaseRouter.route('/changePassword').post((req, res) => new userDatabase_
 userDatabaseRouter.route('/deleteUser').post((req, res) => new userDatabase_controller_1.UserDatabaseController().delete(req, res));
 userDatabaseRouter.route('/getAllUsers').get((req, res) => new userDatabase_controller_1.UserDatabaseController().getAllUsers(req, res));
 userDatabaseRouter.route('/updateProfile').post((req, res) => new userDatabase_controller_1.UserDatabaseController().updateProfile(req, res));
+userDatabaseRouter.route('/updateDays').post((req, res) => new userDatabase_controller_1.UserDatabaseController().updateDays(req, res));
 exports.default = userDatabaseRouter;
 //# sourceMappingURL=userDatabase.routes.js.map

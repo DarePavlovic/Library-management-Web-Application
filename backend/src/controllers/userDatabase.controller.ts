@@ -28,6 +28,7 @@ export class UserDatabaseController{
             picture: req.body.picture,
             //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
             type:"reader",
+            extendNumber:14
             
         })
 
@@ -119,8 +120,20 @@ export class UserDatabaseController{
             if(err)console.log(err);
             else res.json(users);
         })
+     
+    }
+
+    updateDays = (req:express.Request, res:express.Response)=>{
         
+        let extend=req.body.extendNumber;
         
+
+        UserDatabase.updateMany({}, {$set:{'extendNumber':extend}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
+        })
     }
 
 

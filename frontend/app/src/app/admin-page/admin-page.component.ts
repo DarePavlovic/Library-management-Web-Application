@@ -265,6 +265,20 @@ export class AdminPageComponent implements OnInit {
       }
     })
   }
+  dani:number;
+  promeni(){
+    this.userDatabaseService.updateDays(this.dani).subscribe(resp=>{
+      if(resp['message']=='ok'){
+        alert('Promenjen broj dana');
+        this.ngOnInit();
+      }
+      else{
+        alert(resp['message']);
+        return;
+      }
+    })
+  }
+
 }
 
 

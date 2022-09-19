@@ -38,6 +38,13 @@ export class BookController{
         })
     }
 
+    getTopBooks = (req:express.Request, res:express.Response)=>{
+        Book.find({}).sort({taken:-1}).limit(3).exec(function(err, books){
+            if(err)console.log(err);
+            else res.json(books);
+        })
+    }
+
     getBookByID = (req:express.Request, res:express.Response)=>{
         
         let id = req.query.param;

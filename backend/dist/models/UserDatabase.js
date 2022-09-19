@@ -32,6 +32,9 @@ let UserDatabase = new Schema({
     },
     type: {
         type: String
+    },
+    extendNumber: {
+        type: Number
     }
 });
 exports.default = mongoose_1.default.model('UserDatabaseModel', UserDatabase, 'userDatabase');

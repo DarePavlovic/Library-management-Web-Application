@@ -34,6 +34,7 @@ import { ModeratorComponent } from './moderator/moderator.component';
 import { BookPageComponent } from './book-page/book-page.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatListModule,
     MatDividerModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    NgImageSliderModule,
+    
   ],
   
   providers: [],

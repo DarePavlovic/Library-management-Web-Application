@@ -40,6 +40,14 @@ class BookController {
                     res.json(books);
             });
         };
+        this.getTopBooks = (req, res) => {
+            Book_1.default.find({}).sort({ taken: -1 }).limit(3).exec(function (err, books) {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
         this.getBookByID = (req, res) => {
             let id = req.query.param;
             Book_1.default.findOne({ '_id': id }, (err, books) => {

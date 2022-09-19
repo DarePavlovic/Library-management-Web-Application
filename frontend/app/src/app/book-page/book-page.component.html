@@ -3,11 +3,38 @@ Detalji o Knjizi {{book.name}}
 <br>
 <img id="pic" [src]="book.picture">
 <div id="every">
-<label>Book name: </label>{{book.name}}<br>
-<label>Writers: </label>{{writerBook}}<br>
-<label>Styles: </label>{{styleBook}}<br>
-<label>Publisher: </label>{{book.publisher}}<br>
-<label>Year: </label>{{book.year}}<br>
-<label>Language: </label>{{book.language}}<br>
-<label>Available: </label>{{book.number}}<br></div>
+<label>Naziv knjige: </label>{{book.name}}<br>
+<label>Autori: </label>{{writerBook}}<br>
+<label>Zanrovi: </label>{{styleBook}}<br>
+<label>Izdavac: </label>{{book.publisher}}<br>
+<label>Godina: </label>{{book.year}}<br>
+<label>Jezik: </label>{{book.language}}<br>
+<label>Dostupno: </label>{{book.number}}<br>
 <button *ngIf="uzmi" (click)="zaduzi()">Zaduzi knjigu</button>
+
+
+<hr>
+<div *ngIf="ocena">
+Ocenite knjigu i unesite komentar
+<label>Ocena:</label><input type="number" min="0" max="10" name="ocena" [(ngModel)]="gradeN"><br>
+<label>Komentar</label><textarea name="komentar" [(ngModel)]="comme" [maxlength]="maxChars"></textarea><br>
+<button (click)="dodajKomentar()">Dodaj komentar</button>
+</div>
+<hr>
+
+
+<table  *ngIf="tabela">
+    <tr>
+        <th>Username</th>
+        <th>Ocena</th>
+        <th>Komentar</th>
+        <th>Postavljen</th>
+    </tr>
+    <tr *ngFor="let k of comments">
+        <td>{{k.username}}</td>
+        <td>{{k.grade}}</td>
+        <td>{{k.commentS}}</td>
+        <td>{{k.posted}}</td>
+    </tr>
+</table>
+</div>

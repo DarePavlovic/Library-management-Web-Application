@@ -18,14 +18,53 @@ export class HomeComponent implements OnInit {
   sidenav!:MatSidenav
 
   constructor(private observer: BreakpointObserver, private router:Router, private bookService:BookService) { }
-
+  sl:string[];
+  sl1:string;
+  sl2:string;
+  sl3:string;
   ngOnInit(): void {
+    
+    this.brT=0;
+    this.sl=[];
       this.tmp=JSON.parse(localStorage.getItem('pretraga'));
       if(this.tmp==false){this.basic=true;this.search=false;}
       else{this.basic=true;this.search=false;}
+      this.topKnjige=[];
+      this.bookService.getTopBooks().subscribe((b:Book[])=>{
+        this.topKnjige=b;
+        b.forEach((value)=>{
+          this.sl.push(value.picture);
+          console.log(value)
+        })
+        
+
+      //   this.imgCollection = [
+      //     {
+      //       image:  this.topKnjige.pop().picture,
+      //       alt: 'Image 1',
+      //       title: 'Image 1'
+      //     }, {
+      //       image:  this.topKnjige.pop().picture,
+      //       title: 'Image 2',
+      //       alt: 'Image 2'
+      //     }, {
+      //       image:  this.topKnjige.pop().picture,
+      //       title: 'Image 3',
+      //       alt: 'Image 3'
+      //     }
+      // ];
+      })
     
   }
-
+  brT:number;
+  napred(){
+      this.brT=(this.brT+1)%3;
+    
+  }
+  nazad(){
+    this.brT=((this.brT-1)+3)%3;
+  }
+  slD:string;
   tmp:boolean;
   basic:boolean;
   ngAfterViewInit(){
@@ -116,5 +155,9 @@ export class HomeComponent implements OnInit {
     })
 
   }
+
+  topKnjige:Book[]=[];
+
+  imgCollection: Array<object>;
   
 }
