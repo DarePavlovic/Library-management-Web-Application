@@ -18,5 +18,6 @@ bookRouter.route('/getBookByID').get((req, res) => new book_controller_1.BookCon
 bookRouter.route('/getBorrowSortName').get((req, res) => new book_controller_1.BookController().getBorrowSortName(req, res));
 bookRouter.route('/getBorrowSortWriter').get((req, res) => new book_controller_1.BookController().getBorrowSortWriter(req, res));
 bookRouter.route('/getTopBooks').get((req, res) => new book_controller_1.BookController().getTopBooks(req, res));
+bookRouter.route('/searchBookByBoth').post((req, res) => new book_controller_1.BookController().searchBookByBoth(req, res));
 exports.default = bookRouter;
 //# sourceMappingURL=book.routes.js.map

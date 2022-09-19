@@ -29,6 +29,11 @@ mat-sidenav{
     
 }
 
+.table-resp{
+    overflow-x: scroll; 
+    padding: 5%;
+  }
+
 .menu-button{
     width: 100%;
     display: flex;

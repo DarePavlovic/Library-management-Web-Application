@@ -220,7 +220,6 @@ export class AdminPageComponent implements OnInit {
     
     this._id=book._id;
     this.number = book.number;
-    this.ngOnInit();
   }
 
   books:Book[]=[];

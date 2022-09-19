@@ -111,7 +111,17 @@ class BookController {
         };
         this.searchBookByName = (req, res) => {
             let searchParams = req.query.param;
-            Book_1.default.find({ 'name': { $regex: searchParams } }, (err, books) => {
+            Book_1.default.find({ 'name': { $regex: searchParams, $options: 'i' } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.searchBookByBoth = (req, res) => {
+            let writer = req.body.writer;
+            let name = req.body.name;
+            Book_1.default.find({ 'writer': { $regex: writer, $options: 'i' }, 'name': { $regex: name, $options: 'i' } }, (err, books) => {
                 if (err)
                     console.log(err);
                 else
@@ -120,7 +130,7 @@ class BookController {
         };
         this.searchBookByWriter = (req, res) => {
             let searchParams = req.query.param;
-            Book_1.default.find({ 'writer': { $regex: searchParams } }, (err, books) => {
+            Book_1.default.find({ 'writer': { $regex: searchParams, $options: 'i' } }, (err, books) => {
                 if (err)
                     console.log(err);
                 else

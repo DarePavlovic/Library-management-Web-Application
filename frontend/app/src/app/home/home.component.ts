@@ -89,8 +89,9 @@ export class HomeComponent implements OnInit {
   saljiRegister(){
     this.router.navigate(['register']);
   }
-  saljiSearch(){this.ngOnInit();
-    this.search=true
+  saljiSearch(){
+    this.search=true;
+    this.basic=false;
   }
 
   writerSearch:string;
@@ -101,12 +102,24 @@ export class HomeComponent implements OnInit {
   nameS:string;
   writerS:string;
   search:boolean;
-  searchWriter(){
+
+
+
+searchByParam(){
+
+  if(this.writerS == "" || this.writerS == null){
+    this.searchName();
+  }
+  else if(this.nameS == "" || this.nameS == null){
+    this.searchWriter();
+  }
+  else{
+
     this.bookS=undefined;
-    this.bookService.searchBookByWriter(this.writerS).subscribe((bookS:Book[])=>{
+    this.bookService.searchBookByBoth(this.writerS,this.nameS).subscribe((bookS:Book[])=>{
       this.bookSN=bookS;
-      this.bookS=this.bookSN[0];
-      if(this.bookS==undefined){
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined ){
         alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
         return;
       }
@@ -122,7 +135,36 @@ export class HomeComponent implements OnInit {
           this.writerSearch = this.writerSearch + ',' + value.toString() ; 
         }
       })
-      this.ngOnInit();
+    }
+    })
+
+
+  }
+
+}
+
+
+  searchWriter(){
+    this.bookS=undefined;
+    this.bookService.searchBookByWriter(this.writerS).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+      console.log(this.bookS);
+      this.showSearchBook=true;
+      this.writerSearch=undefined;
+      this.bookS.writer.forEach((value)=>{
+        if(this.writerSearch==undefined){
+          this.writerSearch = value.toString();       
+        }
+        else{
+          this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+        }
+      })
     }
     })
 
@@ -132,8 +174,8 @@ export class HomeComponent implements OnInit {
     this.bookS=undefined;
     this.bookService.searchBookByName(this.nameS).subscribe((bookS:Book[])=>{
       this.bookSN=bookS;
-      this.bookS=this.bookSN[0];
-      if(this.bookS==undefined){
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
         alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
         return;
       }
@@ -149,7 +191,6 @@ export class HomeComponent implements OnInit {
             this.writerSearch = this.writerSearch + ',' + value.toString() ; 
           }
         })
-        this.ngOnInit();
       }
       
     })

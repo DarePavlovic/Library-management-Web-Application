@@ -71,19 +71,22 @@
                 Trazi na osnovu naziva knjige
                 <input type="text" name="search" [(ngModel)]="nameS">
                 
-                <button (click)="searchName()">Trazi knjigu</button><br>
+                <br/>
                 Trazi na osnovu autora
                 <input type="text" name="search" [(ngModel)]="writerS">
-                <button (click)="searchWriter()">Trazi knjigu</button>
+                <br>
+                <button (click)="searchByParam()">Trazi knjigu</button>
     
                 <div *ngIf="showSearchBook">
-                    <h3>Knjiga</h3><hr>
-                    <img id="bookPict" [src]="bookS.picture"><hr>
+                  <h3>Knjige</h3><hr>
+                  <div *ngFor="let b of bookSN">
+                    <img id="bookPict" [src]="b.picture"><hr>
                     <div style="font-size: 1rem;">
-                    <label>Naziv knjige:</label>{{bookS.name}}<br>
-                    <label>Autori knjige:</label>{{writerSearch}}<br>
-                    <label>Uspesnost:</label>{{bookS.taken}}<br></div>
-                    </div>
+                    <label>Naziv knjige:</label>{{b.name}}<br>
+                    <label>Autori knjige:</label>{{b.writer}}<br>
+                    <label>Uspesnost:</label>{{b.taken}}<br></div>
+                  </div>  
+                  </div>
     
             </div>
         </div>

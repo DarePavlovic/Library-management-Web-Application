@@ -113,7 +113,16 @@ export class BookController{
     searchBookByName = (req:express.Request, res:express.Response)=>{
         let searchParams = req.query.param;
 
-        Book.find({'name': {$regex:searchParams}}, (err,books)=>{
+        Book.find({'name': {$regex:searchParams, $options: 'i'}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
+        })
+    }
+    searchBookByBoth = (req:express.Request, res:express.Response)=>{
+        let writer = req.body.writer;
+        let name = req.body.name;
+
+        Book.find({'writer': {$regex:writer, $options: 'i'}, 'name': {$regex:name, $options: 'i'}}, (err,books)=>{
             if(err)console.log(err)
             else res.json(books)
         })
@@ -121,11 +130,14 @@ export class BookController{
     searchBookByWriter = (req:express.Request, res:express.Response)=>{
         let searchParams = req.query.param;
 
-        Book.find({'writer': {$regex:searchParams}}, (err,books)=>{
+        Book.find({'writer': {$regex:searchParams, $options: 'i'}}, (err,books)=>{
             if(err)console.log(err)
             else res.json(books)
         })
     }
+
+
+
 
     getBorrowSortName = (req:express.Request, res:express.Response)=>{
         

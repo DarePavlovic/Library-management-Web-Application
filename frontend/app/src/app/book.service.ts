@@ -99,4 +99,12 @@ export class BookService {
   getTopBooks(){
     return this.http.get(`${this.uri}/books/getTopBooks`)
   }
+
+  searchBookByBoth(writer, name){
+    const data = {
+      writer:writer,
+      name:name
+    }
+    return this.http.post(`${this.uri}/books/searchBookByBoth`, data)
+  }
 }

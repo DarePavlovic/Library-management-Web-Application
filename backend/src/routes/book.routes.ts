@@ -50,5 +50,9 @@ bookRouter.route('/getTopBooks').get(
     (req, res)=> new BookController().getTopBooks(req,res)
 )
 
+bookRouter.route('/searchBookByBoth').post(
+    (req, res)=> new BookController().searchBookByBoth(req,res)
+)
+
 
 export default bookRouter;
