@@ -46,6 +46,11 @@
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
             <!-- <button (click)="showBook()">Show</button> -->
+            <div *ngIf="showProf">
+                <app-user-profile></app-user-profile>
+            </div>
+
+
             <div *ngIf="showB">
             <h3>Knjiga dana</h3><hr>
             <img id="bookPict" [src]="book.picture"><hr>

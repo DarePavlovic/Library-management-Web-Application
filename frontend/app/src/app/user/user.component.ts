@@ -81,18 +81,25 @@ export class UserComponent implements OnInit {
   menjajPass(){
 
     // this.router.navigate(['change']);
-    this.bookPageShow=false;
-    this.search=false;
-    this.showB=false;
+    this.showProf=false;
     this.history=false;
     this.menjaj=true;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
   }
   menjaj:boolean;
   dodjiKuci(){
     
     this.ngOnInit();
-    
-    this.search=false;this.showB=true;this.bookPageShow=false;this.history=false;this.menjaj=false;
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=true;
+    this.bookPageShow=false;
 
   }
 
@@ -101,23 +108,37 @@ export class UserComponent implements OnInit {
     localStorage.setItem('knjiga',JSON.stringify(bok));
     localStorage.setItem('ulogovan', JSON.stringify(this.user));
     this.bookPageShow=true;
-    this.search=false;
-    this.showB=false;
+    this.showProf=true;
     this.history=false;
     this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
     //this.router.navigate(['bookPage']);
   }
+  showProf:boolean;
   history:boolean;
+
   showProfile(){
-    
-    this.router.navigate(['userProfile']);
+    this.showProf=true;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
   }
  
 
   showSearch(){
     this.ngOnInit();
-    
-    this.search=true;this.showB=false;this.bookPageShow=false;this.history=false;this.menjaj=false;
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=true;
+    this.showB=false;
+    this.bookPageShow=false;
   }
   odjava(){
     localStorage.removeItem('ulogovan')
@@ -196,7 +217,10 @@ export class UserComponent implements OnInit {
 
   showHistory(){
     this.joinBooks=[];
+    this.showProf=false;
     this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
@@ -229,7 +253,10 @@ export class UserComponent implements OnInit {
   sortName(){
     this.sortBook=[];
     this.sorttmp=[];
+    this.showProf=false;
     this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
@@ -257,7 +284,10 @@ export class UserComponent implements OnInit {
 
     this.sortBook=[];
     this.sorttmp=[];
+    this.showProf=false;
     this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
@@ -282,7 +312,10 @@ export class UserComponent implements OnInit {
 
   sortStart(){
     this.joinBooks=[];
+    this.showProf=false;
     this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
@@ -313,6 +346,7 @@ export class UserComponent implements OnInit {
   zaduzene:boolean;
   showZaduzene(){
     this.joinBooks=[];
+    this.showProf=false;
     this.history=false;
     this.menjaj=false;
     this.zaduzene=true;

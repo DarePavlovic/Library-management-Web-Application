@@ -1,4 +1,4 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
     <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
         <mat-icon *ngIf="sidenav.opened">close</mat-icon>
@@ -44,9 +44,9 @@
        </button>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="content mat-elevation-z4">
+        <div class="content mat-elevation-z4"> -->
            
-            <div *ngIf="bo">
+            <!-- <div *ngIf="bo">
                 <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
                 <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
                 <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
@@ -58,7 +58,7 @@
                 {{slikaPoruka}} Nova profilna ->
                 <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
                 
-                <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
+                <input type="text" name="type" [(ngModel)]="type"><br>
                 
             </div>
             
@@ -78,4 +78,35 @@
             <button *ngIf="bo" (click)="update()">Update all data</button>
         </div>
     </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+
+<div *ngIf="bo">
+    <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
+    <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
+    <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+    <label>Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
+    <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
+    <label>Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
+    <label>Picture</label><img id="profile" [src]="picture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+    
+    {{slikaPoruka}} Nova profilna ->
+    <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
+    
+    <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
+    
+</div>
+
+<div *ngIf="!bo">
+    <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
+    <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>
+    <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+    <label>Address</label><input type="text" name="address" [(ngModel)]="address" disabled="true"><br>
+    <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" disabled="true"><br>
+    <label>Email</label><input type="text" name="email" [(ngModel)]="email" disabled="true"><br>
+    <label>Picture</label><img id="profile" [src]="picture"><br>
+    
+    
+    
+</div>
+<button (click)="promena()" *ngIf="!bo">Azuriraj podatke</button>
+<button *ngIf="bo" (click)="update()">Update all data</button>
