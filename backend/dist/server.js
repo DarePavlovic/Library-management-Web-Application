@@ -10,6 +10,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
 const userDatabase_routes_1 = __importDefault(require("./routes/userDatabase.routes"));
 const book_routes_1 = __importDefault(require("./routes/book.routes"));
+const borrowBook_routes_1 = __importDefault(require("./routes/borrowBook.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '50mb' }));
@@ -23,6 +24,7 @@ const router = express_1.default.Router();
 router.use('/user', user_routes_1.default);
 router.use('/userDatabase', userDatabase_routes_1.default);
 router.use('/books', book_routes_1.default);
+router.use('/borrowBook', borrowBook_routes_1.default);
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 //# sourceMappingURL=server.js.map

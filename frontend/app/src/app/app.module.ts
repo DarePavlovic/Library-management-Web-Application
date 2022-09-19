@@ -32,6 +32,9 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ModeratorComponent } from './moderator/moderator.component';
 import { BookPageComponent } from './book-page/book-page.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +69,9 @@ import { BookPageComponent } from './book-page/book-page.component';
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCardModule,
+    MatGridListModule
   ],
   
   providers: [],

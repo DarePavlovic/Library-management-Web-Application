@@ -11,15 +11,15 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav">
         
-    <button mat-button class="menu-button" (click)="saljiKuci()">
+    <button mat-button class="menu-button" (click)="saljiKuci();search=false">
         <mat-icon>home</mat-icon>
         <span>Home</span>
        </button>
-   <button mat-button class="menu-button" (click)="saljiLogin()">
+   <button mat-button class="menu-button" (click)="saljiLogin();search=false">
     <mat-icon>person</mat-icon>
     <span>Login</span>
    </button>
-   <button mat-button class="menu-button" (click)="saljiRegister()">
+   <button mat-button class="menu-button" (click)="saljiRegister();search=false;">
     <mat-icon>assignment_ind</mat-icon>
     <span>Register</span>
    </button>
@@ -30,7 +30,26 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
-            Main content
+            <div *ngIf="basic">Dobrodosli</div>
+            <div *ngIf="search">
+                Trazi na osnovu naziva knjige
+                <input type="text" name="search" [(ngModel)]="nameS">
+                
+                <button (click)="searchName()">Trazi knjigu</button><br>
+                Trazi na osnovu autora
+                <input type="text" name="search" [(ngModel)]="writerS">
+                <button (click)="searchWriter()">Trazi knjigu</button>
+    
+                <div *ngIf="showSearchBook">
+                    <h3>Knjiga</h3><hr>
+                    <img id="bookPict" [src]="bookS.picture"><hr>
+                    <div style="font-size: 1rem;">
+                    <label>Naziv knjige:</label>{{bookS.name}}<br>
+                    <label>Autori knjige:</label>{{writerSearch}}<br>
+                    <label>Uspesnost:</label>{{bookS.taken}}<br></div>
+                    </div>
+    
+            </div>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

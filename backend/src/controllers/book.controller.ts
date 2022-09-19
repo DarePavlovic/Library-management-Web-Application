@@ -38,6 +38,15 @@ export class BookController{
         })
     }
 
+    getBookByID = (req:express.Request, res:express.Response)=>{
+        
+        let id = req.query.param;
+        Book.findOne({'_id':id},(err, books)=>{
+            if(err)console.log(err);
+            else res.json(books);
+        })
+    }
+
 
     updateBook = (req:express.Request, res:express.Response)=>{
         let _id = req.body._id;
@@ -53,6 +62,30 @@ export class BookController{
 
         Book.updateOne({'_id':_id}, {$set:{'name':name, 'writer':writer, 'style':style,"publisher":publisher,
     'year':year, 'language':language, 'picture':picture, 'number':number}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
+        })
+    }
+    takeBook = (req:express.Request, res:express.Response)=>{
+        let _id = req.body._id;
+        
+        let number=req.body.number;
+        let taken = req.body.taken;
+        Book.updateOne({'_id':_id}, {$set:{'number':number, 'taken': taken}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
+        })
+    }
+
+    returnBook = (req:express.Request, res:express.Response)=>{
+        let _id = req.body._id;
+        
+        let number=req.body.number;
+        Book.updateOne({'_id':_id}, {$set:{'number':number}}, (err, resp)=>{
             if(err) console.log(err);
             else{
                 res.json({'message':'ok'})
@@ -84,6 +117,22 @@ export class BookController{
         Book.find({'writer': {$regex:searchParams}}, (err,books)=>{
             if(err)console.log(err)
             else res.json(books)
+        })
+    }
+
+    getBorrowSortName = (req:express.Request, res:express.Response)=>{
+        
+        Book.find({}).sort({name:1}).exec(function(err, books){
+            if(err)console.log(err);
+            else res.json(books);
+        })
+    }
+
+    getBorrowSortWriter = (req:express.Request, res:express.Response)=>{
+        
+        Book.find({}).sort({writer:1}).exec(function(err, books){
+            if(err)console.log(err);
+            else res.json(books);
         })
     }
 }

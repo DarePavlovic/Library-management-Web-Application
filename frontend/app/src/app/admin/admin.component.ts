@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import defaultKnjiga from '../models/DefaultBook';
+import defaultProfilna from '../models/DefaultProfile';
 import { User } from '../models/User';
 import { UserDatabaseService } from '../user-database.service';
 import { UserService } from '../user.service';
@@ -40,6 +42,5 @@ export class AdminComponent implements OnInit {
       
     })
   }
-
 
 }

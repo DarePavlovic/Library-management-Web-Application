@@ -14,15 +14,15 @@
         <mat-divider></mat-divider>
 
 
-        <button mat-button class="menu-button" (click)="dodjiKuci()">
+        <button mat-button class="menu-button" (click)="dodjiKuci();zaduzene=false;">
             <mat-icon>home</mat-icon>
             <span>Home page</span>
            </button>
-       <button mat-button class="menu-button" (click)="menjajPass()">
+       <button mat-button class="menu-button" (click)="menjajPass();zaduzene=false;">
         <mat-icon>password</mat-icon>
         <span>Change password</span>
        </button>
-       <button mat-button class="menu-button" (click)="search=true;showB=false">
+       <button mat-button class="menu-button" (click)="showSearch();zaduzene=false;">
         <mat-icon>search</mat-icon>
         <span>Search</span>
        </button>
@@ -30,11 +30,11 @@
         <mat-icon>library_add</mat-icon>
         <span>Apply book</span>
        </button>
-       <button mat-button class="menu-button">
+       <button mat-button class="menu-button" (click)="showZaduzene()">
         <mat-icon>library_books</mat-icon>
         <span>Books taken</span>
        </button>
-       <button mat-button class="menu-button">
+       <button mat-button class="menu-button" (click)="showHistory();zaduzene=false;">
         <mat-icon>history</mat-icon>
         <span>History</span>
        </button>
@@ -75,6 +75,57 @@
 
         </div>
         <div *ngIf="bookPageShow"><app-book-page></app-book-page></div>
+        <div *ngIf="history">
+            <button (click)="sortName()">Sortiraj po nazivu</button>
+            <button (click)="sortWrite()">Sortiraj po autoru</button>
+            <button (click)="sortStart()">Sortiraj po datumu zaduzivanja</button>
+            <button (click)="showHistory()">Sortiraj po datumu vracanja</button>
+            <table style="font-size:1rem;">
+                <tr>
+                    <th>Naziv knjige</th>
+                    <th>Autori knjige:</th>
+                    <th>Datum zaduzivanja</th>
+                    <th>Datum vracanja</th>
+                    <th>Akcija</th>
+                </tr>
+                <tr *ngFor="let j of joinBooks" >
+                    <td>{{j.name}}</td>
+                    <td>{{j.writer}}</td>
+                    <td>{{j.startDate}}</td>
+                    <td>{{j.endDate}}</td>
+                    <td><button (click)="vodi(j._id)">Poseti stranicu</button></td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="menjaj"><app-change-pass></app-change-pass></div>
+        
+        <div *ngIf="zaduzene">
+            
+               
+            <div fxLayout='row' fxLayoutWrap class="cards">
+
+            <div fxFlex="20" class="example-card">
+            <mat-card class="example-card" *ngFor="let m of joinBooks">
+                <mat-card-header>
+                <mat-card-title>{{m.name}}</mat-card-title>
+                <mat-card-subtitle>{{m.writer}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-md-image id="picCard" [src]="m.picture" alt="Photo of a {m.name}">
+                <mat-card-content>
+                <p [ngClass]="{'colorError': zakasnio(m.jos)}"> 
+                    Preostalo dana:{{m.jos}}
+                </p>
+                </mat-card-content>
+                <mat-card-actions>
+                <button mat-button (click)="vrati(m._id)">Vrati</button>
+                <button mat-button (click)="produzi(m._id,m.jos, m.extended)">Produzi</button>
+                </mat-card-actions>
+            </mat-card>
+            </div>
+            </div>
+           
+        
+        </div>
     </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

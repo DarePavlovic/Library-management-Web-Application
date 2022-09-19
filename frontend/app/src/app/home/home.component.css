@@ -16,14 +16,15 @@ mat-sidenav{
 .content{
     
     height: calc(100vh - 98px);
+    padding: 5%;
     margin:16px;
     margin-left:32px;
-    display: flex;
+    
     justify-content: center;
     align-items: center;
 
     font-size: 2rem;
-    color:lightgrey;
+    color:black;
 
     border-radius: 10px;
     
@@ -47,3 +48,8 @@ mat-sidenav-container{
     height: calc(100vh - 65px);
 }
 
+#bookPict{
+    height: 200px;
+    width: 120px;
+    padding: 1%;
+}

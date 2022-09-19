@@ -66,4 +66,34 @@ export class BookService {
     return this.http.get(`${this.uri}/books/searchBookByName?param=${name}`)
 
   }
+
+  returnBook(id, number){
+    const data = {
+      _id:id,
+      number:number
+    }
+
+    return this.http.post(`${this.uri}/books/returnBook`, data)
+  }
+  takeBook(id, number, taken){
+    const data = {
+      _id:id,
+      number:number,
+      taken:taken
+    }
+    return this.http.post(`${this.uri}/books/takeBook`, data)
+  }
+
+  getBookByID(id){
+    return this.http.get(`${this.uri}/books/getBookByID?param=${id}`)
+  }
+
+  getBorrowSortName(){
+    return this.http.get(`${this.uri}/books/getBorrowSortName`)
+
+  }
+  getBorrowSortWriter(){
+    return this.http.get(`${this.uri}/books/getBorrowSortWriter`)
+
+  }
 }

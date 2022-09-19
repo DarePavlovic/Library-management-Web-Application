@@ -92,3 +92,17 @@ mat-divider{
     max-height: 480px;
     padding: 5%;
 }
+.example-card {
+    max-width: 300px;
+  }
+  
+ #picCard{
+    height:200px;
+    width: 120px;
+    padding: 1%;
+    align-items: center;
+ }
+
+ .colorError{
+    background-color: red;
+}

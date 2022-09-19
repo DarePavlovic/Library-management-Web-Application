@@ -110,7 +110,8 @@ export class RegisterComponent implements OnInit {
     //this.firstname, this.lastname, this.username, this.password, this.address, this.phone, this.mail, this.picture
     
     if(this.slika==null){
-      this.slika = defaultProfilna}
+      this.slika = defaultProfilna
+    }
  
     
       this.userService.getUser(this.firstname).subscribe((us:User)=>{
@@ -142,6 +143,7 @@ export class RegisterComponent implements OnInit {
   }
 
   saljiKuci(){
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
   saljiLogin(){
@@ -151,7 +153,8 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['register']);
   }
   saljiSearch(){
-    this.router.navigate(['search']);
+    localStorage.setItem('pretraga',JSON.stringify(true));
+    this.router.navigate(['home']);
   }
 
   

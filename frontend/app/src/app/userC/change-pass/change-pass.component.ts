@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
+import { UserDatabaseService } from 'src/app/user-database.service';
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ChangePassComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
 
-  constructor(private observer: BreakpointObserver,private router:Router,private userService:UserService) { }
+  constructor(private observer: BreakpointObserver,private router:Router,private userDatabaseService:UserDatabaseService) { }
 
   ngOnInit(): void {
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
@@ -79,9 +80,9 @@ export class ChangePassComponent implements OnInit {
     }
 
 
-    this.userService.getPassword(this.username, this.pass1).subscribe((us:User)=>{
+    this.userDatabaseService.getPassword(this.username, this.pass1).subscribe((us:User)=>{
       if(us!=null){
-        this.userService.changePassword(this.username, this.pass2).subscribe(resp=>{
+        this.userDatabaseService.changePassword(this.username, this.pass2).subscribe(resp=>{
           if(resp['message']=='ok'){
            
              this.message = 'Promenjena lozinka';

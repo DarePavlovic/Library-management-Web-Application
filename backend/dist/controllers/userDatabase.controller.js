@@ -28,7 +28,7 @@ class UserDatabaseController {
                 email: req.body.email,
                 picture: req.body.picture,
                 //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
-                type: "reader"
+                type: "reader",
             });
             user.save((err, resp) => {
                 if (err) {

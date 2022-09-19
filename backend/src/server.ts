@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import userRouter from './routes/user.routes'
 import userDatabaseRouter from './routes/userDatabase.routes';
 import bookRouter from './routes/book.routes';
+import borrowBookRouter from './routes/borrowBook.routes';
 const app = express();
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
@@ -20,6 +21,7 @@ const router = express.Router();
 router.use('/user', userRouter);
 router.use('/userDatabase', userDatabaseRouter);
 router.use('/books', bookRouter);
+router.use('/borrowBook', borrowBookRouter);
 
 
 app.use('/', router);

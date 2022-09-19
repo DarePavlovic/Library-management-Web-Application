@@ -31,5 +31,21 @@ bookRouter.route('/searchBookByWriter').get(
 )
 
 
+bookRouter.route('/takeBook').post(
+    (req, res)=> new BookController().takeBook(req,res)
+)
+bookRouter.route('/returnBook').post(
+    (req, res)=> new BookController().returnBook(req,res)
+)
+bookRouter.route('/getBookByID').get(
+    (req, res)=> new BookController().getBookByID(req,res)
+)
+bookRouter.route('/getBorrowSortName').get(
+    (req, res)=> new BookController().getBorrowSortName(req,res)
+)
+bookRouter.route('/getBorrowSortWriter').get(
+    (req, res)=> new BookController().getBorrowSortWriter(req,res)
+)
+
 
 export default bookRouter;

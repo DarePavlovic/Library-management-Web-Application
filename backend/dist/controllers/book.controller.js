@@ -40,6 +40,15 @@ class BookController {
                     res.json(books);
             });
         };
+        this.getBookByID = (req, res) => {
+            let id = req.query.param;
+            Book_1.default.findOne({ '_id': id }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
         this.updateBook = (req, res) => {
             let _id = req.body._id;
             let name = req.body.name;
@@ -53,6 +62,29 @@ class BookController {
             // let objectIdArray=Array.prototype.map(_id=>mongoose.Types.ObjectId);
             Book_1.default.updateOne({ '_id': _id }, { $set: { 'name': name, 'writer': writer, 'style': style, "publisher": publisher,
                     'year': year, 'language': language, 'picture': picture, 'number': number } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
+            });
+        };
+        this.takeBook = (req, res) => {
+            let _id = req.body._id;
+            let number = req.body.number;
+            let taken = req.body.taken;
+            Book_1.default.updateOne({ '_id': _id }, { $set: { 'number': number, 'taken': taken } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
+            });
+        };
+        this.returnBook = (req, res) => {
+            let _id = req.body._id;
+            let number = req.body.number;
+            Book_1.default.updateOne({ '_id': _id }, { $set: { 'number': number } }, (err, resp) => {
                 if (err)
                     console.log(err);
                 else {
@@ -81,6 +113,22 @@ class BookController {
         this.searchBookByWriter = (req, res) => {
             let searchParams = req.query.param;
             Book_1.default.find({ 'writer': { $regex: searchParams } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.getBorrowSortName = (req, res) => {
+            Book_1.default.find({}).sort({ name: 1 }).exec(function (err, books) {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.getBorrowSortWriter = (req, res) => {
+            Book_1.default.find({}).sort({ writer: 1 }).exec(function (err, books) {
                 if (err)
                     console.log(err);
                 else

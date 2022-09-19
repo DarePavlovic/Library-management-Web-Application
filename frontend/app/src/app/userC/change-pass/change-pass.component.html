@@ -1,4 +1,4 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
     <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
         <mat-icon *ngIf="sidenav.opened">close</mat-icon>
@@ -54,4 +54,13 @@
             {{message}}
         </div>
     </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+
+<div style="font-size: 1rem;">
+Unesi postojecu lozinku: <input type="password" name="password" [(ngModel)]="pass1"><br>
+Unesi novu lozinku: <input type="password" name="passwordNew" [(ngModel)]="pass2"><br>
+Molim Vas unesite je ponovo <input type="password" name="passwordN" [(ngModel)]="pass3"><br>
+<button (click)="promeniLozinku()">Promeni Lozinku</button>
+<br>
+<span style="color: red;">{{message}}</span>
+</div>

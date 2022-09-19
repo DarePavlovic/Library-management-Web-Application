@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
     )
   }
   saljiKuci(){
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
   saljiLogin(){
@@ -53,7 +54,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['register']);
   }
   saljiSearch(){
-    this.router.navigate(['user']);
+    localStorage.setItem('pretraga',JSON.stringify(true));
+    this.router.navigate(['home']);
   }
 
   

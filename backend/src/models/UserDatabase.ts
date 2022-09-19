@@ -31,6 +31,7 @@ let UserDatabase = new Schema(
         type:{
             type:String
         }
+
     }
 )
 

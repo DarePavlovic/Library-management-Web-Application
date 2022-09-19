@@ -3,7 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
+import { BorrowBookService } from '../borrow-book.service';
 import { Book } from '../models/Book';
+import { BorrowBook } from '../models/BorrowBook';
+import { JoinBook } from '../models/joinBook';
 import { User } from '../models/User';
 
 @Component({
@@ -15,7 +18,7 @@ export class UserComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private observer: BreakpointObserver,private bookService:BookService, private router:Router) { }
+  constructor(private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookService:BookService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -76,28 +79,46 @@ export class UserComponent implements OnInit {
   }
 
   menjajPass(){
-    this.router.navigate(['change']);
+
+    // this.router.navigate(['change']);
+    this.bookPageShow=false;
+    this.search=false;
+    this.showB=false;
+    this.history=false;
+    this.menjaj=true;
   }
+  menjaj:boolean;
   dodjiKuci(){
     
-    this.router.navigate(['user']);
+    this.ngOnInit();
+    
+    this.search=false;this.showB=true;this.bookPageShow=false;this.history=false;this.menjaj=false;
+
   }
 
   skociNaKnjigu(bok:Book){
+    localStorage.clear();
     localStorage.setItem('knjiga',JSON.stringify(bok));
-
     localStorage.setItem('ulogovan', JSON.stringify(this.user));
     this.bookPageShow=true;
     this.search=false;
     this.showB=false;
+    this.history=false;
+    this.menjaj=false;
     //this.router.navigate(['bookPage']);
   }
-
+  history:boolean;
   showProfile(){
     
     this.router.navigate(['userProfile']);
   }
+ 
 
+  showSearch(){
+    this.ngOnInit();
+    
+    this.search=true;this.showB=false;this.bookPageShow=false;this.history=false;this.menjaj=false;
+  }
   odjava(){
     localStorage.removeItem('ulogovan')
     this.router.navigate(['home']);
@@ -167,4 +188,195 @@ export class UserComponent implements OnInit {
   nameS:string;
   writerS:string;
   search:boolean;
+
+  borrowedBooks:BorrowBook[]=[];
+  bookB:Book[]=[];
+  joinBooks:JoinBook[]=[];
+  joinBook:JoinBook;
+
+  showHistory(){
+    this.joinBooks=[];
+    this.history=true;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getAllBorrowedBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+
+    })
+  }
+
+  vodi(id){
+    this.bookService.getBookByID(id).subscribe((b:Book)=>{
+      this.skociNaKnjigu(b);
+    })
+  }
+
+  sortBook:JoinBook[]=[];
+  sorttmp:Book[]=[];
+  sortName(){
+    this.sortBook=[];
+    this.sorttmp=[];
+    this.history=true;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.bookService.getBorrowSortName().subscribe((bs:Book[])=>{
+      this.sorttmp=bs;
+
+      this.joinBooks.forEach((k)=>{
+        this.sortBook.push(k);
+      })
+      this.joinBooks=[];
+      this.sorttmp.forEach((value)=>{
+          this.sortBook.forEach((j)=>{
+            if(value._id==j._id){
+              this.joinBooks.push(j);
+              console.log(j)
+            }
+          })
+        })
+    })
+
+  }
+
+  sortWrite(){
+    
+
+    this.sortBook=[];
+    this.sorttmp=[];
+    this.history=true;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.bookService.getBorrowSortWriter().subscribe((bs:Book[])=>{
+      this.sorttmp=bs;
+      
+      this.joinBooks.forEach((k)=>{
+        this.sortBook.push(k);
+      })
+      this.joinBooks=[];
+      this.sorttmp.forEach((value)=>{
+          this.sortBook.forEach((j)=>{
+            if(value._id==j._id){
+              this.joinBooks.push(j);
+              console.log(j)
+            }
+          })
+        })
+    })
+
+  }
+
+  sortStart(){
+    this.joinBooks=[];
+    this.history=true;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getBorrowSortStart(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+
+    })
+
+  }
+
+
+  
+  brD1:number;
+  brD2:number;
+  brD3:number;
+  zaduzene:boolean;
+  showZaduzene(){
+    this.joinBooks=[];
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=true;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBook.picture=bok.picture;
+          this.joinBook.extended=value.extended;
+          let dat3=new Date(value.endDate);
+          this.joinBook.jos = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+    })
+  }
+
+  zakasnio(a){
+    if(a<0){
+      return true;
+    }
+    else {return false;}
+  }
+
+  proveriTrue(a:boolean){
+    return a==true;
+  }
+
+  vrati(id){
+    this.borrowBookService.returnBorrowBook(this.user.username,id).subscribe(resp=>{
+      if(resp['message']=='ok'){ alert('Knjiga je vracena');this.ngOnInit();}
+      else {alert(resp['message']); return;}
+    })
+
+  }
+  produzi(id,broj, b){
+    if(b==true){
+      alert('Vec ste produzili ovu knjigu, nije moguce');
+      return;
+    }
+    if(broj>0){
+      alert('Mozete produziti rok tek onda kad vam istekne prvi period');
+      return;
+    }
+    
+    let start= new Date();
+    let date = new Date();
+    date.setDate( date.getDate() + 14 );
+    this.borrowBookService.updateBorrowBook(this.user.username,id,start, date).subscribe(resp=>{
+      if(resp['message']=='ok'){ alert('Knjiga je produzena');this.ngOnInit();}
+      else {alert(resp['message']); return;}
+    })
+    
+
+  }
+  
 }

@@ -65,8 +65,9 @@ export class AdminPageComponent implements OnInit {
   saljiAzuriraj(){
     this.router.navigate(['userUpdate']);
   }
-  saljiRegister(){
-    this.router.navigate(['register']);
+  saljiRegister(){this.regBool=true;
+    this.showUsers=false;
+    this.updateBook=false;
   }
   odjava(){
     localStorage.removeItem('ulogovan')
@@ -250,7 +251,7 @@ export class AdminPageComponent implements OnInit {
       }
     })
   }
-
+  regBool:boolean;
   deleteBook(bok:Book){
     this._id=bok._id;
     this.bookService.deleteBook(this._id).subscribe(resp=>{
@@ -265,3 +266,6 @@ export class AdminPageComponent implements OnInit {
     })
   }
 }
+
+
+
