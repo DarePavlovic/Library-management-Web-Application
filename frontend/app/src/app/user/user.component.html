@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav  #sidenav="matSidenav">
+    <mat-sidenav style="width: auto;"  #sidenav="matSidenav">
         <img class="avatar mat-elevation-z8" [src]="picture" (click)="showProfile()">
         <h4 class="name">{{fullname}}</h4>
         <p class="designation">{{email}}</p>
@@ -61,31 +61,52 @@
         </div>
 
         <div *ngIf="search">
-            Trazi na osnovu naziva knjige
-            <input type="text" name="search" [(ngModel)]="nameS">
-            
-            <button (click)="searchName()">Trazi knjigu</button><br>
-            Trazi na osnovu autora
-            <input type="text" name="search" [(ngModel)]="writerS">
-            <button (click)="searchWriter()">Trazi knjigu</button>
+            <h2 style="text-align: center;">Pretraga</h2>
 
-            <div *ngIf="showSearchBook">
-                <h3>Knjiga</h3><hr>
-                <img id="bookPict" [src]="bookS.picture" (click)="skociNaKnjigu(bookS)"><hr>
+            <div style="display: flex; align-items:center;justify-content: center; ">
+              <span style="font-size: 1rem;"> Trazi na osnovu naziva knjige:</span> 
+              <input type="text" name="search" style="margin: 2%;" [(ngModel)]="nameS">
+              
+            </div>
+            
+            
+            <span style="font-size: 1rem;">Trazi na osnovu autora:</span> 
+            <input type="text" style="margin: 0 2%;" name="search" [(ngModel)]="writerS">
+            <br>
+            <br>
+            <button class="buttn" style="margin: 0;" (click)="searchByParam()">Trazi knjigu</button>
+
+            <div *ngIf="showSearchBook" >
+              <h3 style="margin: 5% 0; text-align: center;">Knjige</h3><hr>
+              <div *ngFor="let b of bookSN" style="display: flex; flex-direction: column;justify-content: center; align-items: center; padding: 5% 0; border-bottom: solid black 1px;">
+                <img id="bookPict" [src]="b.picture" (click)="skociNaKnjigu(b)"><hr>
                 <div style="font-size: 1rem;">
-                <label>Naziv knjige:</label>{{bookS.name}}<br>
-                <label>Autori knjige:</label>{{writerSearch}}<br>
-                <label>Uspesnost:</label>{{bookS.taken}}<br></div>
-                </div>
+                <label>Naziv knjige:</label>{{b.name}}<br>
+                <label>Autori knjige:</label>{{b.writer}}<br>
+                <label>Zanr:</label>{{b.style}}<br>
+                <label>Izdavac:</label>{{b.publisher}}<br>
+                <label>Godina izdanja:</label>{{b.year}}<br>
+                <label>Jezik:</label>{{b.language}}<br>
+              </div>    
+              </div>  
+                
+            </div>
 
         </div>
         <div *ngIf="bookPageShow"><app-book-page></app-book-page></div>
-        <div *ngIf="history">
-            <button (click)="sortName()">Sortiraj po nazivu</button>
-            <button (click)="sortWrite()">Sortiraj po autoru</button>
-            <button (click)="sortStart()">Sortiraj po datumu zaduzivanja</button>
-            <button (click)="showHistory()">Sortiraj po datumu vracanja</button>
-            <table style="font-size:1rem;">
+        <div *ngIf="history" style="overflow-x: scroll;">
+           
+            
+           
+            
+            <table class="tab-his" style="font-size:1rem;">
+                <tr>
+                    <th style="padding: 10px; margin: 0"> <button class="buttn"  (click)="sortName()">Sortiraj po nazivu</button></th>
+                    <th style="padding: 10px; margin: 0"><button class="buttn"  (click)="sortWrite()">Sortiraj po autoru</button></th>
+                    <th  style="padding: 10px; margin: 0"> <button class="buttn" (click)="sortStart()">Sortiraj po datumu zaduzivanja</button></th>
+                    <th style="padding: 10px; margin: 0"><button class="buttn"  (click)="showHistory()">Sortiraj po datumu vracanja</button></th>
+                    <th></th>
+                </tr>
                 <tr>
                     <th>Naziv knjige</th>
                     <th>Autori knjige:</th>
@@ -93,6 +114,7 @@
                     <th>Datum vracanja</th>
                     <th>Akcija</th>
                 </tr>
+                <br>
                 <tr *ngFor="let j of joinBooks" >
                     <td>{{j.name}}</td>
                     <td>{{j.writer}}</td>
@@ -107,9 +129,9 @@
         <div *ngIf="zaduzene">
             
                
-            <div fxLayout='row' fxLayoutWrap class="cards">
+            <div fxLayout='row' fxLayoutWrap class="cards" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 5%;">
 
-            <div fxFlex="20" class="example-card">
+      
             <mat-card class="example-card" *ngFor="let m of joinBooks">
                 <mat-card-header>
                 <mat-card-title>{{m.name}}</mat-card-title>
@@ -126,7 +148,7 @@
                 <button mat-button (click)="produzi(m._id,m.jos, m.extended)">Produzi</button>
                 </mat-card-actions>
             </mat-card>
-            </div>
+            
             </div>
            
         

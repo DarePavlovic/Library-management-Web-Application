@@ -93,3 +93,16 @@ mat-divider{
     width: 99px;
     padding: 1%;
 }
+
+.buttn {
+    background-color: rgb(100, 100, 207);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px;
+  }
+  .table-resp{
+    overflow-x: scroll; 
+    padding: 5%;
+  }

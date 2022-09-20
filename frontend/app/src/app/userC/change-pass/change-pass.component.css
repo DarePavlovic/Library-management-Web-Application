@@ -79,3 +79,13 @@ mat-divider{
     padding-top: 0.8rem;
     font-style: oblique;
 }
+
+.buttn {
+    background-color: navy;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px 0;
+  }
+  

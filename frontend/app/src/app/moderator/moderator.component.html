@@ -57,26 +57,26 @@
             <label>Autori knjige:</label>{{writerD}}<br>
             <label>Uspesnost:</label>{{bookD.taken}}<br></div>
             </div>
-            <div *ngIf="addBook">
+            <div *ngIf="addBook" style="display: flex; flex-direction: column; align-items: flex-start;">
                 
             <hr>
-                <p>Ovde je dodavanje knjige</p>
-                <label>Naziv knjige</label><input type="text" name="name" [(ngModel)]="name"><br>
-                <label>Unesi prezime i ime writera</label><input type="text" name="writer" [(ngModel)]="writer"><br>
+                <p style="color: navy">Ovde je dodavanje knjige</p>
+                <div> <label style="margin: 15px">Naziv knjige</label><input type="text" name="name" [(ngModel)]="name"><br></div>
+                <div><label style="margin: 15px">Unesi prezime i ime writera</label><input type="text" name="writer" [(ngModel)]="writer"><br></div>
                 <!-- <button (click)="unesiW()">Ubaci writera</button><br> -->
-                <label>Unesi zanr</label><input type="text" name="style" [(ngModel)]="style"><br>
+                <div><label style="margin: 15px">Unesi zanr</label><input type="text" name="style" [(ngModel)]="style"><br></div>
                 <!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
-                <label>Izdavac</label><input type="text" name="publisher" [(ngModel)]="publisher"><br>
-                <label>Godina</label><input type="number" name="year" [(ngModel)]="year"><br>
-                <label>Jezik</label><input type="text" name="language" [(ngModel)]="language"><br>
-                <label>Broj dostupnih knjiga</label><input type="number" name="number" [(ngModel)]="number"><br>
-                <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                <div><label style="margin: 15px">Izdavac</label><input type="text" name="publisher" [(ngModel)]="publisher"><br></div>
+                <div><label style="margin: 15px">Godina</label><input type="number" name="year" [(ngModel)]="year"><br></div>
+                <div><label style="margin: 15px">Jezik</label><input type="text" name="language" [(ngModel)]="language"><br></div>
+                <div><label style="margin: 15px">Broj dostupnih knjiga</label><input type="number" name="number" [(ngModel)]="number"><br></div>
+                <input #slikaUpload  style="margin: 15px" type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
                 {{slikaPoruka}}
                 <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" />
-                <button (click)="book()">Dodaj knjigu</button>
+                <button class="buttn" (click)="book()">Dodaj knjigu</button>
 
             </div>
-            <div *ngIf="updateBook" class="table-responsive">
+            <div *ngIf="updateBook" class="table-resp">
                 <table class="table">
                     <thead>
                     <tr>
@@ -103,7 +103,7 @@
                         <td><img id="profile" [src]="b.picture"></td>
                         
                         <td>{{b.number}}</td>
-                        <td><button (click)="promena(b);showBook=false">Update</button></td>
+                        <td><button class="buttn" (click)="promena(b);showBook=false">Update</button></td>
                         <!-- <td><button (click)="deleteUser(u)">Remove</button></td> -->
                     </tr>
                 </tbody>
@@ -112,21 +112,27 @@
     
     
                 <div *ngIf="bo">
-                    <label>Book name</label><input type="text" name="name" [(ngModel)]="name" ><br>
-                    <label>Writers</label><input type="text" name="writer" [(ngModel)]="writer" ><br>
-                    <label>Styles</label><input type="text" name="style" [(ngModel)]="style"><br>
-                    <label>Publisher</label><input type="text" name="publisher" [(ngModel)]="publisher" ><br>
-                    <label>Year</label><input type="number" name="year" [(ngModel)]="year" ><br>
-                    <label>Language</label><input type="text" name="language" [(ngModel)]="language" ><br>
-                    <label>Picture</label><img id="profile" [src]="bookPicture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
-                    <label>Available</label><input type="number" name="number" [(ngModel)]="number" ><br>
+                    <label style="margin: 5%;">Book name</label><input type="text" name="name" [(ngModel)]="name" ><br>
+                    <label style="margin: 5%;">Writers</label><input type="text" name="writer" [(ngModel)]="writer" ><br>
+                    <label style="margin: 5%;">Styles</label><input type="text" name="style" [(ngModel)]="style"><br>
+                    <label style="margin: 5%;">Publisher</label><input type="text" name="publisher" [(ngModel)]="publisher" ><br>
+                    <label style="margin: 5%;">Year</label><input type="number" name="year" [(ngModel)]="year" ><br>
+                    <label style="margin: 5%;">Language</label><input type="text" name="language" [(ngModel)]="language" ><br>
+                    <label style="margin: 5%;">Available</label><input type="number" name="number" [(ngModel)]="number" ><br>
+                    <br>
+                    <label style="margin: 5%;">Picture</label><img id="profile" [src]="bookPicture">  
+                    <br>
+                    <br>
+                    <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                    <br>
+                    <br>
                     {{slikaPoruka}} Nova profilna ->
                     <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
                     
                     <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
                     
                 </div>
-                <button (click)="update()">Update all data</button>
+                <button class="buttn" (click)="update()">Update all data</button>
             </div>
         </div>
     </mat-sidenav-content>

@@ -59,7 +59,7 @@ mat-sidenav-container{
     background-color: navy;
     border: none;
     padding: 10px;
-    border-radius: 25px;
+    border-radius: 5px;
     color: white;
     margin: 15px;
   }
@@ -67,4 +67,8 @@ mat-sidenav-container{
   .table-resp{
     overflow-x: scroll; 
     padding: 5%;
+  }
+
+  .tableUser>tr>th, .tableUser>tr>td{
+    padding: 5px;
   }

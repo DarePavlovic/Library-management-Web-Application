@@ -84,3 +84,12 @@ mat-divider{
     height: 100px;
     padding-left: 20px;
 }
+
+.buttn {
+    background-color: navy;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px 0;
+  }

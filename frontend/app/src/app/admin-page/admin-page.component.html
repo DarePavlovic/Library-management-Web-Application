@@ -40,8 +40,8 @@
             </div>
 
 
-            <div *ngIf="showUsers" >
-            <table>
+            <div *ngIf="showUsers"  class="table-resp">
+            <table class="tableUser">
                 <tr>
                     <th>Username</th>
                     <th>Firstname</th>
@@ -55,8 +55,8 @@
                     <td>{{u.firstname}}</td>
                     <td>{{u.lastname}}</td>
                     <td>{{u.email}}</td>
-                    <td><button (click)="registerUser(u)">Add</button></td>
-                    <td><button (click)="deleteUser(u)">Remove</button></td>
+                    <td><button class="buttn" (click)="registerUser(u)">Add</button></td>
+                    <td><button class="buttn" (click)="deleteUser(u)">Remove</button></td>
                 </tr>
             </table>
         </div>
@@ -84,22 +84,28 @@
                             <td>{{b.language}}</td>
                             <td><img id="profile" [src]="b.picture"></td>
                             <td>{{b.number}}</td>
-                            <td><button (click)="promena(b)">Update</button></td>
-                            <td><button (click)="deleteBook(b)">Remove</button></td>
+                            <td><button class="buttn" (click)="promena(b)">Update</button></td>
+                            <td><button class="buttn" (click)="deleteBook(b)">Remove</button></td>
                         </tr>
                     </table>
         
         
         
                     <div *ngIf="bo">
-                        <label>Book name</label><input type="text" name="name" [(ngModel)]="name" ><br>
-                        <label>Writers</label><input type="text" name="writer" [(ngModel)]="writer" ><br>
-                        <label>Styles</label><input type="text" name="style" [(ngModel)]="style"><br>
-                        <label>Publisher</label><input type="text" name="publisher" [(ngModel)]="publisher" ><br>
-                        <label>Year</label><input type="text" name="year" [(ngModel)]="year" ><br>
-                        <label>Language</label><input type="text" name="language" [(ngModel)]="language" ><br>
-                        <label>Picture</label><img id="profile" [src]="bookPicture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
-                        <label>Available</label><input type="text" name="number" [(ngModel)]="number" ><br>
+                        <label style="margin: 5%;">Book name</label><input type="text" name="name" [(ngModel)]="name" ><br>
+                        <label style="margin: 5%;">Writers</label><input type="text" name="writer" [(ngModel)]="writer" ><br>
+                        <label style="margin: 5%;">Styles</label><input type="text" name="style" [(ngModel)]="style"><br>
+                        <label style="margin: 5%;">Publisher</label><input type="text" name="publisher" [(ngModel)]="publisher" ><br>
+                        <label style="margin: 5%;">Year</label><input type="number" name="year" [(ngModel)]="year" ><br>
+                        <label style="margin: 5%;">Language</label><input type="text" name="language" [(ngModel)]="language" ><br>
+                        <label style="margin: 5%;">Available</label><input type="number" name="number" [(ngModel)]="number" ><br>
+                        <br>
+                        <label style="margin: 5%;">Picture</label><img id="profile" [src]="bookPicture">  
+                        <br>
+                        <br>
+                        <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                        <br>
+                        <br>
                         {{slikaPoruka}} Nova profilna ->
                         <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
                         
@@ -108,7 +114,7 @@
                     </div>
                     <button class="buttn" (click)="update()">Update all data</button>
                     
-                    <div *ngIf="!bo">Update broj dana koji korisnik moze da ima knjigu:<input type="number" name="dani" min="0" [(ngModel)]="dani"><button (click)="promeni()">Promeni</button>
+                    <div *ngIf="!bo" >Update broj dana koji korisnik moze da ima knjigu:<input style="margin: 10px;" type="number" name="dani" min="0" [(ngModel)]="dani"><button (click)="promeni()">Promeni</button>
                     </div><br>
                 </div>
                 

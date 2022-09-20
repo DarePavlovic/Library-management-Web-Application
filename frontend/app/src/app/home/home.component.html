@@ -29,8 +29,9 @@
    </button>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="content mat-elevation-z4">
-            <div *ngIf="basic">Dobrodosli<br>
+        <div class="content mat-elevation-z4" style="display: flex;">
+            <div *ngIf="basic" style="text-align: center;"><h2><i>Dobrodosli</i></h2><br>
+              
                 <!-- <ng-image-slider [images]="imgCollection" ></ng-image-slider><ngb-carousel *ngIf="images">
   <ng-template ngbSlide>
     <div class="picsum-img-wrapper">
@@ -60,33 +61,47 @@
     </div>
   </ng-template>
 </ngb-carousel> -->
-            <img [src]="sl[brT]" id="bookPict"><br>
-                <button (click)="nazad()">Nazad</button><button (click)="napred()">Napred</button>
+            <img [src]="sl[brT]" id="bookPict" style="border: solid 3px navy; padding: 0;">
+            <br/>
+           
+                <button class="buttn" (click)="nazad()">Nazad</button>
+                <button class="buttn" (click)="napred()">Napred</button>
             </div>
 
 
 
 
             <div *ngIf="search">
-                Trazi na osnovu naziva knjige
-                <input type="text" name="search" [(ngModel)]="nameS">
+                <h2 style="text-align: center;">Pretraga</h2>
+
+                <div style="display: flex; align-items:center;">
+                  <span> Trazi na osnovu naziva knjige:</span> 
+                  <input type="text" name="search" style="margin: 5%;" [(ngModel)]="nameS">
+                  
+                </div>
                 
-                <br/>
-                Trazi na osnovu autora
-                <input type="text" name="search" [(ngModel)]="writerS">
+                
+                Trazi na osnovu autora:
+                <input type="text" style="margin: 0 5%;" name="search" [(ngModel)]="writerS">
                 <br>
-                <button (click)="searchByParam()">Trazi knjigu</button>
+                <br>
+                <button class="buttn"  style="margin: 0" (click)="searchByParam()">Trazi knjigu</button>
     
-                <div *ngIf="showSearchBook">
-                  <h3>Knjige</h3><hr>
-                  <div *ngFor="let b of bookSN">
+                <div *ngIf="showSearchBook" >
+                  <h3 style="margin: 5% 0; text-align: center;">Knjige</h3><hr>
+                  <div *ngFor="let b of bookSN" style="display: flex; flex-direction: column;justify-content: center; align-items: center; padding: 5% 0; border-bottom: solid black 1px;">
                     <img id="bookPict" [src]="b.picture"><hr>
                     <div style="font-size: 1rem;">
                     <label>Naziv knjige:</label>{{b.name}}<br>
                     <label>Autori knjige:</label>{{b.writer}}<br>
-                    <label>Uspesnost:</label>{{b.taken}}<br></div>
+                    <label>Zanr:</label>{{b.style}}<br>
+                    <label>Izdavac:</label>{{b.publisher}}<br>
+                    <label>Godina izdanja:</label>{{b.year}}<br>
+                    <label>Jezik:</label>{{b.language}}<br>
+                  </div>    
                   </div>  
-                  </div>
+                    
+                </div>
     
             </div>
         </div>

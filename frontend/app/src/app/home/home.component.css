@@ -49,7 +49,17 @@ mat-sidenav-container{
 }
 
 #bookPict{
-    height: 200px;
-    width: 120px;
+
+    width: 60%;
     padding: 1%;
 }
+
+
+.buttn {
+    background-color: rgb(100, 100, 207);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px;
+  }

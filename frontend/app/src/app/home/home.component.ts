@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     this.sl=[];
       this.tmp=JSON.parse(localStorage.getItem('pretraga'));
       if(this.tmp==false){this.basic=true;this.search=false;}
-      else{this.basic=true;this.search=false;}
+      else{this.basic=false;this.search=true;}
       this.topKnjige=[];
       this.bookService.getTopBooks().subscribe((b:Book[])=>{
         this.topKnjige=b;
@@ -38,21 +38,7 @@ export class HomeComponent implements OnInit {
         })
         
 
-      //   this.imgCollection = [
-      //     {
-      //       image:  this.topKnjige.pop().picture,
-      //       alt: 'Image 1',
-      //       title: 'Image 1'
-      //     }, {
-      //       image:  this.topKnjige.pop().picture,
-      //       title: 'Image 2',
-      //       alt: 'Image 2'
-      //     }, {
-      //       image:  this.topKnjige.pop().picture,
-      //       title: 'Image 3',
-      //       alt: 'Image 3'
-      //     }
-      // ];
+      
       })
     
   }
@@ -82,6 +68,7 @@ export class HomeComponent implements OnInit {
 
   saljiKuci(){
     this.router.navigate(['home']);
+    this.basic=true;
   }
   saljiLogin(){
     this.router.navigate(['login']);

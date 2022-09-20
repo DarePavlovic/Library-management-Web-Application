@@ -121,7 +121,7 @@ export class ModeratorComponent implements OnInit {
     this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika, this.number).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
-        this.ngOnInit();
+        
       }
       else{
         alert(resp['message']);
@@ -220,7 +220,7 @@ export class ModeratorComponent implements OnInit {
     
     this._id=book._id;
     this.number = book.number;
-    this.ngOnInit();
+
   }
 
   books:Book[]=[];
@@ -243,11 +243,10 @@ export class ModeratorComponent implements OnInit {
         this.writer=undefined;
         this.style=undefined;
         this.bo=false;
-        this.ngOnInit()
+        window.location.reload();
       }
       else{
         alert(resp['message']);
-        this.ngOnInit()
         return;
       }
     })

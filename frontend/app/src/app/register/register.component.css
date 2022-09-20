@@ -37,11 +37,21 @@ mat-sidenav{
 .formica{
   margin-left: auto;
   margin-right: auto;
-  padding: 5rem;
-  padding-top: 1rem ;
+  padding: 5%;
+  padding-top: 1% ;
+  
 }
 .example-container .mat-form-field + .mat-form-field {
   margin-left: 8px;
+}
+
+.buttn {
+  background-color: navy;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  margin: 15px 0;
 }
 
 .menu-button{
@@ -63,7 +73,7 @@ mat-sidenav-container{
 }
 
 #profile{
-  width: 40px;
-  height: 40px;
+  margin: 2%;
+  width: 20%;
   padding-left: 20px;
 }

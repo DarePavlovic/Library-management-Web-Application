@@ -1,94 +1,17 @@
-<!-- <mat-toolbar>
-    <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
-    </button>
-    <p class="header">Biblioteka</p>
-</mat-toolbar>
 
-<mat-sidenav-container>
-    <mat-sidenav  #sidenav="matSidenav">
-        <img class="avatar mat-elevation-z8" [src]="picture" (click)="showProfile()">
-        <h4 class="name">{{fullname}}</h4>
-        <p class="designation">{{email}}</p>
-        <mat-divider></mat-divider>
-
-
-        <button mat-button class="menu-button" (click)="dodjiKuci()">
-            <mat-icon>home</mat-icon>
-            <span>Home page</span>
-           </button>
-       <button mat-button class="menu-button" (click)="menjajPass()">
-        <mat-icon>password</mat-icon>
-        <span>Change password</span>
-       </button>
-       <button mat-button class="menu-button" router-link="register">
-        <mat-icon>search</mat-icon>
-        <span>Search</span>
-       </button>
-       <button mat-button class="menu-button">
-        <mat-icon>library_add</mat-icon>
-        <span>Apply book</span>
-       </button>
-       <button mat-button class="menu-button">
-        <mat-icon>library_books</mat-icon>
-        <span>Books taken</span>
-       </button>
-       <button mat-button class="menu-button">
-        <mat-icon>history</mat-icon>
-        <span>History</span>
-       </button>
-       <button mat-button class="menu-button" (click)="odjava()">
-        <mat-icon>logout</mat-icon>
-        <span>Log out</span>
-       </button>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="content mat-elevation-z4"> -->
-           
-            <!-- <div *ngIf="bo">
-                <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
-                <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
-                <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
-                <label>Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
-                <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
-                <label>Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
-                <label>Picture</label><img id="profile" [src]="picture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
-                
-                {{slikaPoruka}} Nova profilna ->
-                <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
-                
-                <input type="text" name="type" [(ngModel)]="type"><br>
-                
-            </div>
-            
-            <div *ngIf="!bo">
-                <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
-                <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>
-                <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
-                <label>Address</label><input type="text" name="address" [(ngModel)]="address" disabled="true"><br>
-                <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" disabled="true"><br>
-                <label>Email</label><input type="text" name="email" [(ngModel)]="email" disabled="true"><br>
-                <label>Picture</label><img id="profile" [src]="picture"><br>
-                
-                
-                
-            </div>
-            <button (click)="promena()" *ngIf="!bo">Azuriraj podatke</button>
-            <button *ngIf="bo" (click)="update()">Update all data</button>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container> -->
 
 <div *ngIf="bo">
-    <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
-    <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
-    <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
-    <label>Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
-    <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
-    <label>Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
-    <label>Picture</label><img id="profile" [src]="picture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
-    
+    <label style="margin: 5%; font-size: 1.2rem">Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
+    <label style="margin: 5%; font-size: 1.2rem">Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
+    <label style="margin: 5%; font-size: 1.2rem">Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
+    <label style="margin: 5%; font-size: 1.2rem">Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
+    <label style="margin: 5%; font-size: 1.2rem">Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
+    <label style="margin: 5%; font-size: 1.2rem">Picture</label><img id="profile" [src]="picture"> <br>
+    <br>
+    <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+    <br>
+    <br>
     {{slikaPoruka}} Nova profilna ->
     <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
     
@@ -97,16 +20,16 @@
 </div>
 
 <div *ngIf="!bo">
-    <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
-    <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>
-    <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
-    <label>Address</label><input type="text" name="address" [(ngModel)]="address" disabled="true"><br>
-    <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" disabled="true"><br>
-    <label>Email</label><input type="text" name="email" [(ngModel)]="email" disabled="true"><br>
-    <label>Picture</label><img id="profile" [src]="picture"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Address</label><input type="text" name="address" [(ngModel)]="address" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Email</label><input type="text" name="email" [(ngModel)]="email" disabled="true"><br>
+    <label style="margin: 5%; font-size: 1.2rem">Picture</label><img id="profile" [src]="picture"><br>
     
     
     
 </div>
-<button (click)="promena()" *ngIf="!bo">Azuriraj podatke</button>
-<button *ngIf="bo" (click)="update()">Update all data</button>
+<button class="buttn" (click)="promena()" *ngIf="!bo">Azuriraj podatke</button>
+<button class="buttn" *ngIf="bo" (click)="update()">Update all data</button>

@@ -19,8 +19,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.user=JSON.parse(localStorage.getItem('ulogovan'));
-    this.username=this.user.username;
+    this.tm=JSON.parse(localStorage.getItem('ulogovan'));
+
+    this.userDatabaseService.getUser(this.tm.username).subscribe((u:User)=>{
+      this.user=u;
+      this.username=this.user.username;
     this.fullname = this.user.firstname + ' ' +this.user.lastname;
     this.email = this.user.email;
     this.picture = this.user.picture;
@@ -29,6 +32,8 @@ export class UserProfileComponent implements OnInit {
     this.address=this.user.address;
     this.phone_number=this.user.phone_number;
     this.type=this.user.type;
+    })
+    
   }
   odjava(){
     localStorage.removeItem('ulogovan')
@@ -36,6 +41,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   user:User;
+  tm:User;
   email:string;
   username:string;
   fullname:string;
@@ -68,7 +74,7 @@ export class UserProfileComponent implements OnInit {
   slika: string
   slikaPoruka: string
   slikaSacuvana: boolean
-  slikaPromenjena
+  slikaPromenjena:boolean = false;
   slikaDodata(fileInput: any) {
     this.slikaPoruka = null;
     this.slika = null
@@ -111,11 +117,10 @@ export class UserProfileComponent implements OnInit {
   bo:boolean;
   promena(){
     this.bo=true;
-    this.ngOnInit();
   }
   
   update(){
-    console.log(this.type);
+    
     if(this.slikaPromenjena!=true){
       this.slika=this.picture;
     }
@@ -123,13 +128,16 @@ export class UserProfileComponent implements OnInit {
       if(resp['message']=='ok'){
         alert('User updated');
         this.slikaPromenjena=false;
+        this.picture=this.slika;
+        this.user.picture = this.picture;
+        localStorage.setItem('ulogovan',JSON.stringify(this.user));
         this.bo=false;
+         window.location.reload();
         
         
       }
       else{
         alert(resp['message']);
-        this.ngOnInit()
         return;
       }
     })

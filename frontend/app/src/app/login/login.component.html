@@ -29,9 +29,10 @@
        </button>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="content mat-elevation-z4">
+        <div class="content mat-elevation-z4" style="padding: 5%; min-width: 400px;" >
             
-                <h1>LOGIN</h1><br>
+                <h1 style="color: navy;">LOGIN</h1>
+                
             
             <h2>Dobrodosli u Biblioteku</h2>
             
@@ -51,15 +52,16 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button (click)="login()" >Login</button>
+                        <button class="buttn" style="font-size: 0.5em; padding: 2% 7%;" (click)="login()" >Login</button>
                     </td>
                 </tr>
             </table>
             <div style="color: red;">{{errorMessage}}</div>
+            <br>
             
             </form>
             
-            <a routerLink="/register">Sign up for a new account</a>
+            <a routerLink="/register" style="font-size: 0.8em;">Sign up for a new account</a>
             
         </div>
     </mat-sidenav-content>

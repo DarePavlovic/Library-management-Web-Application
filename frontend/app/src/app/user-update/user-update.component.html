@@ -59,25 +59,31 @@
                     <td>{{u.phone_number}}</td>
                     <td>{{u.email}}</td>
                     <td><img id="profile" [src]="u.picture"></td>
-                    <td><button (click)="promena(u)">Update</button></td>
-                    <td><button (click)="deleteUser(u)">Remove</button></td>
+                    <td><button class="buttn" (click)="promena(u)">Update</button></td>
+                    <td><button class="buttn" (click)="deleteUser(u)">Remove</button></td>
                 </tr>
             </table>
 
 
 
             <div *ngIf="bo">
-                <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
-                <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
-                <label>Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
-                <label>Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
-                <label>Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
-                <label>Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
-                <label>Picture</label><img id="profile" [src]="picture">  <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                <label style="margin: 10px;">Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
+                <label style="margin: 10px;">Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
+                <label style="margin: 10px;">Username</label><input type="text" name="username" [(ngModel)]="username" disabled="true"><br>
+                <label style="margin: 10px;">Address</label><input type="text" name="address" [(ngModel)]="address" ><br>
+                <label style="margin: 10px;">Phone_number</label><input type="text" name="phone_number" [(ngModel)]="phone_number" ><br>
+                <label style="margin: 10px;">Email</label><input type="text" name="email" [(ngModel)]="email" ><br>
+                <br>
+                <label style="margin: 10px;">Picture</label><img id="profile" [src]="picture">  <br>
+                
+                <br>
+                <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg"><br>
+                <br>
                 
                 {{slikaPoruka}} Nova profilna ->
+                <br>
                 <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
-                <label>Type</label>
+                <label style="margin: 10px;">Type</label>
                 <select [(ngModel)]="tip">
                     <option value="admin">Admin</option>
                     <option value="moderator">Moderator</option>
@@ -86,7 +92,7 @@
                 <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
                 
             </div>
-            <button (click)="update()">Update all data</button>
+            <button class="buttn" (click)="update()">Update all data</button>
             <!-- <div *ngIf="!bo">
                 <label>Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" disabled="true"><br>
                 <label>Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" disabled="true"><br>

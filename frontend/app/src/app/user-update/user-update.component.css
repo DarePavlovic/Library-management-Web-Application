@@ -29,7 +29,16 @@ mat-sidenav{
     
 }
 
-.table-resp{
+.buttn {
+    background-color: navy;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px;
+  }
+
+  .table-resp{
     overflow-x: scroll; 
     padding: 5%;
   }

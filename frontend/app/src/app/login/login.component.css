@@ -13,9 +13,19 @@ mat-sidenav{
     padding: 16px;
     text-align: center;
 }
+
+
+.buttn {
+    background-color: navy;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px;
+  }
 .content{
     
-    height: calc(100vh - 98px);
+    height: auto;
     margin:16px;
     margin-left:32px;
     /* display: flex; */

@@ -1,3 +1,70 @@
+
+mat-toolbar{
+    background-color: navy;
+    color:white;
+}
+
+mat-sidenav{
+    margin:16px;
+    width:200px;
+    border-right: none;
+    background-color: navy;
+    color:white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+.content{
+    
+    height: auto;
+    padding: 5%;
+    margin:16px;
+    margin-left:32px;
+    
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+    color:black;
+
+    border-radius: 10px;
+    
+}
+
+.menu-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    
+}
+mat-icon {
+    margin-right:8px;
+}
+
+
+mat-sidenav-container{
+    height: calc(100vh - 65px);
+}
+
+#bookPict{
+
+    width: 60%;
+    padding: 1%;
+}
+
+
+.buttn {
+    background-color: rgb(100, 100, 207);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 15px;
+  }
+
 mat-toolbar{
     background-color: navy;
     color:white;
@@ -93,7 +160,8 @@ mat-divider{
     padding: 5%;
 }
 .example-card {
-    max-width: 300px;
+    width: 200px;
+    height: 350px;
   }
   
  #picCard{
@@ -106,3 +174,8 @@ mat-divider{
  .colorError{
     background-color: red;
 }
+
+.tab-his td, .tab-his th{
+    padding: 5px;
+}
+
