@@ -14,6 +14,7 @@ class CommentController {
                 grade: req.body.grade,
                 commentS: req.body.commentS,
                 posted: req.body.posted,
+                updated: false
             });
             comment.save((err, resp) => {
                 if (err) {
@@ -42,6 +43,22 @@ class CommentController {
                     console.log(err);
                 else
                     res.json(comm);
+            });
+        };
+        this.updateComment = (req, res) => {
+            let book_id = req.body.book_id;
+            let username = req.body.username;
+            let grade = req.body.grade;
+            let commentS = req.body.commentS;
+            let posted = req.body.posted;
+            let updated = true;
+            Comment_1.default.updateOne({ 'book_id': book_id, 'username': username }, { $set: { 'grade': grade, 'commentS': commentS,
+                    'posted': posted, "updated": updated } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
             });
         };
     }

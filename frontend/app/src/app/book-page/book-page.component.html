@@ -18,7 +18,8 @@ Detalji o Knjizi {{book.name}}
 Ocenite knjigu i unesite komentar
 <label>Ocena:</label><input type="number" min="0" max="10" name="ocena" [(ngModel)]="gradeN"><br>
 <label>Komentar</label><textarea name="komentar" [(ngModel)]="comme" [maxlength]="maxChars"></textarea><br>
-<button (click)="dodajKomentar()">Dodaj komentar</button>
+<button (click)="dodajKomentar()">Dodaj komentar</button><br>
+<label>Komentar - azuriran : {{da}}</label><div *ngIf="btnB"><button (click)="updateKomentar()">Azuriraj komentar</button></div>
 </div>
 <hr>
 

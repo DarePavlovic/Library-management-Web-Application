@@ -38,6 +38,9 @@ let UserDatabase = new Schema({
     },
     blocked: {
         type: Boolean
+    },
+    book: {
+        type: String
     }
 });
 exports.default = mongoose_1.default.model('UserDatabaseModel', UserDatabase, 'userDatabase');

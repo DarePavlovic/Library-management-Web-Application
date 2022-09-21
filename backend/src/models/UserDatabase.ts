@@ -36,6 +36,9 @@ let UserDatabase = new Schema(
         },
         blocked:{
             type:Boolean
+        },
+        book:{
+            type:String
         }
 
     }

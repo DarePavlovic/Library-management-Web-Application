@@ -19,6 +19,9 @@ let Comment = new Schema(
         },
         posted:{
             type:Date
+        },
+        updated:{
+            type:Boolean
         }
     }
 )

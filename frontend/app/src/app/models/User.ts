@@ -10,4 +10,5 @@ export class User{
     type:string;
     extendNumber:number;
     blocked:boolean;
+    book:string;
 }

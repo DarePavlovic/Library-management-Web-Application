@@ -3,16 +3,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { BookWService } from '../book-w.service';
 import { BookService } from '../book.service';
 import { BorrowBookService } from '../borrow-book.service';
 import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
+import { BookW } from '../models/BookW';
 import { BorrowBook } from '../models/BorrowBook';
 import { Comment } from '../models/Comment';
 import defaultKnjiga from '../models/DefaultBook';
 import { JoinBook } from '../models/joinBook';
 import { OID } from '../models/Oid';
 import { User } from '../models/User';
+import { UserDatabaseService } from '../user-database.service';
 
 @Component({
   selector: 'app-moderator',
@@ -24,7 +27,8 @@ export class ModeratorComponent implements OnInit {
   
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private commentService:CommentService,private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService) { }
+  constructor(private commentService:CommentService,private observer: BreakpointObserver,private booksWService:BookWService,private domSanitizer:DomSanitizer,
+    private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService, private userDatabaseService:UserDatabaseService) { }
   blokiran:boolean;
   ngOnInit(): void {
 
@@ -36,7 +40,7 @@ export class ModeratorComponent implements OnInit {
     this.picture = this.user.picture;
     this.addHome=true;
     this.showBook=true;
-
+    this.bookPageShow=false;
 
     this.bookService.getAllBooks().subscribe((bok:Book[])=>{
       this.books=bok;
@@ -44,6 +48,7 @@ export class ModeratorComponent implements OnInit {
       this.seed = ((new Date().getDate())*(new Date().getFullYear())*(new Date().getMonth())+1)%bok.length;
       this.writerD=undefined;
       this.bookD=this.books[this.seed];
+
       this.bookD.writer.forEach((value)=>{
         if(this.writerD==undefined){
           this.writerD = value.toString();       
@@ -110,7 +115,8 @@ export class ModeratorComponent implements OnInit {
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
-    this.bookPageShow=false;}
+    this.bookPageShow=false;
+    this.nemaReq=false;}
   }
   dodjiKuci(){
     this.showProf=false;
@@ -123,6 +129,7 @@ export class ModeratorComponent implements OnInit {
     this.addBook=false;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.nemaReq=false;
   }
 
   
@@ -282,7 +289,7 @@ export class ModeratorComponent implements OnInit {
 
 
   defaultSlika:string;
-
+  showBookRequest:boolean;
   addB(){
     if(this.blokiran){
       alert('Ne mozete koristiti ovu funkciju');
@@ -299,6 +306,9 @@ export class ModeratorComponent implements OnInit {
     this.addBook=true;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.showBookRequest=false;
+    this.nemaReq=false;
+
     this.nameM=undefined;
     this.writerM=undefined;
     this.styleM=undefined;
@@ -317,6 +327,7 @@ export class ModeratorComponent implements OnInit {
     }
     else{
     this.showProf=false;
+    this.showBookRequest=false;
     this.history=false;
     this.menjaj=false;
     this.zaduzene=false;
@@ -325,7 +336,8 @@ export class ModeratorComponent implements OnInit {
     this.showBook=false;
     this.addBook=false;
     this.updateBook=true;
-    this.bookPageShow=false;}
+    this.bookPageShow=false;
+    this.nemaReq=false;}
   }
 
 
@@ -343,22 +355,26 @@ export class ModeratorComponent implements OnInit {
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.showBookRequest=false;
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.nemaReq=false;
   }
   showSearch(){
     this.showProf=false;
     this.history=false;
     this.menjaj=false;
     this.zaduzene=false;
+    this.showBookRequest=false;
     this.search=true;
     this.showB=false;
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.nemaReq=false;
   }
 
   
@@ -472,7 +488,9 @@ searchByParam(){
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
-    this.bookPageShow=true;}
+    this.bookPageShow=true;
+    this.showBookRequest=false;
+    this.nemaReq=false;}
   }
 
   writerSearch:string;
@@ -500,6 +518,8 @@ searchByParam(){
     this.addBook=false;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.showBookRequest=false;
+    this.nemaReq=false;
     this.borrowBookService.getAllBorrowedBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
       console.log(this.borrowedBooks);
@@ -535,7 +555,9 @@ searchByParam(){
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.showBookRequest=false;
     this.bookPageShow=false;
+    this.nemaReq=false;
     this.bookService.getBorrowSortName().subscribe((bs:Book[])=>{
       this.sorttmp=bs;
 
@@ -566,7 +588,9 @@ searchByParam(){
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.showBookRequest=false;
     this.bookPageShow=false;
+    this.nemaReq=false;
     this.bookService.getBorrowSortWriter().subscribe((bs:Book[])=>{
       this.sorttmp=bs;
       
@@ -595,6 +619,8 @@ searchByParam(){
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
+    this.showBookRequest=false;
+    this.nemaReq=false;
     this.borrowBookService.getBorrowSortStart(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
       console.log(this.borrowedBooks);
@@ -629,6 +655,8 @@ searchByParam(){
     this.addBook=false;
     this.updateBook=false;
     this.bookPageShow=false;
+    this.showBookRequest=false;
+    this.nemaReq=false;
     this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
       console.log(this.borrowedBooks);
@@ -687,6 +715,71 @@ searchByParam(){
     })
     
 
+  }
+
+  nemaReq:boolean;
+  showBookRequests(){
+    this.showBookRequest=true;
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
+    this.booksWService.getAllBooks().subscribe((bw:BookW[])=>{
+      this.booksW=bw;
+      if(bw.length==0){
+        this.showBookRequest=false;
+        this.nemaReq=true;
+      }
+    })
+  }
+
+  booksW:BookW[]=[];
+  str:string;
+
+  addBookReq(bw:BookW){
+    this.bookService.addBook(bw.name,bw.writer, bw.style, bw.publisher,
+      bw.year, bw.language, bw.picture, bw.number).subscribe(resp=>{
+        if(resp['message']=='ok'){
+          this.booksWService.deleteBook(bw._id).subscribe(resq=>{
+            if(resq['message']=='ok'){
+              this.userDatabaseService.getUser(bw.username).subscribe((us:User)=>{
+                  this.str=us.book;
+                  this.userDatabaseService.setUserBook(us.username, us.book+", "+bw.name).subscribe(resl=>{
+                    if(resl['message']=='ok'){
+                      alert('Knjiga je dodata');
+                    }
+                    else{
+                      alert(resl['message']);
+                      return
+                    }
+                  })
+              })
+              
+            }
+            else{
+              alert(resq['message']);
+              return;
+            }
+          })
+        }
+        else{
+          alert(resp['message']);
+          return;
+        }
+      })
+
+  }
+  deleteBookReq(bw:BookW){
+    this.booksWService.deleteBook(bw._id).subscribe(resp=>{
+      alert(resp['message']);
+      this.ngOnInit();
+    })
   }
 
 

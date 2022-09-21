@@ -7,4 +7,5 @@ export class Comment{
     grade:string;
     commentS:string;
     posted:Date;
+    updated:boolean;
 }

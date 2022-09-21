@@ -26,7 +26,7 @@
         <mat-icon>search</mat-icon>
         <span>Search</span>
        </button>
-       <button mat-button class="menu-button">
+       <button mat-button class="menu-button" (click)="addB()">
         <mat-icon>library_add</mat-icon>
         <span>Apply book</span>
        </button>
@@ -59,7 +59,7 @@
             <label>Autori knjige:</label>{{writer}}<br>
             <label>Ocena:</label>{{ocena}}<br></div>
 
-            <hr>
+            <hr><label style="font-size: 1rem;">{{dodat}}</label>
             <div>
                 <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label>
             </div>
@@ -158,6 +158,26 @@
            
         
         </div>
+        <div *ngIf="addBook" style="display: flex; flex-direction: column; align-items: flex-start; font-size: 1rem; padding: 5%;">
+                
+            <hr>
+                <p style="color: navy">Ovde je dodavanje knjige</p>
+                <div> <label style="margin: 15px">Naziv knjige</label><input type="text" name="name" [(ngModel)]="nameM"><br></div>
+                <div><label style="margin: 15px">Unesi prezime i ime writera</label><input type="text" name="writer" [(ngModel)]="writerM"><br></div>
+                <!-- <button (click)="unesiW()">Ubaci writera</button><br> -->
+                <div><label style="margin: 15px">Unesi zanr</label><input type="text" name="style" [(ngModel)]="styleM"><br></div>
+                <!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
+                <div><label style="margin: 15px">Izdavac</label><input type="text" name="publisher" [(ngModel)]="publisherM"><br></div>
+                <div><label style="margin: 15px">Godina</label><input type="number" name="year" [(ngModel)]="yearM"><br></div>
+                <div><label style="margin: 15px">Jezik</label><input type="text" name="language" [(ngModel)]="languageM"><br></div>
+                <div><label style="margin: 15px">Broj dostupnih knjiga</label><input type="number" name="number" [(ngModel)]="numberM"><br></div>
+                <input #slikaUpload  style="margin: 15px" type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                {{slikaPoruka}}
+                <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" />
+                <button class="buttn" (click)="bookW()">Dodaj knjigu</button>
+
+        </div>
+
     </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

@@ -20,13 +20,7 @@ userDatabaseRouter.route('/setBlocked').post(
     (req,res)=>new UserDatabaseController().setBlocked(req,res)
 )
 
-userDatabaseRouter.route('/setUnBlocked').post(
-    (req,res)=>new UserDatabaseController().setUnBlocked(req,res)
-)
 
-userDatabaseRouter.route('/getBlocked').post(
-    (req,res)=>new UserDatabaseController().getBlocked(req,res)
-)
 
 
 userDatabaseRouter.route('/getEmail').post(
@@ -54,6 +48,10 @@ userDatabaseRouter.route('/updateProfile').post(
 )
 userDatabaseRouter.route('/updateDays').post(
     (req,res)=>new UserDatabaseController().updateDays(req,res)
+)
+
+userDatabaseRouter.route('/setUserBook').post(
+    (req,res)=>new UserDatabaseController().setUserBook(req,res)
 )
 
 

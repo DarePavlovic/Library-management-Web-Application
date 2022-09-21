@@ -34,6 +34,10 @@
         <mat-icon>update</mat-icon>
         <span>Update book</span>
        </button>
+       <button mat-button class="menu-button" (click)="showBookRequests()">
+        <mat-icon>library_books</mat-icon>
+        <span>Show book requests</span>
+       </button>
        <button mat-button class="menu-button" (click)="showZaduzene()">
         <mat-icon>library_books</mat-icon>
         <span>Books taken</span>
@@ -244,6 +248,27 @@
                         <td>{{j.startDate}}</td>
                         <td>{{j.endDate}}</td>
                         <td><button (click)="vodi(j._id)">Poseti stranicu</button></td>
+                    </tr>
+                </table>
+            </div>
+            <label *ngIf="nemaReq">Nema trenutnih zahteva za knjige</label>
+            <div *ngIf="showBookRequest"  class="table-resp">
+                <table class="tableUser">
+                    <tr>
+                        <th>Username</th>
+                        <th>Naziv knjige</th>
+                        <th>Autor</th>
+                        <th>Zanr</th>
+                        <th>Add book</th>
+                        <th>Remove</th>
+                    </tr>
+                    <tr *ngFor="let b of booksW">
+                        <td>{{b.username}}</td>
+                        <td>{{b.name}}</td>
+                        <td>{{b.writer}}</td>
+                        <td>{{b.style}}</td>
+                        <td><button class="buttn" (click)="addBookReq(b)">Add</button></td>
+                        <td><button class="buttn" (click)="deleteBookReq(b)">Remove</button></td>
                     </tr>
                 </table>
             </div>

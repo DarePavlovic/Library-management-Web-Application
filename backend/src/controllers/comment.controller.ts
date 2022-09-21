@@ -11,7 +11,7 @@ export class CommentController{
             grade:req.body.grade,
             commentS:req.body.commentS,
             posted:req.body.posted,
-            
+            updated:false
         })
         
 
@@ -43,6 +43,23 @@ export class CommentController{
         Comment.findOne({'book_id':book_id, 'username':user},(err, comm)=>{
             if(err)console.log(err);
             else res.json(comm);
+        })
+    }
+
+    updateComment = (req:express.Request, res:express.Response)=>{
+        let book_id = req.body.book_id;
+        let username=req.body.username;
+        let grade= req.body.grade;
+        let commentS= req.body.commentS;
+        let posted = req.body.posted;
+        let updated = true;
+       
+        Comment.updateOne({'book_id':book_id, 'username':username}, {$set:{'grade':grade, 'commentS':commentS, 
+        'posted':posted,"updated":updated}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
         })
     }
 }

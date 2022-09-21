@@ -12,6 +12,9 @@ commRouter.route('/getAllCommentsByBookID').get(
 commRouter.route('/getCommentByBookID').post(
     (req, res)=> new CommentController().getCommentByBookID(req,res)
 )
+commRouter.route('/updateComment').post(
+    (req, res)=> new CommentController().updateComment(req,res)
+)
 
 
 export default commRouter;

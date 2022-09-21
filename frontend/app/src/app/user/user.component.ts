@@ -1,15 +1,19 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { BookWService } from '../book-w.service';
 import { BookService } from '../book.service';
 import { BorrowBookService } from '../borrow-book.service';
 import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
 import { BorrowBook } from '../models/BorrowBook';
 import { Comment } from '../models/Comment';
+import defaultKnjiga from '../models/DefaultBook';
 import { JoinBook } from '../models/joinBook';
 import { User } from '../models/User';
+import { UserDatabaseService } from '../user-database.service';
 
 @Component({
   selector: 'app-user',
@@ -20,8 +24,9 @@ export class UserComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private commentService:CommentService,private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookService:BookService, private router:Router) { }
+  constructor(private commentService:CommentService,private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookWService:BookWService,private domSanitizer:DomSanitizer,private bookService:BookService, private router:Router, private userDatabaseService:UserDatabaseService) { }
 
+  dodat:string;
   ngOnInit(): void {
 
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
@@ -66,6 +71,13 @@ export class UserComponent implements OnInit {
     }
     else{
     this.showB=true;
+    }
+
+    if(this.user.book!=undefined){
+      this.dodat = "Obavestenje: Dodate su vase knjige:" + this.user.book;
+    }
+    else{
+      this.dodat="";
     }
     
   }
@@ -113,7 +125,9 @@ export class UserComponent implements OnInit {
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
-    this.bookPageShow=false;}
+    this.bookPageShow=false;
+    this.addBook=false;
+  }
   }
   menjaj:boolean;
   dodjiKuci(){
@@ -126,6 +140,7 @@ export class UserComponent implements OnInit {
     this.search=false;
     this.showB=true;
     this.bookPageShow=false;
+    this.addBook=false;
 
   }
 
@@ -144,6 +159,7 @@ export class UserComponent implements OnInit {
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.addBook=false;
     this.bookPageShow=true;}
     //this.router.navigate(['bookPage']);
   }
@@ -157,6 +173,7 @@ export class UserComponent implements OnInit {
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.addBook=false;
     this.bookPageShow=false;
   }
  
@@ -169,6 +186,7 @@ export class UserComponent implements OnInit {
     this.search=true;
     this.showB=false;
     this.bookPageShow=false;
+    this.addBook=false;
   }
   odjava(){
     localStorage.removeItem('ulogovan')
@@ -294,6 +312,7 @@ searchByParam(){
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
+    this.addBook=false;
     this.borrowBookService.getAllBorrowedBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
       console.log(this.borrowedBooks);
@@ -329,6 +348,7 @@ searchByParam(){
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.addBook=false;
     this.bookPageShow=false;
     this.bookService.getBorrowSortName().subscribe((bs:Book[])=>{
       this.sorttmp=bs;
@@ -360,6 +380,7 @@ searchByParam(){
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
+    this.addBook=false;
     this.bookPageShow=false;
     this.bookService.getBorrowSortWriter().subscribe((bs:Book[])=>{
       this.sorttmp=bs;
@@ -389,6 +410,7 @@ searchByParam(){
     this.search=false;
     this.showB=false;
     this.bookPageShow=false;
+    this.addBook=false;
     this.borrowBookService.getBorrowSortStart(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
       console.log(this.borrowedBooks);
@@ -422,6 +444,7 @@ searchByParam(){
     this.zaduzene=true;
     this.search=false;
     this.showB=false;
+    this.addBook=false;
     this.bookPageShow=false;
     this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
       this.borrowedBooks=borr;
@@ -482,5 +505,86 @@ searchByParam(){
     
 
   }
+  addB(){
+    this.addBook=true;
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+  }
+  addBook:boolean;
+  bookW(){
+    if(this.slika==null){
+      this.slika=defaultKnjiga;
+    }
+    this.writersN = this.writerM.split(',');
+    this.styleN = this.styleM.split(',');
+    console.log(this.user.username);
+    
+    this.bookWService.addBook(this.user.username,this.nameM, this.writersN,this.styleN, this.publisherM, this.yearM, this.languageM, this.slika, this.numberM).subscribe(resp=>{
+      if(resp['message']=='ok'){
+        alert('Knjiga je dodata, sacekajte da vidite da li ce Vasa knjiga biti prihvacena');
+      }
+      else{
+        alert(resp['message']);
+        return;
+      }
+    })
+  }
+
+  nameM:string;
+  numberM:number;
+  writerM:string;
+  writerOld:string;
+  styleOld:string;
+  styleM:string;
+  publisherM:string;
+  yearM:number;
+  languageM:string;
+  writersN:Array<String>;
+  styleN:Array<String>;
+  writers:Array<{id:number, text:string}>;
+  styles:Array<{id:number, text:string}>;
+  
+  slika: string
+  slikaPoruka: string
+  slikaSacuvana: boolean
+
+  slikaDodata(fileInput: any) {
+    this.slikaPoruka = null;
+    this.slika = null
+    this.slikaSacuvana = false
+    if (fileInput.target.files && fileInput.target.files[0]) {
+
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+
+
+            const imgBase64Path = e.target.result;
+            this.slika = imgBase64Path;
+            this.slikaSacuvana = true;
+            this.slikaPromenjena=true;
+            return true
+            // this.previewImagePath = imgBase64Path;
+          
+        };
+      };
+
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
+  putdoslike() {
+    return this.domSanitizer.bypassSecurityTrustUrl(this.slika)
+  }
+
+  slikaPromenjena:boolean;
   
 }

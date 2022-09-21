@@ -9,5 +9,6 @@ const commRouter = express_1.default.Router();
 commRouter.route('/addComment').post((req, res) => new comment_controller_1.CommentController().addComment(req, res));
 commRouter.route('/getAllCommentsByBookID').get((req, res) => new comment_controller_1.CommentController().getAllCommentsByBookID(req, res));
 commRouter.route('/getCommentByBookID').post((req, res) => new comment_controller_1.CommentController().getCommentByBookID(req, res));
+commRouter.route('/updateComment').post((req, res) => new comment_controller_1.CommentController().updateComment(req, res));
 exports.default = commRouter;
 //# sourceMappingURL=comment.routes.js.map

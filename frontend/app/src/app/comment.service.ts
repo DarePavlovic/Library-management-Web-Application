@@ -35,4 +35,16 @@ export class CommentService {
     return this.http.post(`${this.uri}/comments/getCommentByBookID`, data);
 
   }
+
+  updateComment(book_id,username,grade,comm,posted){
+    const data={
+      book_id:book_id,
+      username:username,
+      grade:grade,
+      commentS:comm,
+      posted:posted
+    }
+    return this.http.post(`${this.uri}/comments/updateComment`, data);
+
+  }
 }

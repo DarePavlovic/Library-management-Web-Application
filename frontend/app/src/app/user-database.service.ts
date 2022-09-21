@@ -123,6 +123,14 @@ deleteUser(username){
     return this.http.post(`${this.uri}/userDatabase/updateDays`,data);
   }
 
+  setUserBook(username, book){
+    const data = {
+      username:username,
+      book:book
+    }
+    
+    return this.http.post(`${this.uri}/userDatabase/setUserBook`,data);
+  }
   
 
   setBlocked(username, blocked){

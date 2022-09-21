@@ -178,4 +178,9 @@ mat-divider{
 .tab-his td, .tab-his th{
     padding: 5px;
 }
+#profile{
+    width: 60px;
+    height: 80px;
+    padding-left: 20px;
+  }
 

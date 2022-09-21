@@ -60,8 +60,24 @@ export class BookPageComponent implements OnInit {
       })
     })
 
+    this.commentService.getCommentByBookID(this.book._id, this.user.username).subscribe((co:Comment)=>{
+      if(co==null){this.btnB=false}
+      else{
+        this.gradeN = co.grade.length;
+        this.comme = co.commentS;
+        this.btnB = true;
+      }
+      if(co.updated){
+        this.da="da";
+      }
+      else{
+        this.da="ne";
+      }
+    })
 
   }
+  da:string;
+  btnB:boolean;
   ocena:boolean;
   tabela:boolean;
   uzmi:boolean;
@@ -151,4 +167,20 @@ export class BookPageComponent implements OnInit {
     })
   }
 
+  updateKomentar(){
+    this.gradeS="";
+    for(let i=0;i<this.gradeN;i++){
+      this.gradeS = this.gradeS + '*';
+    }
+    this.commentService.updateComment(this.book._id, this.user.username, this.gradeS,this.comme, new Date()).subscribe(resp=>{
+      if(resp['message']=='ok'){
+        alert('Komentar je azuriran');
+        this.ngOnInit();
+      }
+      else{
+        alert(resp['message']);
+        return;
+      }
+    })
+  }
 }
