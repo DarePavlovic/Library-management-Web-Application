@@ -13,6 +13,7 @@ const book_routes_1 = __importDefault(require("./routes/book.routes"));
 const borrowBook_routes_1 = __importDefault(require("./routes/borrowBook.routes"));
 const comment_routes_1 = __importDefault(require("./routes/comment.routes"));
 const bookW_routes_1 = __importDefault(require("./routes/bookW.routes"));
+const reservation_routes_1 = __importDefault(require("./routes/reservation.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '50mb' }));
@@ -29,6 +30,7 @@ router.use('/books', book_routes_1.default);
 router.use('/borrowBook', borrowBook_routes_1.default);
 router.use('/comments', comment_routes_1.default);
 router.use('/booksW', bookW_routes_1.default);
+router.use('/reservation', reservation_routes_1.default);
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 //# sourceMappingURL=server.js.map

@@ -92,7 +92,7 @@ export class BookController{
         let _id = req.body._id;
         
         let number=req.body.number;
-        Book.updateOne({'_id':_id}, {$set:{'number':number}}, (err, resp)=>{
+        Book.updateOne({'_id':_id}, {$inc:{'number':1}}, (err, resp)=>{
             if(err) console.log(err);
             else{
                 res.json({'message':'ok'})

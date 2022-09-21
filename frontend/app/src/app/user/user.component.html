@@ -65,6 +65,8 @@
                 <label style="font-size: 1rem;color: red;">{{istekao}}</label><br>
                 <label style="font-size: 1rem;color:purple">{{dvaDana}}</label><br>
                 <label style="font-size: 1rem;color:green">{{triKnjige}}</label><br>
+                <label style="font-size: 1rem;color:navy">{{rezervacija}}</label><br>
+
                 <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label><br>
             </div>
         </div>
@@ -170,7 +172,18 @@
                 <div> <label style="margin: 15px">Naziv knjige</label><input type="text" name="name" [(ngModel)]="nameM"><br></div>
                 <div><label style="margin: 15px">Unesi prezime i ime writera</label><input type="text" name="writer" [(ngModel)]="writerM"><br></div>
                 <!-- <button (click)="unesiW()">Ubaci writera</button><br> -->
-                <div><label style="margin: 15px">Unesi zanr</label><input type="text" name="style" [(ngModel)]="styleM"><br></div>
+                <div><label style="margin: 15px">Unesi zanr</label>
+                    <select [(ngModel)]="zanr">
+                        <option value="Roman">Roman</option>
+                        <option value="Triler">Triler</option>
+                        <option value="Misterija">Misterija</option>
+                        <option value="Fantastika">Fantastika</option>
+                        <option value="Komedija">Komedija</option>
+                        <option value="Bajka">Bajka</option>
+                        <option value="Putopis">Putopis</option>
+                    </select><br><button (click)="dodajZanr()">Dodaj zanr</button><br>
+                    <input type="text" name="style" [(ngModel)]="styleM"><br>
+                </div>
                 <!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
                 <div><label style="margin: 15px">Izdavac</label><input type="text" name="publisher" [(ngModel)]="publisherM"><br></div>
                 <div><label style="margin: 15px">Godina</label><input type="number" name="year" [(ngModel)]="yearM"><br></div>

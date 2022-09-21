@@ -8,6 +8,7 @@ import bookRouter from './routes/book.routes';
 import borrowBookRouter from './routes/borrowBook.routes';
 import commRouter from './routes/comment.routes';
 import bookWRouter from './routes/bookW.routes';
+import reservationRouter from './routes/reservation.routes';
 const app = express();
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
@@ -26,6 +27,7 @@ router.use('/books', bookRouter);
 router.use('/borrowBook', borrowBookRouter);
 router.use('/comments',commRouter);
 router.use('/booksW',bookWRouter);
+router.use('/reservation',reservationRouter);
 
 
 app.use('/', router);

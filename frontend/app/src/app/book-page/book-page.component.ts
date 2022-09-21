@@ -5,7 +5,9 @@ import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
 import { BorrowBook } from '../models/BorrowBook';
 import { Comment } from '../models/Comment';
+import { Reservation } from '../models/Reservation';
 import { User } from '../models/User';
+import { ReservationService } from '../reservation.service';
 
 @Component({
   selector: 'app-book-page',
@@ -15,7 +17,7 @@ import { User } from '../models/User';
 export class BookPageComponent implements OnInit {
   maxChars:number
 
-  constructor(private borrowBookService:BorrowBookService,private commentService:CommentService, private bookService:BookService) { }
+  constructor(private borrowBookService:BorrowBookService,private reservationService:ReservationService,private commentService:CommentService, private bookService:BookService) { }
 
   ngOnInit(): void {
     this.book=undefined;
@@ -43,6 +45,7 @@ export class BookPageComponent implements OnInit {
     if(this.book.number>0){
       this.uzmi=true;
     }
+    this.uzmi=true;
 
     this.commentService.getAllCommentsByBookID(this.book._id).subscribe((c:Comment[])=>{
       this.comments=c;
@@ -61,7 +64,7 @@ export class BookPageComponent implements OnInit {
     })
 
     this.commentService.getCommentByBookID(this.book._id, this.user.username).subscribe((co:Comment)=>{
-      if(co==null){this.btnB=false}
+      if(co==null){this.btnB=false; this.da="ne";}
       else{
         this.gradeN = co.grade.length;
         this.comme = co.commentS;
@@ -90,47 +93,77 @@ export class BookPageComponent implements OnInit {
   borrow:BorrowBook[]=[];
   tmpB:boolean;
   zaduzi(){
-    this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borrowB:BorrowBook[])=>{
-      this.borrow=borrowB;
-      if(this.borrow.length>0){
-        this.borrow.forEach((value)=>{
-          if(value.bookId==this.book._id){
-            this.tmpB=true;
-          }
-        })
-      }
-      if(this.borrow.length>=3){
-        alert('Imate 3 vec zaduzene knjige, molim Vas neku oduzite');
-        return;
-      }
-      else if(this.tmpB){
-        alert('Vec ste zaduzili ovu knjigu')
-        return;
-      }
-      else{
-        this.startDate=new Date();
-        this.endDate = new Date();
-        this.endDate.setDate(this.startDate.getDate()+14);
-          
-        this.borrowBookService.addBorrowBook(this.user.username, this.book._id, this.startDate, this.endDate).subscribe(resp=>{
-          if(resp['message']=='ok'){
-            this.bookService.takeBook(this.book._id,this.book.number-1,this.book.taken+1).subscribe(resp=>{
-              if(resp['message']=='ok'){
-                alert('Zaduzili ste knjigu');
-                this.ngOnInit();
-              }
-              else{
-                alert(resp['message']);
-                return;
+    this.bookService.getBookByID(this.book._id).subscribe((bok:Book)=>{
+      if(bok.number>0){
+        this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borrowB:BorrowBook[])=>{
+          this.borrow=borrowB;
+          if(this.borrow.length>0){
+            this.borrow.forEach((value)=>{
+              if(value.bookId==this.book._id){
+                this.tmpB=true;
               }
             })
           }
+          if(this.borrow.length>=3){
+            alert('Imate 3 vec zaduzene knjige, molim Vas neku oduzite');
+            return;
+          }
+          else if(this.tmpB){
+            alert('Vec ste zaduzili ovu knjigu')
+            return;
+          }
           else{
-            alert(resp['message']);
+            this.startDate=new Date();
+            this.endDate = new Date();
+            this.endDate.setDate(this.startDate.getDate()+14);
+              
+            this.borrowBookService.addBorrowBook(this.user.username, this.book._id, this.startDate, this.endDate).subscribe(resp=>{
+              if(resp['message']=='ok'){
+                this.bookService.takeBook(this.book._id,this.book.number-1,this.book.taken+1).subscribe(resp=>{
+                  if(resp['message']=='ok'){
+                    alert('Zaduzili ste knjigu');
+                    this.ngOnInit();
+                  }
+                  else{
+                    alert(resp['message']);
+                    return;
+                  }
+                })
+              }
+              
+            })
+          }
+        })
+      }
+      else{
+        this.reservationService.getAllReservation().subscribe((r:Reservation[])=>{
+          console.log(r);
+          if(r.length==0){
+            this.reservationService.addReservation(this.user.username, bok._id,0).subscribe(res=>{
+              if(res['message']=='ok'){
+                alert('Dodata je rezervacija');
+                window.location.reload();
+              }
+              else{alert(res['message']); return;}
+            })
+          }
+          else{
+            this.reservationService.getTicket().subscribe((res:Reservation)=>{
+              this.ticket=res.ticket;
+            
+            this.reservationService.addReservation(this.user.username, bok._id,this.ticket+1).subscribe(res=>{
+              if(res['message']=='ok'){
+                alert('Dodata je rezervacijaa');
+                window.location.reload();
+              }
+              else{alert(res['message']); return;}
+            })
+          })
           }
         })
       }
     })
+    
     
   }
 
@@ -138,6 +171,7 @@ export class BookPageComponent implements OnInit {
   gradeN:number;
   gradeS:string;
   comme:string;
+  ticket:number;
 
   dodajKomentar(){
     this.gradeS="";

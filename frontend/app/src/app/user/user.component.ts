@@ -12,7 +12,9 @@ import { BorrowBook } from '../models/BorrowBook';
 import { Comment } from '../models/Comment';
 import defaultKnjiga from '../models/DefaultBook';
 import { JoinBook } from '../models/joinBook';
+import { Reservation } from '../models/Reservation';
 import { User } from '../models/User';
+import { ReservationService } from '../reservation.service';
 import { UserDatabaseService } from '../user-database.service';
 
 @Component({
@@ -24,11 +26,12 @@ export class UserComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private commentService:CommentService,private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookWService:BookWService,private domSanitizer:DomSanitizer,private bookService:BookService, private router:Router, private userDatabaseService:UserDatabaseService) { }
+  constructor(private commentService:CommentService,private reservationService:ReservationService,private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookWService:BookWService,private domSanitizer:DomSanitizer,private bookService:BookService, private router:Router, private userDatabaseService:UserDatabaseService) { }
 
   dodat:string;
   ngOnInit(): void {
     this.brDana=0;
+    this.brZanr=0;
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
     this.blokiran=this.user.blocked;
     this.username=this.user.username;
@@ -73,7 +76,7 @@ export class UserComponent implements OnInit {
     this.showB=true;
     }
 
-    if(this.user.book!=undefined){
+    if(this.user.book!=""){
       this.dodat = "Obavestenje: Dodate su vase knjige:" + this.user.book;
     }
     else{
@@ -109,10 +112,27 @@ export class UserComponent implements OnInit {
       }
       
     })
-    if(this.triKnjige!=""||this.istekao!=""||this.dodat!=""||this.dvaDana!=""){
+    
+    this.styleM="";
+
+    this.rezervacija="";
+    this.reservationService.getFromUser(this.user.username).subscribe((res:Reservation[])=>{
+        res.forEach((value)=>{
+          this.bookService.getBookByID(value.book_id).subscribe((boo:Book)=>{
+            if(this.rezervacija==""){
+              this.rezervacija = "Odobreni rezervacionu zahtevi za knjige su: " + boo.name;
+            }
+            else{
+              this.rezervacija = this.rezervacija + " " + boo.name;
+            }
+          })
+          
+        })
+    })
+
+    if(this.triKnjige!=""||this.istekao!=""||this.dodat!=""||this.dvaDana!=""||this.rezervacija!=""){
       this.obavestenja=true;
     }
-    
   }
   brDana:number;
   obavestenja:boolean;
@@ -120,6 +140,7 @@ export class UserComponent implements OnInit {
   tmp:number;
   dvaDana:string;
   istekao:string;
+  rezervacija:string;
 
   triKnjige:string;
   writer:String;
@@ -510,14 +531,72 @@ searchByParam(){
   proveriTrue(a:boolean){
     return a==true;
   }
-
+  prek:number;
+  prekBool:boolean;
   vrati(id){
     this.borrowBookService.returnBorrowBook(this.user.username,id).subscribe(resp=>{
-      if(resp['message']=='ok'){ alert('Knjiga je vracena'); window.location.reload();}
+      if(resp['message']=='ok'){ 
+      this.reservationService.getAllReservation().subscribe((res:Reservation[])=>{
+        if(res.length>0){
+          this.reservationService.getNext().subscribe((reser:Reservation)=>{
+            this.startDate=new Date();
+            this.endDate = new Date();
+            this.endDate.setDate(this.startDate.getDate()+14);
+
+            this.borrowBookService.getAllBorrowBooks(reser.username).subscribe((bbb:BorrowBook[])=>{
+              if(bbb.length==3){
+                this.prekBool=true;
+              }
+              console.log(bbb.length)
+              bbb.forEach((value)=>{
+                let dat3=new Date(value.endDate);
+                this.prek = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));      
+                if(this.prek<0){this.prekBool=true;}
+              })
+              if(this.prekBool==false){
+                this.borrowBookService.addBorrowBook(reser.username, reser.book_id, this.startDate, this.endDate).subscribe(resa=>{
+                  if(resa['message']=='ok'){
+                    this.reservationService.doneReservation(reser.book_id, reser.username).subscribe(resk=>{
+                      if(resk['message']=='ok'){
+                        alert('Knjiga je vracena'); window.location.reload();
+                      }
+                      else{
+                        alert(resk['message']);
+                      }
+                    })
+                  }
+                  else{alert(resa['message']);return;}
+                })
+              }
+              else{
+                alert('Korisnik koji treba sl da zaduzi knjigu nije u mogucnosti, a vasa knjiga je vracenja');
+                window.location.reload();
+              }
+              
+            })
+            
+          })
+        }
+        else{
+          this.bookService.returnBook(id,1).subscribe(resp=>{
+            if(resp['message']=='ok'){
+              alert('Knjiga je vracenaa');
+              window.location.reload();
+            }
+            else{
+              alert(resp['message']);
+              return;
+            }
+          })
+        }
+      })
+    }
       else {alert(resp['message']); return;}
     })
 
   }
+  startDate:Date;
+  endDate:Date;
   produzi(id,broj, b){
     if(b==true){
       alert('Vec ste produzili ovu knjigu, nije moguce');
@@ -619,5 +698,22 @@ searchByParam(){
   }
 
   slikaPromenjena:boolean;
+  zanr:string;
+  brZanr:number;
+  dodajZanr(){
+    
+    this.brZanr=this.brZanr+1;
+    if(this.brZanr>3){
+      alert('samo tri zanra se mogu uneti');
+      return;
+    }
+    if(this.brZanr<3){
+      if(this.styleM==""){this.brZanr=0;this.styleM=this.zanr;}
+      else{
+
+        this.styleM = this.styleM +","+ this.zanr;
+      }
+    }
+  }
   
 }

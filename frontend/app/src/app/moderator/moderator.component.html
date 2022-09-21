@@ -65,9 +65,13 @@
             <label>Naziv knjige:</label>{{bookD.name}}<br>
             <label>Autori knjige:</label>{{writerD}}<br>
             <label>Ocena:</label>{{ocena}}<br></div>
-            <hr>
-            <div>
-                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label>
+            
+            <div *ngIf="obavestenja">
+                <hr><label style="font-size: 1rem;">{{dodat}}</label><br>
+                <label style="font-size: 1rem;color: red;">{{istekao}}</label><br>
+                <label style="font-size: 1rem;color:purple">{{dvaDana}}</label><br>
+                <label style="font-size: 1rem;color:green">{{triKnjige}}</label><br>
+                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label><br>
             </div>
             </div>
             <div *ngIf="menjaj"><app-change-pass></app-change-pass></div>
@@ -118,8 +122,18 @@
                 <div> <label style="margin: 15px">Naziv knjige</label><input type="text" name="name" [(ngModel)]="nameM"><br></div>
                 <div><label style="margin: 15px">Unesi prezime i ime writera</label><input type="text" name="writer" [(ngModel)]="writerM"><br></div>
                 <!-- <button (click)="unesiW()">Ubaci writera</button><br> -->
-                <div><label style="margin: 15px">Unesi zanr</label><input type="text" name="style" [(ngModel)]="styleM"><br></div>
-                <!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
+                <div><label style="margin: 15px">Unesi zanr</label>
+                    <select [(ngModel)]="zanr">
+                        <option value="Roman">Roman</option>
+                        <option value="Triler">Triler</option>
+                        <option value="Misterija">Misterija</option>
+                        <option value="Fantastika">Fantastika</option>
+                        <option value="Komedija">Komedija</option>
+                        <option value="Bajka">Bajka</option>
+                        <option value="Putopis">Putopis</option>
+                    </select><br><button (click)="dodajZanr()">Dodaj zanr</button><br>
+                    <input type="text" name="style" [(ngModel)]="styleM"><br>
+                </div><!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
                 <div><label style="margin: 15px">Izdavac</label><input type="text" name="publisher" [(ngModel)]="publisherM"><br></div>
                 <div><label style="margin: 15px">Godina</label><input type="number" name="year" [(ngModel)]="yearM"><br></div>
                 <div><label style="margin: 15px">Jezik</label><input type="text" name="language" [(ngModel)]="languageM"><br></div>
@@ -204,9 +218,11 @@
                     </mat-card-header>
                     <img mat-card-md-image id="picCard" [src]="m.picture" alt="Photo of a {m.name}">
                     <mat-card-content>
-                    <p [ngClass]="{'colorError': zakasnio(m.jos)}"> 
+                    
+                    <p [hidden]="zakasnio(m.jos)"> 
                         Preostalo dana:{{m.jos}}
                     </p>
+                    <p [ngClass]="{'colorError': zakasnio(m.jos)}" *ngIf="zakasnio(m.jos)">Kasni>{{m.jos}} dana</p>
                     </mat-card-content>
                     <mat-card-actions>
                     <button mat-button (click)="vrati(m._id)">Vrati</button>

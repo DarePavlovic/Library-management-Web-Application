@@ -14,7 +14,9 @@ import { Comment } from '../models/Comment';
 import defaultKnjiga from '../models/DefaultBook';
 import { JoinBook } from '../models/joinBook';
 import { OID } from '../models/Oid';
+import { Reservation } from '../models/Reservation';
 import { User } from '../models/User';
+import { ReservationService } from '../reservation.service';
 import { UserDatabaseService } from '../user-database.service';
 
 @Component({
@@ -28,7 +30,7 @@ export class ModeratorComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
   constructor(private commentService:CommentService,private observer: BreakpointObserver,private booksWService:BookWService,private domSanitizer:DomSanitizer,
-    private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService, private userDatabaseService:UserDatabaseService) { }
+    private bookService:BookService,private reservationService:ReservationService,private router:Router, private borrowBookService:BorrowBookService, private userDatabaseService:UserDatabaseService) { }
   blokiran:boolean;
   ngOnInit(): void {
 
@@ -41,6 +43,8 @@ export class ModeratorComponent implements OnInit {
     this.addHome=true;
     this.showBook=true;
     this.bookPageShow=false;
+    this.zanr="";
+    this.brZanr=0;
 
     this.bookService.getAllBooks().subscribe((bok:Book[])=>{
       this.books=bok;
@@ -76,8 +80,54 @@ export class ModeratorComponent implements OnInit {
 
     })
 
+    if(this.user.book!=""){
+      this.dodat = "Obavestenje: Dodate su vase knjige:" + this.user.book;
+    }
+    else{
+      this.dodat="";
+    }
+
+    this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((bb:BorrowBook[])=>{
+      if(bb.length==3){
+        this.triKnjige="Imate tri knjige na zaduzenju"
+      }
+      else{
+        this.triKnjige="";
+      }
+
+      bb.forEach((value)=>{
+        let dat3=new Date(value.endDate);
+        this.brDana = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));
+        
+
+
+        if(this.brDana<3){
+          this.dvaDana="Istice Vam rok za vracanje knjige"; 
+        }
+        if(this.brDana<0){
+          this.istekao="Istekao Vam je rok za vracanje knjige";
+        }
+      })
+      if(this.dvaDana==undefined){
+        this.dvaDana="";
+      }
+      if(this.istekao==undefined){
+        this.istekao="";
+      }
+      if(this.triKnjige!=""||this.istekao!=""||this.dodat!=""||this.dvaDana!=""){
+        this.obavestenja=true;
+      }
+    })
+    
+
     
   }
+  brDana:number;
+  obavestenja:boolean;
+  dodat:string;
+  triKnjige:string;
+  dvaDana:string;
+  istekao:string;
   tmp:number;
   ocena:number;
   showBook:boolean;
@@ -148,6 +198,9 @@ export class ModeratorComponent implements OnInit {
     this.bookService.addBook(this.nameM, this.writersN,this.styleN, this.publisherM, this.yearM, this.languageM, this.slika, this.numberM).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
+        this.writerM=undefined;
+        this.styleM=undefined;
+    
       }
       else{
         alert(resp['message']);
@@ -691,11 +744,48 @@ searchByParam(){
 
   vrati(id){
     this.borrowBookService.returnBorrowBook(this.user.username,id).subscribe(resp=>{
-      if(resp['message']=='ok'){ alert('Knjiga je vracena'); window.location.reload();}
+      if(resp['message']=='ok'){ 
+      this.reservationService.getAllReservation().subscribe((res:Reservation[])=>{
+        if(res.length>0){
+          this.reservationService.getNext().subscribe((reser:Reservation)=>{
+            this.startDate=new Date();
+            this.endDate = new Date();
+            this.endDate.setDate(this.startDate.getDate()+14);
+            this.borrowBookService.addBorrowBook(reser.username, reser.book_id, this.startDate, this.endDate).subscribe(resa=>{
+              if(resa['message']=='ok'){
+                this.reservationService.doneReservation(reser.book_id, reser.username).subscribe(resk=>{
+                  if(resk['message']=='ok'){
+                    alert('Knjiga je vracena'); window.location.reload();
+                  }
+                  else{
+                    alert(resk['message']);
+                  }
+                })
+              }
+              else{alert(resa['message']);return;}
+            })
+          })
+        }
+        else{
+          this.bookService.returnBook(id,1).subscribe(resp=>{
+            if(resp['message']=='ok'){
+              alert('Knjiga je vracenaa');
+              window.location.reload();
+            }
+            else{
+              alert(resp['message']);
+              return;
+            }
+          })
+        }
+      })
+    }
       else {alert(resp['message']); return;}
     })
 
   }
+  startDate:Date;
+  endDate:Date;
   produzi(id,broj, b){
     if(b==true){
       alert('Vec ste produzili ovu knjigu, nije moguce');
@@ -783,4 +873,21 @@ searchByParam(){
   }
 
 
+  zanr:string;
+  brZanr:number;
+  dodajZanr(){
+    
+    this.brZanr=this.brZanr+1;
+    if(this.brZanr>3){
+      alert('samo tri zanra se mogu uneti');
+      return;
+    }
+    if(this.brZanr<3){
+      if(this.styleM==""||this.styleM==undefined){this.brZanr=0;this.styleM=this.zanr;}
+      else{
+
+        this.styleM = this.styleM +","+ this.zanr;
+      }
+    }
+  }
 }
