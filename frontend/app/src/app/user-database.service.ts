@@ -95,7 +95,7 @@ deleteUser(username){
     username:username
   }
   
-  return this.http.post(`${this.uri}/userDatabase/deleteUser`,data);
+  return this.http.post(`${this.uri}/userDatabase/delete`,data);
 }
 
   getAllUsers(){

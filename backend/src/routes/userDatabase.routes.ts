@@ -27,7 +27,7 @@ userDatabaseRouter.route('/changePassword').post(
     (req,res)=>new UserDatabaseController().changePassword(req,res)
 )
 
-userDatabaseRouter.route('/deleteUser').post(
+userDatabaseRouter.route('/delete').post(
     (req,res)=>new UserDatabaseController().delete(req,res)
 )
 

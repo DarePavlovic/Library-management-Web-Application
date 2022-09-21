@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { BorrowBookService } from '../borrow-book.service';
+import { BorrowBook } from '../models/BorrowBook';
 import { User } from '../models/User';
 import { UserDatabaseService } from '../user-database.service';
 
@@ -16,7 +18,7 @@ export class UserUpdateComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
   constructor(private observer: BreakpointObserver,private router:Router, private userDatabaseService:UserDatabaseService,
-    private domSanitizer:DomSanitizer) { }
+    private domSanitizer:DomSanitizer, private borrowBookService:BorrowBookService) { }
 
   ngOnInit(): void {
     this.userDatabaseService.getAllUsers().subscribe((user:User[])=>{
@@ -73,17 +75,26 @@ export class UserUpdateComponent implements OnInit {
 
   tip:string;
   deleteUser(user:User){
-    this.userDatabaseService.deleteUser(this.username).subscribe(resp=>{
-      if(resp['message']=='ok'){
-        alert('User deleted');
-        this.ngOnInit()
+    this.borrowBookService.getAllBorrowBooks(user.username).subscribe((b:BorrowBook[])=>{
+      
+      if(b.length==0){
+        this.userDatabaseService.deleteUser(user.username).subscribe(resp=>{
+          if(resp['message']=='ok'){
+            alert('User deleted');
+            this.ngOnInit()
+          }
+          else{
+            alert(resp['message']);
+            return;
+          }
+        })
       }
       else{
-        alert(resp['message']);
-        this.ngOnInit()
+        alert('Korisnik ima zaduzene knjige');
         return;
       }
     })
+    
 
   }
   ngAfterViewInit(){

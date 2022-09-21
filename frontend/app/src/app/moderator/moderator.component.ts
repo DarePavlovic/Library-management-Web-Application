@@ -121,7 +121,7 @@ export class ModeratorComponent implements OnInit {
     this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika, this.number).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
-        
+        this.ngOnInit();
       }
       else{
         alert(resp['message']);

@@ -14,5 +14,6 @@ borrowBookRouter.route('/updateBorrowBook').post((req, res) => new borrowBook_co
 borrowBookRouter.route('/getBorrowSortName').get((req, res) => new borrowBook_controller_1.BorrowBookController().getBorrowSortName(req, res));
 borrowBookRouter.route('/getBorrowSortStart').get((req, res) => new borrowBook_controller_1.BorrowBookController().getBorrowSortStart(req, res));
 borrowBookRouter.route('/getBorrowSortWriter').get((req, res) => new borrowBook_controller_1.BorrowBookController().getBorrowSortWriter(req, res));
+borrowBookRouter.route('/getAllBorrowBooksByBookId').get((req, res) => new borrowBook_controller_1.BorrowBookController().getAllBorrowBooksByBookId(req, res));
 exports.default = borrowBookRouter;
 //# sourceMappingURL=borrowBook.routes.js.map

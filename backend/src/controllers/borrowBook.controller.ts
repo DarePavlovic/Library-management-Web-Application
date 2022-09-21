@@ -108,4 +108,15 @@ export class BorrowBookController{
     }
 
 
+    getAllBorrowBooksByBookId = (req:express.Request, res:express.Response)=>{
+        
+        let book_id = req.query.param;
+        BorrowBook.find({'bookId':book_id,'returned':false},(err, books)=>{
+            if(err)console.log(err);
+            else res.json(books);
+        })
+            
+    }
+
+
 }

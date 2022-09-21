@@ -5,7 +5,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
+import { BorrowBookService } from '../borrow-book.service';
 import { Book } from '../models/Book';
+import { BorrowBook } from '../models/BorrowBook';
 import defaultProfilna from '../models/DefaultProfile';
 import { OID } from '../models/Oid';
 import { User } from '../models/User';
@@ -22,7 +24,7 @@ export class AdminPageComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
 
-  constructor(private observer: BreakpointObserver,private bookService:BookService,private domSanitizer:DomSanitizer, private router:Router, private userService:UserService, private userDatabaseService:UserDatabaseService) { }
+  constructor(private observer: BreakpointObserver,private borrowBookService:BorrowBookService,private bookService:BookService,private domSanitizer:DomSanitizer, private router:Router, private userService:UserService, private userDatabaseService:UserDatabaseService) { }
 
   tmp:string;
   ngOnInit(): void {
@@ -279,18 +281,36 @@ export class AdminPageComponent implements OnInit {
     })
   }
   regBool:boolean;
+  flag:boolean;
   deleteBook(bok:Book){
     this._id=bok._id;
-    this.bookService.deleteBook(this._id).subscribe(resp=>{
-      if(resp['message']=='ok'){
-        alert('Knjiga je obrisana');
-        this.ngOnInit();
+    this.borrowBookService.getAllBorrowBooksByBookId(bok._id).subscribe((bb:BorrowBook[])=>{
+      console.log(bb.length)
+      bb.forEach((value)=>{
+        console.log(value)
+        if(value.bookId==bok._id){
+          this.flag==true;
+        }
+      })
+
+      if(this.flag==false || bb.length==0){
+        this.bookService.deleteBook(this._id).subscribe(resp=>{
+          if(resp['message']=='ok'){
+            alert('Knjiga je obrisana');
+            this.ngOnInit();
+          }
+          else{
+            alert(resp['message']);
+            return;
+          }
+        })
       }
       else{
-        alert(resp['message']);
+        alert('Neki user ima vec zaduzenu tu knjigu');
         return;
       }
     })
+    
   }
   dani:number;
   promeni(){

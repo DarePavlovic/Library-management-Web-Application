@@ -101,6 +101,15 @@ class BorrowBookController {
                 }
             });
         };
+        this.getAllBorrowBooksByBookId = (req, res) => {
+            let book_id = req.query.param;
+            BorrowBook_1.default.find({ 'bookId': book_id, 'returned': false }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
     }
 }
 exports.BorrowBookController = BorrowBookController;

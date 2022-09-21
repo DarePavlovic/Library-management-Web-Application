@@ -38,6 +38,10 @@ borrowBookRouter.route('/getBorrowSortWriter').get(
     (req, res)=> new BorrowBookController().getBorrowSortWriter(req,res)
 )
 
+borrowBookRouter.route('/getAllBorrowBooksByBookId').get(
+    (req, res)=> new BorrowBookController().getAllBorrowBooksByBookId(req,res)
+)
+
 
 
 

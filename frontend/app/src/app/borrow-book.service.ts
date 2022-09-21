@@ -37,6 +37,10 @@ export class BorrowBookService {
     return this.http.get(`${this.uri}/borrowBook/getBorrowSortName?param=${username}`)
   }
 
+  getAllBorrowBooksByBookId(book){
+    return this.http.get(`${this.uri}/borrowBook/getAllBorrowBooksByBookId?param=${book}`)
+  }
+
 
 
 
