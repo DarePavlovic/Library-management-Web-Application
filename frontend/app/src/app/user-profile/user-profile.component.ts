@@ -5,6 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { User } from '../models/User';
 import { UserDatabaseService } from '../user-database.service';
+import Chart from 'chart.js/auto';
+import { BorrowBookService } from '../borrow-book.service';
+import { BorrowBook } from '../models/BorrowBook';
+import { BookService } from '../book.service';
+import { Book } from '../models/Book';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,12 +20,12 @@ export class UserProfileComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private userDatabaseService:UserDatabaseService,private observer: BreakpointObserver,private domSanitizer:DomSanitizer, private router:Router) { }
+  constructor(private userDatabaseService:UserDatabaseService,private bookService:BookService,private borrowBookService:BorrowBookService,private observer: BreakpointObserver,private domSanitizer:DomSanitizer, private router:Router) { }
 
   ngOnInit(): void {
 
     this.tm=JSON.parse(localStorage.getItem('ulogovan'));
-
+    
     this.userDatabaseService.getUser(this.tm.username).subscribe((u:User)=>{
       this.user=u;
       this.username=this.user.username;
@@ -33,13 +38,51 @@ export class UserProfileComponent implements OnInit {
     this.phone_number=this.user.phone_number;
     this.type=this.user.type;
     })
+
+    this.borrowBookService.getAllBorrowedBooks(this.tm.username).subscribe(((bb:BorrowBook[])=>{
+      bb.forEach((value)=>{
+        this.datum = new Date();
+        this.datum.setFullYear(new Date().getFullYear()-1);
+        
+        let dat3=new Date(value.endDate);
+        this.prek = (-1)* Math.floor((Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) - Date.UTC(this.datum.getFullYear(), this.datum.getMonth(), this.datum.getDate()) ) /(1000 * 60 * 60 * 24));      
+        if(this.prek<=0){
+          this.mesec[dat3.getMonth()]=this.mesec[dat3.getMonth()]+1;
+          
+          this.bookService.getBookByID(value.bookId).subscribe((b:Book)=>{
+            b.style.forEach((v)=>{
+              console.log(v.toString());
+              let br=0;
+              this.zanroviN.forEach((k)=>{
+                if(k==v.toString()){
+                  this.zanrovi[br]=this.zanrovi[br] + 1;
+                }
+                br=br+1;
+              })
+              //this.zanrovi[v.toString()]=this.zanrovi[v.toString()] + 1;
+            })
+          })
+        }
+
+      })
+      
+    }))
+    
     
   }
+  pokaziGrafike(){
+    this.createChart();
+    this.createChart2();
+  }
+  datum:Date;
+  prek:number;
+  prekBool:boolean;
   odjava(){
     localStorage.removeItem('ulogovan')
     this.router.navigate(['home']);
   }
-
+  public chart: any;
+  public chart2:any;
   user:User;
   tm:User;
   email:string;
@@ -132,7 +175,7 @@ export class UserProfileComponent implements OnInit {
         this.user.picture = this.picture;
         localStorage.setItem('ulogovan',JSON.stringify(this.user));
         this.bo=false;
-         window.location.reload();
+         this.ngOnInit();
         
         
       }
@@ -141,6 +184,54 @@ export class UserProfileComponent implements OnInit {
         return;
       }
     })
+  }
+
+  mesec:number[]=[0,0,0,0,0,0,0,0,0,0,0,0];
+  mesecN:string[]=['jan','feb','mart','apr','maj','jun','jul','avgust','sept','okt','novmb','decem'];
+  zanrovi:number[]=[0,0,0,0,0,0,0,0,0,0,0];
+  zanroviN:string[]=["Triler","Roman","Komedija", "Misterija", "Fantastika", "Bajka","Putopis","Dnevnik","Sveta pisma","Fikcija","Manga"];
+
+
+  createChart(){
+  
+    this.chart = new Chart("MyChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: this.mesecN, 
+	       datasets: [
+          {
+            label: "Citalacke navike po mesecima",
+            data: this.mesec,
+            backgroundColor: 'blue'
+          } 
+        ]
+      },
+      options: {
+        aspectRatio:3.5
+      }
+      
+    });
+  }
+    createChart2(){
+    this.chart2 = new Chart("MyChart2", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: this.zanroviN, 
+	       datasets: [
+          {
+            label: "Citalacke navike po zanrovima",
+            data: this.zanrovi,
+            backgroundColor: 'green'
+          } 
+        ]
+      },
+      options: {
+        aspectRatio:3.5
+      }
+      
+    });
   }
 
 }

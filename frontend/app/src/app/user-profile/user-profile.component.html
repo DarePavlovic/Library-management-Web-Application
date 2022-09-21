@@ -1,5 +1,10 @@
-
-
+<button class="buttn"  (click)="pokaziGrafike()">Pokazi grafike</button>
+<div class="chart-container">
+    <canvas  id="MyChart" >{{chart}}</canvas>
+</div>
+<div class="chart-container">
+    <canvas  id="MyChart2" >{{chart2}}</canvas>
+</div>
 <div *ngIf="bo">
     <label style="margin: 5%; font-size: 1.2rem">Firstname</label><input type="text" name="firstname" [(ngModel)]="firstname" ><br>
     <label style="margin: 5%; font-size: 1.2rem">Lastname</label><input type="text" name="lastname" [(ngModel)]="lastname" ><br>
@@ -33,3 +38,4 @@
 </div>
 <button class="buttn" (click)="promena()" *ngIf="!bo">Azuriraj podatke</button>
 <button class="buttn" *ngIf="bo" (click)="update()">Update all data</button>
+<hr>

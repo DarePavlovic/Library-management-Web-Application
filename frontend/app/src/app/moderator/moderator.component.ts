@@ -274,6 +274,8 @@ export class ModeratorComponent implements OnInit {
     this.yearM = book.year;
     this.languageM=book.language;
     this.bookPictureM=book.picture;
+    this.styleM=undefined;
+    this.writerM=undefined;
     //console.log(book);
     book.writer.forEach((value)=>{
       if(this.writerM==undefined){
@@ -910,5 +912,103 @@ searchByParam(){
         this.styleM = this.styleM +","+ this.zanr;
       }
     }
+  }
+
+  
+  publisherS:string;
+  yearStart:number;
+  yearEnd:number;
+  searchByPublisher(){
+    this.bookS=undefined;
+    this.bookService.searchBookByPublisher(this.publisherS).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+        console.log(this.bookS);
+        this.showSearchBook=true;
+        this.writerSearch=undefined;
+        this.bookS.writer.forEach((value)=>{
+          if(this.writerSearch==undefined){
+            this.writerSearch = value.toString();       
+          }
+          else{
+            this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+          }
+        })
+      }
+      
+    })
+
+  }
+
+
+  searchByYear(){
+    this.bookS=undefined;
+    this.bookService.searchBookByYear(this.yearStart, this.yearEnd).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+        console.log(this.bookS);
+        this.showSearchBook=true;
+        this.writerSearch=undefined;
+        this.bookS.writer.forEach((value)=>{
+          if(this.writerSearch==undefined){
+            this.writerSearch = value.toString();       
+          }
+          else{
+            this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+          }
+        })
+      }
+      
+    })
+
+  }
+
+ 
+
+  imgCollection: Array<object>;
+
+  zanrovi:string[];
+  searchByStyle(){
+    this.bookS=undefined;
+    this.zanrovi = this.styleM.split(',');
+    this.zanrovi.forEach((value)=>{
+      console.log(value);
+    this.bookService.searchBookByStyle(value).subscribe((bookS:Book[])=>{
+      this.bookSN = this.bookSN.concat(bookS);
+      this.bookSN = Array.from(this.bookSN.reduce((m, t) => m.set(t.name, t), new Map()).values());
+     //this.bookSN = this.bookSN.filter((el, i, a) => i === a.indexOf(el));
+      this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+        this.showSearchBook=true;
+        this.writerSearch=undefined;
+        this.bookS.writer.forEach((value)=>{
+          if(this.writerSearch==undefined){
+            this.writerSearch = value.toString();       
+          }
+          else{
+            this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+          }
+        })
+      }
+      
+    })
+    })
+
+
+
   }
 }

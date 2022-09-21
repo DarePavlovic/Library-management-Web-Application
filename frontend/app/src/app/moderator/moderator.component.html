@@ -90,7 +90,38 @@
                 <input type="text" style="margin: 0 2%;" name="search" [(ngModel)]="writerS">
                 <br>
                 <br>
-                <button class="buttn" style="margin: 0;" (click)="searchByParam()">Trazi knjigu</button>
+                <button class="buttn" style="margin: 0;" (click)="searchByParam()">Trazi knjigu</button><br>
+
+                Trazi na osnovu izdavaca:
+                <input type="text" name="search" style="margin: 5%;" [(ngModel)]="publisherS">
+              
+              
+              <button class="buttn"  style="margin: 0" (click)="searchByPublisher()">Po izdavacu</button><br>
+              
+              
+              Trazi na osnovu godine:<br>
+              <input type="number" style="margin: 0 5%;" name="search" [(ngModel)]="yearStart">
+              <input type="number" style="margin: 0 5%;" name="search" [(ngModel)]="yearEnd">
+              <br>
+              <button class="buttn"  style="margin: 0" (click)="searchByYear()">Po godini</button><br>
+              Trazi na osnovu zanra:<br>
+              <select [(ngModel)]="zanr">
+                <option value="Roman">Roman</option>
+                <option value="Triler">Triler</option>
+                <option value="Misterija">Misterija</option>
+                <option value="Fantastika">Fantastika</option>
+                <option value="Komedija">Komedija</option>
+                <option value="Bajka">Bajka</option>
+                 <option value="Putopis">Putopis</option>
+                 <option value="Manga">Manga</option>
+                 <option value="Sveta pisma">Sveta pisma</option>
+                 <option value="Dnevnik">Dnevnik</option>
+                 <option value="Fikcija">Fikcija</option>
+                </select><br><button (click)="dodajZanr()">Dodaj zanr</button><br>
+                 <input type="text" name="style" [(ngModel)]="styleM"><br>
+            
+                <button class="buttn"  style="margin: 0" (click)="searchByStyle()">Po zanru</button>
+    
     
                 <div *ngIf="showSearchBook" >
                   <h3 style="margin: 5% 0; text-align: center;">Knjige</h3><hr>
@@ -131,6 +162,10 @@
                         <option value="Komedija">Komedija</option>
                         <option value="Bajka">Bajka</option>
                         <option value="Putopis">Putopis</option>
+                        <option value="Manga">Manga</option>
+                        <option value="Sveta pisma">Sveta pisma</option>
+                        <option value="Dnevnik">Dnevnik</option>
+                        <option value="Fikcija">Fikcija</option>
                     </select><br><button (click)="dodajZanr()">Dodaj zanr</button><br>
                     <input type="text" name="style" [(ngModel)]="styleM"><br>
                 </div><!-- <button (click)="unesiS()">Ubaci writera</button><br> -->
