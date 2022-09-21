@@ -136,6 +136,33 @@ export class BookController{
         })
     }
 
+    searchBookByYear = (req:express.Request, res:express.Response)=>{
+        let start = req.body.start;
+        let end = req.body.end;
+        Book.find({'year': {$gte:start, $lt:end}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
+        })
+    }
+
+    searchBookByPublisher = (req:express.Request, res:express.Response)=>{
+        let searchParams = req.query.param;
+
+        Book.find({'publisher': {$regex:searchParams, $options: 'i'}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
+        })
+    }
+    searchBookByStyle = (req:express.Request, res:express.Response)=>{
+        let searchParams = req.query.param;
+
+        Book.find({'style': {$regex:searchParams, $options: 'i'}}, (err,books)=>{
+            if(err)console.log(err)
+            else res.json(books)
+        })
+    }
+
+
 
 
 

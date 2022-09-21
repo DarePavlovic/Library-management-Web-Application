@@ -19,7 +19,15 @@ bookRouter.route('/updateBook').post(
 bookRouter.route('/deleteBook').post(
     (req, res)=> new BookController().deleteBook(req,res)
 )
-
+bookRouter.route('/searchBookByYear').post(
+    (req, res)=> new BookController().searchBookByYear(req,res)
+)
+bookRouter.route('/searchBookByPublisher').get(
+    (req, res)=> new BookController().searchBookByPublisher(req,res)
+)
+bookRouter.route('/searchBookByStyle').get(
+    (req, res)=> new BookController().searchBookByStyle(req,res)
+)
 
 bookRouter.route('/searchBookByName').get(
     (req, res)=> new BookController().searchBookByName(req,res)

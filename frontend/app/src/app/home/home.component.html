@@ -32,35 +32,6 @@
         <div class="content mat-elevation-z4" style="display: flex;">
             <div *ngIf="basic" style="text-align: center;"><h2><i>Dobrodosli</i></h2><br>
               
-                <!-- <ng-image-slider [images]="imgCollection" ></ng-image-slider><ngb-carousel *ngIf="images">
-  <ng-template ngbSlide>
-    <div class="picsum-img-wrapper">
-      <img [src]="sl1" alt="Random first slide">
-    </div>
-    <div class="carousel-caption">
-      <h3>First slide label</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <div class="picsum-img-wrapper">
-      <img [src]="sl2" alt="Random second slide">
-    </div>
-    <div class="carousel-caption">
-      <h3>Second slide label</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <div class="picsum-img-wrapper">
-      <img [src]="sl3" alt="Random third slide">
-    </div>
-    <div class="carousel-caption">
-      <h3>Third slide label</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-    </div>
-  </ng-template>
-</ngb-carousel> -->
             <img [src]="sl[brT]" id="bookPict" style="border: solid 3px navy; padding: 0;">
             <br/>
            
@@ -84,8 +55,34 @@
                 Trazi na osnovu autora:
                 <input type="text" style="margin: 0 5%;" name="search" [(ngModel)]="writerS">
                 <br>
+                <button class="buttn"  style="margin: 0" (click)="searchByParam()">Osnovan search</button><br>
+
+                   Trazi na osnovu izdavaca:
+                  <input type="text" name="search" style="margin: 5%;" [(ngModel)]="publisherS">
+                
                 <br>
-                <button class="buttn"  style="margin: 0" (click)="searchByParam()">Trazi knjigu</button>
+                <button class="buttn"  style="margin: 0" (click)="searchByPublisher()">Po izdavacu</button><br>
+                
+                
+                Trazi na osnovu godine:<br>
+                <input type="number" style="margin: 0 5%;" name="search" [(ngModel)]="yearStart">
+                <input type="number" style="margin: 0 5%;" name="search" [(ngModel)]="yearEnd">
+                <br>
+                <button class="buttn"  style="margin: 0" (click)="searchByYear()">Po godini</button><br>
+                Trazi na osnovu zanra:<br>
+                <select [(ngModel)]="zanr">
+                  <option value="Roman">Roman</option>
+                  <option value="Triler">Triler</option>
+                  <option value="Misterija">Misterija</option>
+                  <option value="Fantastika">Fantastika</option>
+                  <option value="Komedija">Komedija</option>
+                  <option value="Bajka">Bajka</option>
+                  <option value="Putopis">Putopis</option>
+              </select><br><button (click)="dodajZanr()">Dodaj zanr</button><br>
+              <input type="text" name="style" [(ngModel)]="styleM"><br>
+              
+              <button class="buttn"  style="margin: 0" (click)="searchByStyle()">Po zanru</button>
+
     
                 <div *ngIf="showSearchBook" >
                   <h3 style="margin: 5% 0; text-align: center;">Knjige</h3><hr>

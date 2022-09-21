@@ -741,7 +741,8 @@ searchByParam(){
   proveriTrue(a:boolean){
     return a==true;
   }
-
+  prekBool:boolean;
+  prek:number;
   vrati(id){
     this.borrowBookService.returnBorrowBook(this.user.username,id).subscribe(resp=>{
       if(resp['message']=='ok'){ 
@@ -751,19 +752,39 @@ searchByParam(){
             this.startDate=new Date();
             this.endDate = new Date();
             this.endDate.setDate(this.startDate.getDate()+14);
-            this.borrowBookService.addBorrowBook(reser.username, reser.book_id, this.startDate, this.endDate).subscribe(resa=>{
-              if(resa['message']=='ok'){
-                this.reservationService.doneReservation(reser.book_id, reser.username).subscribe(resk=>{
-                  if(resk['message']=='ok'){
-                    alert('Knjiga je vracena'); window.location.reload();
+
+            this.borrowBookService.getAllBorrowBooks(reser.username).subscribe((bbb:BorrowBook[])=>{
+              if(bbb.length==3){
+                this.prekBool=true;
+              }
+              console.log(bbb.length)
+              bbb.forEach((value)=>{
+                let dat3=new Date(value.endDate);
+                this.prek = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));      
+                if(this.prek<0){this.prekBool=true;}
+              })
+              if(this.prekBool==false){
+                this.borrowBookService.addBorrowBook(reser.username, reser.book_id, this.startDate, this.endDate).subscribe(resa=>{
+                  if(resa['message']=='ok'){
+                    this.reservationService.doneReservation(reser.book_id, reser.username).subscribe(resk=>{
+                      if(resk['message']=='ok'){
+                        alert('Knjiga je vracena'); window.location.reload();
+                      }
+                      else{
+                        alert(resk['message']);
+                      }
+                    })
                   }
-                  else{
-                    alert(resk['message']);
-                  }
+                  else{alert(resa['message']);return;}
                 })
               }
-              else{alert(resa['message']);return;}
+              else{
+                alert('Korisnik koji treba sl da zaduzi knjigu nije u mogucnosti, a vasa knjiga je vracenja');
+                window.location.reload();
+              }
+              
             })
+            
           })
         }
         else{

@@ -137,6 +137,34 @@ class BookController {
                     res.json(books);
             });
         };
+        this.searchBookByYear = (req, res) => {
+            let start = req.body.start;
+            let end = req.body.end;
+            Book_1.default.find({ 'year': { $gte: start, $lt: end } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.searchBookByPublisher = (req, res) => {
+            let searchParams = req.query.param;
+            Book_1.default.find({ 'publisher': { $regex: searchParams, $options: 'i' } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
+        this.searchBookByStyle = (req, res) => {
+            let searchParams = req.query.param;
+            Book_1.default.find({ 'style': { $regex: searchParams, $options: 'i' } }, (err, books) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(books);
+            });
+        };
         this.getBorrowSortName = (req, res) => {
             Book_1.default.find({}).sort({ name: 1 }).exec(function (err, books) {
                 if (err)
