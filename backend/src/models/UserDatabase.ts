@@ -33,6 +33,9 @@ let UserDatabase = new Schema(
         },
         extendNumber:{
             type:Number
+        },
+        blocked:{
+            type:Boolean
         }
 
     }

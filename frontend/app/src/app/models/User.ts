@@ -9,4 +9,5 @@ export class User{
     picture:string;
     type:string;
     extendNumber:number;
+    blocked:boolean;
 }

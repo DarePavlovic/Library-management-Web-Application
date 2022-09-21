@@ -35,6 +35,7 @@ export class UserUpdateComponent implements OnInit {
   picture:string;
   type:string;
   bo:boolean;
+  blok:boolean;
   promena(use:User){
     this.bo=true;
     this.firstname=use.firstname;
@@ -45,10 +46,12 @@ export class UserUpdateComponent implements OnInit {
     this.email=use.email;
     this.picture=use.picture;
     this.type=use.type;
+    this.blok=use.blocked;
     this.ngOnInit();
   }
   
 
+  
   update(){
     if(this.bo!=true){
       alert("Niste izabrali korisnika");
@@ -59,11 +62,22 @@ export class UserUpdateComponent implements OnInit {
     }
     
     this.type=this.tip;
-    this.userDatabaseService.updateProfile(this.firstname, this.lastname,this.username,this.address,this.phone_number,this.email,this.slika,this.type).subscribe(resp=>{
+    this.userDatabaseService.updateProfile(this.firstname, this.lastname,this.username,this.address,this.phone_number,this.email,
+      this.slika,this.type).subscribe(resp=>{
       if(resp['message']=='ok'){
-        alert('User updated');
-        this.slikaPromenjena=false;
-        this.ngOnInit()
+        this.userDatabaseService.setBlocked(this.username,this.blok).subscribe(resq=>{
+          if(resq['message']=='ok'){
+            alert('User updated');
+            this.slikaPromenjena=false;
+            this.ngOnInit();
+            this.bo=false;
+          }
+          else{
+            alert(resq['message']);
+            return;
+          }
+        })
+        
       }
       else{
         alert(resp['message']);
@@ -138,6 +152,7 @@ export class UserUpdateComponent implements OnInit {
   // }
   odjava(){
     localStorage.removeItem('ulogovan')
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
 
@@ -177,5 +192,30 @@ export class UserUpdateComponent implements OnInit {
   putdoslike() {
     return this.domSanitizer.bypassSecurityTrustUrl(this.slika)
   }
+
+ 
+
+  isBlocked(user:User){
+    this.userDatabaseService.getBlocked(user.username).subscribe((u:User)=>{
+      if(u!=null){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+  }
+
+  isUnBlocked(user:User){
+    this.userDatabaseService.getBlocked(user.username).subscribe((u:User)=>{
+      if(u!=null){
+        return false;
+      }
+      else{
+        return true;
+      }
+    })
+  }
+
 
 }

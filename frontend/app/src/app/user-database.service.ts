@@ -122,5 +122,26 @@ deleteUser(username){
     }
     return this.http.post(`${this.uri}/userDatabase/updateDays`,data);
   }
+
+  
+
+  setBlocked(username, blocked){
+    const data = {
+      username:username,
+      blocked:blocked
+    }
+    
+    return this.http.post(`${this.uri}/userDatabase/setBlocked`,data);
+  }
+
+  getBlocked(username){
+    const data = {
+      username:username
+    }
+    
+    return this.http.post(`${this.uri}/userDatabase/getBlocked`,data);
+  }
+
+
   
 }

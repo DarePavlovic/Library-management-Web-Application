@@ -29,7 +29,8 @@ class UserDatabaseController {
                 picture: req.body.picture,
                 //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
                 type: "reader",
-                extendNumber: 14
+                extendNumber: 14,
+                blocked: false
             });
             user.save((err, resp) => {
                 if (err) {
@@ -124,6 +125,35 @@ class UserDatabaseController {
                 else {
                     res.json({ 'message': 'ok' });
                 }
+            });
+        };
+        this.setBlocked = (req, res) => {
+            let username = req.body.username;
+            let blocked = req.body.blocked;
+            UserDatabase_1.default.updateOne({ 'username': username }, { $set: { 'blocked': blocked } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
+            });
+        };
+        this.setUnBlocked = (req, res) => {
+            let username = req.body.username;
+            UserDatabase_1.default.updateOne({ 'username': username }, { $set: { 'blocked': false } }, (err, resp) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json({ 'message': 'ok' });
+                }
+            });
+        };
+        this.getBlocked = (req, res) => {
+            UserDatabase_1.default.find({ 'blocked': true }, (err, users) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(users);
             });
         };
     }

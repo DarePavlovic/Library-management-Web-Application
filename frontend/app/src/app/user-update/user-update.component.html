@@ -61,7 +61,7 @@
                     <td><img id="profile" [src]="u.picture"></td>
                     <td><button class="buttn" (click)="promena(u)">Update</button></td>
                     <td><button class="buttn" (click)="deleteUser(u)">Remove</button></td>
-                </tr>
+                    </tr>
             </table>
 
 
@@ -88,7 +88,11 @@
                     <option value="admin">Admin</option>
                     <option value="moderator">Moderator</option>
                     <option value="reader">Reader</option>
-                </select>
+                </select><br>
+                <label style="margin: 10px;">Block user?</label>
+                <input type="checkbox" name="block" [(ngModel)]="blok">
+                
+
                 <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->
                 
             </div>

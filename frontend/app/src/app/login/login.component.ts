@@ -35,7 +35,11 @@ export class LoginComponent implements OnInit {
         }else if(user.type=="moderator"){
           this.router.navigate(['moderator']);
 
-      }}
+      }else{
+        alert('Pogresan tip korisnika');
+        return;
+      }
+    }
       else{
         this.errorMessage="Wrong username or password";
       }

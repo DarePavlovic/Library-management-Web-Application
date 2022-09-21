@@ -60,7 +60,11 @@
             <div style="font-size: 1rem;">
             <label>Naziv knjige:</label>{{bookD.name}}<br>
             <label>Autori knjige:</label>{{writerD}}<br>
-            <label>Uspesnost:</label>{{bookD.taken}}<br></div>
+            <label>Ocena:</label>{{ocena}}<br></div>
+            <hr>
+            <div>
+                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label>
+            </div>
             </div>
             <div *ngIf="menjaj"><app-change-pass></app-change-pass></div>
             

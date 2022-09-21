@@ -58,6 +58,11 @@
             <label>Naziv knjige:</label>{{book.name}}<br>
             <label>Autori knjige:</label>{{writer}}<br>
             <label>Ocena:</label>{{ocena}}<br></div>
+
+            <hr>
+            <div>
+                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label>
+            </div>
         </div>
 
         <div *ngIf="search">

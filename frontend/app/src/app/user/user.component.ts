@@ -25,6 +25,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
 
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
+    this.blokiran=this.user.blocked;
     this.username=this.user.username;
     this.fullname = this.user.firstname + ' ' +this.user.lastname;
     this.email = this.user.email;
@@ -101,13 +102,18 @@ export class UserComponent implements OnInit {
   menjajPass(){
 
     // this.router.navigate(['change']);
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     this.showProf=false;
     this.history=false;
     this.menjaj=true;
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
-    this.bookPageShow=false;
+    this.bookPageShow=false;}
   }
   menjaj:boolean;
   dodjiKuci(){
@@ -124,6 +130,11 @@ export class UserComponent implements OnInit {
   }
 
   skociNaKnjigu(bok:Book){
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     localStorage.clear();
     localStorage.setItem('knjiga',JSON.stringify(bok));
     localStorage.setItem('ulogovan', JSON.stringify(this.user));
@@ -133,7 +144,7 @@ export class UserComponent implements OnInit {
     this.zaduzene=false;
     this.search=false;
     this.showB=false;
-    this.bookPageShow=true;
+    this.bookPageShow=true;}
     //this.router.navigate(['bookPage']);
   }
   showProf:boolean;
@@ -161,12 +172,13 @@ export class UserComponent implements OnInit {
   }
   odjava(){
     localStorage.removeItem('ulogovan')
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
 
   bookPageShow:boolean;
 
-  
+  blokiran:boolean;
 
 searchByParam(){
 

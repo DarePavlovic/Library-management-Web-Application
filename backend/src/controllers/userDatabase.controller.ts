@@ -28,7 +28,8 @@ export class UserDatabaseController{
             picture: req.body.picture,
             //'picture' : typeof req.body.picture !== 'undefined' ? req.body.picture : 'profile_default.jpg',
             type:"reader",
-            extendNumber:14
+            extendNumber:14,
+            blocked:false
             
         })
 
@@ -133,6 +134,41 @@ export class UserDatabaseController{
             else{
                 res.json({'message':'ok'})
             }
+        })
+    }
+
+    setBlocked = (req:express.Request, res:express.Response)=>{
+        
+        let username=req.body.username;
+        let blocked = req.body.blocked;
+        
+
+        UserDatabase.updateOne({'username':username}, {$set:{'blocked':blocked}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
+        })
+    }
+
+    setUnBlocked = (req:express.Request, res:express.Response)=>{
+        
+        let username=req.body.username;
+        
+
+        UserDatabase.updateOne({'username':username}, {$set:{'blocked':false}}, (err, resp)=>{
+            if(err) console.log(err);
+            else{
+                res.json({'message':'ok'})
+            }
+        })
+    }
+
+    getBlocked = (req:express.Request, res:express.Response)=>{
+        
+        UserDatabase.find({'blocked':true},(err, users)=>{
+            if(err)console.log(err);
+            else res.json(users);
         })
     }
 

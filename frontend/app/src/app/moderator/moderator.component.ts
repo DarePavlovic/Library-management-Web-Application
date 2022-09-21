@@ -5,8 +5,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { BorrowBookService } from '../borrow-book.service';
+import { CommentService } from '../comment.service';
 import { Book } from '../models/Book';
 import { BorrowBook } from '../models/BorrowBook';
+import { Comment } from '../models/Comment';
 import defaultKnjiga from '../models/DefaultBook';
 import { JoinBook } from '../models/joinBook';
 import { OID } from '../models/Oid';
@@ -22,11 +24,12 @@ export class ModeratorComponent implements OnInit {
   
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService) { }
-
+  constructor(private commentService:CommentService,private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService) { }
+  blokiran:boolean;
   ngOnInit(): void {
 
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
+    this.blokiran=this.user.blocked;
     this.username=this.user.username;
     this.fullname = this.user.firstname + ' ' +this.user.lastname;
     this.email = this.user.email;
@@ -49,10 +52,29 @@ export class ModeratorComponent implements OnInit {
           this.writerD = this.writerD + ',' + value.toString() ; 
         }
       })
+      this.ocena=0;
+      this.tmp=0;
+      this.commentService.getAllCommentsByBookID(this.bookD._id).subscribe((b:Comment[])=>{
+        
+        if(this.bookD.taken!=0){
+          b.forEach((p)=>{
+            this.tmp=this.tmp+1;
+          this.ocena = this.ocena + p.grade.length;
+        })
+          this.ocena = this.ocena/this.tmp;
+          console.log(this.ocena);
+        }
+        else{
+          this.ocena=0;
+        }
+      })
+
     })
 
     
   }
+  tmp:number;
+  ocena:number;
   showBook:boolean;
   user:User;
   email:string;
@@ -74,6 +96,11 @@ export class ModeratorComponent implements OnInit {
   }
 
   menjajPass(){
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     this.showProf=false;
     this.history=false;
     this.menjaj=true;
@@ -83,7 +110,7 @@ export class ModeratorComponent implements OnInit {
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
-    this.bookPageShow=false;
+    this.bookPageShow=false;}
   }
   dodjiKuci(){
     this.showProf=false;
@@ -247,6 +274,7 @@ export class ModeratorComponent implements OnInit {
 
   odjava(){
     localStorage.removeItem('ulogovan')
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
 
@@ -256,6 +284,11 @@ export class ModeratorComponent implements OnInit {
   defaultSlika:string;
 
   addB(){
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     this.showProf=false;
     this.history=false;
     this.menjaj=false;
@@ -274,10 +307,15 @@ export class ModeratorComponent implements OnInit {
     this.languageM=undefined;
     this.numberM=undefined;
     this.slika=undefined;
-    this.bo=false;
+    this.bo=false;}
   }
 
   showUpdate(){
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     this.showProf=false;
     this.history=false;
     this.menjaj=false;
@@ -287,7 +325,7 @@ export class ModeratorComponent implements OnInit {
     this.showBook=false;
     this.addBook=false;
     this.updateBook=true;
-    this.bookPageShow=false;
+    this.bookPageShow=false;}
   }
 
 
@@ -417,6 +455,11 @@ searchByParam(){
   }
 
   skociNaKnjigu(bok:Book){
+    if(this.blokiran){
+      alert('Ne mozete koristiti ovu funkciju');
+      return;
+    }
+    else{
     localStorage.clear();
     localStorage.setItem('knjiga',JSON.stringify(bok));
     localStorage.setItem('ulogovan', JSON.stringify(this.user));
@@ -429,7 +472,7 @@ searchByParam(){
     this.showBook=false;
     this.addBook=false;
     this.updateBook=false;
-    this.bookPageShow=true;
+    this.bookPageShow=true;}
   }
 
   writerSearch:string;

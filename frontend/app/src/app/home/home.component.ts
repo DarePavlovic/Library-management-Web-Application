@@ -26,9 +26,11 @@ export class HomeComponent implements OnInit {
     
     this.brT=0;
     this.sl=[];
-      this.tmp=JSON.parse(localStorage.getItem('pretraga'));
-      if(this.tmp==false){this.basic=true;this.search=false;}
-      else{this.basic=false;this.search=true;}
+    this.tmpB=JSON.parse(localStorage.getItem('pretraga'));
+    if(this.tmpB==false){this.basic=true;this.search=false;}
+    else{this.basic=false;this.search=true;}
+
+      
       this.topKnjige=[];
       this.bookService.getTopBooks().subscribe((b:Book[])=>{
         this.topKnjige=b;
@@ -37,12 +39,33 @@ export class HomeComponent implements OnInit {
           console.log(value)
         })
         
+        // this.tmp=JSON.parse(localStorage.getItem('pretraga'));
+    
+        // console.log(this.tmp)
+        // switch(this.tmp){
+        //     case "home":{
+        //       this.basic=true;
+        //       this.search=false;
+        //       break;
+        //     }
+        //     case "search":{
+        //       this.basic=false;
+        //       this.search=true;
+        //       break;
+        //     }
+        //     default:{
+        //       this.basic=true;
+        //       this.search=false;
+        //       break;
+        //     }
+        //   } 
 
       
       })
     
   }
   brT:number;
+  tmpB:boolean;
   napred(){
       this.brT=(this.brT+1)%3;
     
@@ -51,7 +74,7 @@ export class HomeComponent implements OnInit {
     this.brT=((this.brT-1)+3)%3;
   }
   slD:string;
-  tmp:boolean;
+  tmp:string;
   basic:boolean;
   ngAfterViewInit(){
     this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{

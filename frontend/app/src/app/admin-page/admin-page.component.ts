@@ -101,6 +101,7 @@ export class AdminPageComponent implements OnInit {
   }
   odjava(){
     localStorage.removeItem('ulogovan')
+    localStorage.setItem('pretraga',JSON.stringify(false));
     this.router.navigate(['home']);
   }
   username:string;

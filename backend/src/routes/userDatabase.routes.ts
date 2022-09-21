@@ -16,6 +16,19 @@ userDatabaseRouter.route('/getUser').post(
     (req,res)=>new UserDatabaseController().getUser(req,res)
 )
 
+userDatabaseRouter.route('/setBlocked').post(
+    (req,res)=>new UserDatabaseController().setBlocked(req,res)
+)
+
+userDatabaseRouter.route('/setUnBlocked').post(
+    (req,res)=>new UserDatabaseController().setUnBlocked(req,res)
+)
+
+userDatabaseRouter.route('/getBlocked').post(
+    (req,res)=>new UserDatabaseController().getBlocked(req,res)
+)
+
+
 userDatabaseRouter.route('/getEmail').post(
     (req,res)=>new UserDatabaseController().getEmail(req,res)
 )

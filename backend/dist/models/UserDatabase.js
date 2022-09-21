@@ -35,6 +35,9 @@ let UserDatabase = new Schema({
     },
     extendNumber: {
         type: Number
+    },
+    blocked: {
+        type: Boolean
     }
 });
 exports.default = mongoose_1.default.model('UserDatabaseModel', UserDatabase, 'userDatabase');
