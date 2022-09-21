@@ -59,9 +59,13 @@
             <label>Autori knjige:</label>{{writer}}<br>
             <label>Ocena:</label>{{ocena}}<br></div>
 
-            <hr><label style="font-size: 1rem;">{{dodat}}</label>
-            <div>
-                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label>
+            
+            <div *ngIf="obavestenja">
+                <hr><label style="font-size: 1rem;">{{dodat}}</label><br>
+                <label style="font-size: 1rem;color: red;">{{istekao}}</label><br>
+                <label style="font-size: 1rem;color:purple">{{dvaDana}}</label><br>
+                <label style="font-size: 1rem;color:green">{{triKnjige}}</label><br>
+                <label *ngIf="blokiran">Vas korisnicki nalog je blokiran</label><br>
             </div>
         </div>
 
@@ -144,9 +148,10 @@
                 </mat-card-header>
                 <img mat-card-md-image id="picCard" [src]="m.picture" alt="Photo of a {m.name}">
                 <mat-card-content>
-                <p [ngClass]="{'colorError': zakasnio(m.jos)}"> 
+                <p [hidden]="zakasnio(m.jos)"> 
                     Preostalo dana:{{m.jos}}
                 </p>
+                <p [ngClass]="{'colorError': zakasnio(m.jos)}" *ngIf="zakasnio(m.jos)">Kasni>{{m.jos}} dana</p>
                 </mat-card-content>
                 <mat-card-actions>
                 <button mat-button (click)="vrati(m._id)">Vrati</button>

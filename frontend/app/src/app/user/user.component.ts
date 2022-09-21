@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
 
   dodat:string;
   ngOnInit(): void {
-
+    this.brDana=0;
     this.user=JSON.parse(localStorage.getItem('ulogovan'));
     this.blokiran=this.user.blocked;
     this.username=this.user.username;
@@ -79,16 +79,49 @@ export class UserComponent implements OnInit {
     else{
       this.dodat="";
     }
+
+    this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((bb:BorrowBook[])=>{
+      if(bb.length==3){
+        this.triKnjige="Imate tri knjige na zaduzenju"
+      }
+      else{
+        this.triKnjige="";
+      }
+
+      bb.forEach((value)=>{
+        let dat3=new Date(value.endDate);
+        this.brDana = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));
+        
+
+
+        if(this.brDana<3){
+          this.dvaDana="Istice Vam rok za vracanje knjige"; 
+        }
+        if(this.brDana<0){
+          this.istekao="Istekao Vam je rok za vracanje knjige";
+        }
+      })
+      if(this.dvaDana==undefined){
+        this.dvaDana="";
+      }
+      if(this.istekao==undefined){
+        this.istekao="";
+      }
+      
+    })
+    if(this.triKnjige!=""||this.istekao!=""||this.dodat!=""||this.dvaDana!=""){
+      this.obavestenja=true;
+    }
     
   }
-
+  brDana:number;
+  obavestenja:boolean;
   ocena:number;
   tmp:number;
-  showBook(){
-    console.log(this.seed);
-    console.log(this.book);
-  }
+  dvaDana:string;
+  istekao:string;
 
+  triKnjige:string;
   writer:String;
   seed:number;
   book:Book;
@@ -499,7 +532,7 @@ searchByParam(){
     let date = new Date();
     date.setDate( date.getDate() + this.user.extendNumber);
     this.borrowBookService.updateBorrowBook(this.user.username,id,start, date).subscribe(resp=>{
-      if(resp['message']=='ok'){ alert('Knjiga je produzena');this.ngOnInit();}
+      if(resp['message']=='ok'){ alert('Knjiga je produzena');window.location.reload();}
       else {alert(resp['message']); return;}
     })
     
