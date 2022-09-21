@@ -151,7 +151,6 @@ export class UserComponent implements OnInit {
  
 
   showSearch(){
-    this.ngOnInit();
     this.showProf=false;
     this.history=false;
     this.menjaj=false;

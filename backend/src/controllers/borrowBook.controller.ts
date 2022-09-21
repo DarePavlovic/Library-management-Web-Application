@@ -99,7 +99,7 @@ export class BorrowBookController{
         let returned=true;
         // let objectIdArray=Array.prototype.map(_id=>mongoose.Types.ObjectId);
 
-        BorrowBook.updateOne({'username':username, 'bookId':bookId}, {$set:{'returned':returned}}, (err, resp)=>{
+        BorrowBook.updateOne({'username':username, 'bookId':bookId, 'returned':false}, {$set:{'returned':returned}}, (err, resp)=>{
             if(err) console.log(err);
             else{
                 res.json({'message':'ok'})

@@ -35,7 +35,74 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
-            <div *ngIf="regBool">
+            <div *ngIf="regBool">          
+                <p class="header">Registracija novog korisnika</p>
+
+                <table class="formica" style="display: flex;flex-direction: column;">
+                    <tr>
+                        <td>Firstname: </td>
+                        <td><input type="text" name="firstname" [(ngModel)]="firstname" required></td>
+                    </tr>
+                    <tr>
+                        <td>Lastname: </td>
+                        <td><input type="text" name="lastname" [(ngModel)]="lastname" ng-required="lastname"></td>
+                    </tr>
+                    <tr>
+                        <td>Username: </td>
+                        <td><input type="text" name="username" [(ngModel)]="usernameReg" ng-required="username"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" name="password" [(ngModel)]="password" ng-required="password">
+                            </td>
+                            <div style="color:red;text-align: left;">{{passMessage}}</div>
+                    </tr>
+                    <tr>
+                        <td>Repeat Password: </td>
+                        <td><input type="password" name="passwordR" [(ngModel)]="passwordR" ng-required="passwordR"></td>
+                        <div style="color:red; text-align: left;">{{passRepeat}}</div>
+                    </tr>
+                    <tr>
+                        <td>Address: (Street and house number)</td>
+                        <td><input type="text" name="street" [(ngModel)]="street" ng-required="street"></td>
+                    </tr>
+                    <tr>
+                        <td>City: </td>
+                        <td><input type="text" name="city" [(ngModel)]="city" ng-required="city"></td>
+                    </tr>
+                    <tr>
+                        <td>E-mail: </td>
+                        <td>
+                            <div class="example-container">
+                                <mat-form-field>
+                                  <mat-label>Enter your email</mat-label>
+                                  <input matInput placeholder="mat@mail.com" [formControl]="email" required>
+                                  <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                              </div>
+                    </tr>
+                    <tr>
+                        <td>Phone_number: </td>
+                        <td><input type="text" name="phone_number" [(ngModel)]="phone_number" ng-required="phone_number">
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+                        </td>
+                        {{slikaPoruka}}
+                        <img *ngIf="slikaSacuvana" style="display: block;" id="profile" [src]="putdoslike()" alt="Red dot" />
+                    </tr>
+                   
+                    <tr>
+                        <td colspan="2">
+                            <button class="buttn" (click)="register()">Register</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="message">{{message}}
+                    <!-- <h4 ng-if="!Reg.phone_number.$valid">The input field cannot be empty</h4> -->
+                </div>
                 
             </div>
 
@@ -106,7 +173,7 @@
                         <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
                         <br>
                         <br>
-                        {{slikaPoruka}} Nova profilna ->
+                        {{slikaPoruka}} Nova slika ->
                         <img *ngIf="slikaSacuvana" id="profile" [src]="putdoslike()" alt="Red dot" /><br>
                         
                         <!-- <input type="text" name="type" [(ngModel)]="type"><br> -->

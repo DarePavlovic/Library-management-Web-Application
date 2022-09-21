@@ -101,16 +101,16 @@ export class UserUpdateComponent implements OnInit {
 
   user:User;
   users:User[]=[];
-  upd:boolean;
+  upd:string;
 
   saljiUpdate(){
-    this.upd=true;
-    localStorage.setItem('update', JSON.stringify(this.upd))
+    this.upd="update";
+    localStorage.setItem('adm', JSON.stringify(this.upd))
     this.router.navigate(['adminPage']);
   }
   saljiKuci(){
-    this.upd=false;
-    localStorage.setItem('update', JSON.stringify(this.upd))
+    this.upd="home";
+    localStorage.setItem('adm', JSON.stringify(this.upd))
     this.router.navigate(['adminPage']);
 
   }
@@ -118,11 +118,13 @@ export class UserUpdateComponent implements OnInit {
     this.router.navigate(['userUpdate']);
   }
   saljiRegister(){
-    this.router.navigate(['register']);
+    this.upd="reg";
+    localStorage.setItem('adm',JSON.stringify(this.upd));
+    this.router.navigate(['adminPage']);
   }
-  saljiBrisi(){
-    this.router.navigate(['user']);
-  }
+  // saljiBrisi(){
+  //   this.router.navigate(['user']);
+  // }
   odjava(){
     localStorage.removeItem('ulogovan')
     this.router.navigate(['home']);

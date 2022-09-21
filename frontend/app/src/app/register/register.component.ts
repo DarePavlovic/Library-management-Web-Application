@@ -80,41 +80,16 @@ export class RegisterComponent implements OnInit {
       this.passMessage = "Lozinka mora biti izmejdu 8 i 12 karaktera i treba satojati u sebi malo, veliko slovo, broj i neki od znakova: @$!%*#?&";
       return;
     }
-    // if(!this.emailPattern.test(this.mail)){
-      //this.emailMessage="Niste dobro upisali mejl";
-      //return;
-    
     this.address = this.street + ', ' + this.city;
     this.phone = parseInt(this.phone_number);
 
-    // let formData = new FormData()
-    
-    // formData.append('firstname',this.firstname)
-    // formData.append('lastname',this.lastname)
-    // formData.append('username',this.username)
-    // formData.append('password',this.password)
-    // formData.append('address',this.address)
-    // formData.append('phone_number',this.phone_number)
-    // formData.append('email',this.mail);
-    // formData.append('picture', this.slika);
-    
-    // console.log(this.profilePic);
-    // if(this.profilePic != null){
-    //   formData.append('picture',this.profilePic);
-    // }
-    // else {
-    //   formData.append('picture','defaultProfilePicture')
-    // }
 
-
-    //this.firstname, this.lastname, this.username, this.password, this.address, this.phone, this.mail, this.picture
-    
     if(this.slika==null){
       this.slika = defaultProfilna
     }
  
     
-      this.userService.getUser(this.firstname).subscribe((us:User)=>{
+      this.userService.getUser(this.username).subscribe((us:User)=>{
         if(us==null){
           this.userService.getEmail(this.username, this.mail).subscribe((use:User)=>{
             if(use==null){

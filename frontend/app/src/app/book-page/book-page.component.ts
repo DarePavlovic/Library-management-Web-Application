@@ -95,6 +95,7 @@ export class BookPageComponent implements OnInit {
         this.startDate=new Date();
         this.endDate = new Date();
         this.endDate.setDate(this.startDate.getDate()+14);
+          
         this.borrowBookService.addBorrowBook(this.user.username, this.book._id, this.startDate, this.endDate).subscribe(resp=>{
           if(resp['message']=='ok'){
             this.bookService.takeBook(this.book._id,this.book.number-1,this.book.taken+1).subscribe(resp=>{
