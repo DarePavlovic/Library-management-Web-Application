@@ -106,3 +106,29 @@ mat-divider{
     overflow-x: scroll; 
     padding: 5%;
   }
+
+  
+#pic{
+    max-width: 300px;
+    max-height: 480px;
+    padding: 5%;
+}
+.example-card {
+    width: 200px;
+    height: 350px;
+  }
+  
+ #picCard{
+    height:200px;
+    width: 120px;
+    padding: 1%;
+    align-items: center;
+ }
+
+ .colorError{
+    background-color: red;
+}
+
+.tab-his td, .tab-his th{
+    padding: 5px;
+}

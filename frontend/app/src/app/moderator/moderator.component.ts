@@ -4,8 +4,11 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
+import { BorrowBookService } from '../borrow-book.service';
 import { Book } from '../models/Book';
+import { BorrowBook } from '../models/BorrowBook';
 import defaultKnjiga from '../models/DefaultBook';
+import { JoinBook } from '../models/joinBook';
 import { OID } from '../models/Oid';
 import { User } from '../models/User';
 
@@ -19,7 +22,7 @@ export class ModeratorComponent implements OnInit {
   
   @ViewChild(MatSidenav)
   sidenav!:MatSidenav
-  constructor(private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router) { }
+  constructor(private observer: BreakpointObserver,private domSanitizer:DomSanitizer,private bookService:BookService,private router:Router, private borrowBookService:BorrowBookService) { }
 
   ngOnInit(): void {
 
@@ -71,57 +74,46 @@ export class ModeratorComponent implements OnInit {
   }
 
   menjajPass(){
-    this.router.navigate(['change']);
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=true;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
   }
   dodjiKuci(){
-    
-    this.router.navigate(['moderator']);
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=true;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
   }
 
-  showProfile(){
-    
-    this.router.navigate(['userProfile']);
-  }
+  
   seed:number;
   bookD:Book;
   writerD:string;
-  // unesiW(){
-  //   if(this.writer!=this.writerOld){
-  //     this.writerOld=this.writer;
-  //     this.idW=this.idW+1;
-  //     this.writers.push({'id':this.idWO,'text':this.writer});
-  //     this.idWO=this.idW;
-  //     console.log(this.writers);
-  //     this.writer="";
-  //   }
-  // }
-  // unesiS(){
-  //   if(this.style!=this.styleOld){
-  //     this.styleOld=this.style;
-  //     this.idS=this.idS+1;
-  //     this.styles.push({'id':this.idSO,'text':this.style});
-  //     console.log(this.styles);
-  //     this.idSO=this.idS;
-  //     this.style="";
-  //   }
-  // }
-
-  // idW:number;
-  // idWO:number;
-  // idS:number;
-  // idSO:number;
+  
   book(){
     if(this.slika==null){
       this.slika=defaultKnjiga;
     }
-    this.writersN = this.writer.split(',');
-    this.styleN = this.style.split(',');
+    this.writersN = this.writerM.split(',');
+    this.styleN = this.styleM.split(',');
     console.log(this.writersN);
     
-    this.bookService.addBook(this.name, this.writersN,this.styleN, this.publisher, this.year, this.language, this.slika, this.number).subscribe(resp=>{
+    this.bookService.addBook(this.nameM, this.writersN,this.styleN, this.publisherM, this.yearM, this.languageM, this.slika, this.numberM).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je dodata');
-        this.ngOnInit();
       }
       else{
         alert(resp['message']);
@@ -130,14 +122,14 @@ export class ModeratorComponent implements OnInit {
     })
   }
 
-  name:string;
-  writer:string;
+  nameM:string;
+  writerM:string;
   writerOld:string;
   styleOld:string;
-  style:string;
-  publisher:string;
-  year:number;
-  language:string;
+  styleM:string;
+  publisherM:string;
+  yearM:number;
+  languageM:string;
   writersN:Array<String>;
   styleN:Array<String>;
   writers:Array<{id:number, text:string}>;
@@ -181,45 +173,45 @@ export class ModeratorComponent implements OnInit {
 
   slikaPromenjena:boolean;
   updateBook:boolean;
-  bookPicture:string;
+  bookPictureM:string;
   bo:boolean;
   _id:Object;
-  number:number;
+  numberM:number;
   addHome:boolean;
 
   promena(book:Book){
     this.bo=true;
-    this.name=book.name;
+    this.nameM=book.name;
     //this.styleN = book.style;
-    this.publisher=book.publisher;
-    this.year = book.year;
-    this.language=book.language;
-    this.bookPicture=book.picture;
+    this.publisherM=book.publisher;
+    this.yearM = book.year;
+    this.languageM=book.language;
+    this.bookPictureM=book.picture;
     //console.log(book);
     book.writer.forEach((value)=>{
-      if(this.writer==undefined){
-        this.writer = value.toString();       
+      if(this.writerM==undefined){
+        this.writerM = value.toString();       
       }
       else{
-        this.writer = this.writer + ',' + value.toString() ; 
+        this.writerM = this.writerM + ',' + value.toString() ; 
       }
       console.log(value);
     })
     
     //this.writer=book.writer;
     book.style.forEach((value)=>{
-      if(this.style==undefined){
-        this.style = value.toString();
+      if(this.styleM==undefined){
+        this.styleM = value.toString();
       }
       else{
-        this.style = this.style + ',' + value.toString();
+        this.styleM = this.styleM + ',' + value.toString();
       }
       console.log(value);
     })
 
     
     this._id=book._id;
-    this.number = book.number;
+    this.numberM = book.number;
 
   }
 
@@ -230,18 +222,18 @@ export class ModeratorComponent implements OnInit {
       return;
     }
     if(this.slikaPromenjena!=true){
-      this.slika=this.bookPicture;
+      this.slika=this.bookPictureM;
     }
     //dovuci sve knjige iz baze
-    this.writersN = this.writer.split(',');
-    this.styleN = this.style.split(',');
+    this.writersN = this.writerM.split(',');
+    this.styleN = this.styleM.split(',');
     //this.styleN.length = 3;
-    this.bookService.updateBook(this._id,this.name, this.writersN,this.styleN,this.publisher,this.year,this.language,this.slika, this.number).subscribe(resp=>{
+    this.bookService.updateBook(this._id,this.nameM, this.writersN,this.styleN,this.publisherM,this.yearM,this.languageM,this.slika, this.numberM).subscribe(resp=>{
       if(resp['message']=='ok'){
         alert('Knjiga je azurirana');
         this.slikaPromenjena=false;
-        this.writer=undefined;
-        this.style=undefined;
+        this.writerM=undefined;
+        this.styleM=undefined;
         this.bo=false;
         window.location.reload();
       }
@@ -264,18 +256,395 @@ export class ModeratorComponent implements OnInit {
   defaultSlika:string;
 
   addB(){
-    this.addBook=true;
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
     this.showBook=false;
+    this.addBook=true;
     this.updateBook=false;
-    this.name=undefined;
-    this.writer=undefined;
-    this.style=undefined;
-    this.publisher=undefined;
-    this.year=undefined;
-    this.language=undefined;
-    this.number=undefined;
+    this.bookPageShow=false;
+    this.nameM=undefined;
+    this.writerM=undefined;
+    this.styleM=undefined;
+    this.publisherM=undefined;
+    this.yearM=undefined;
+    this.languageM=undefined;
+    this.numberM=undefined;
     this.slika=undefined;
     this.bo=false;
   }
+
+  showUpdate(){
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=true;
+    this.bookPageShow=false;
+  }
+
+
+  showProf:boolean;
+  history:boolean;
+  menjaj:boolean;
+  zaduzene:boolean;
+  search:boolean;
+  showB:boolean;
+  bookPageShow:boolean;
+  showProfile(){
+    this.showProf=true;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
+  }
+  showSearch(){
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=true;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
+  }
+
   
+searchByParam(){
+
+  if(this.writerS == "" || this.writerS == null){
+    this.searchName();
+  }
+  else if(this.nameS == "" || this.nameS == null){
+    this.searchWriter();
+  }
+  else{
+
+    this.bookS=undefined;
+    this.bookService.searchBookByBoth(this.writerS,this.nameS).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined ){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+      console.log(this.bookS);
+      this.showSearchBook=true;
+      this.writerSearch=undefined;
+      this.bookS.writer.forEach((value)=>{
+        if(this.writerSearch==undefined){
+          this.writerSearch = value.toString();       
+        }
+        else{
+          this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+        }
+      })
+    }
+    })
+
+
+  }
+
+}
+
+
+  searchWriter(){
+    this.bookS=undefined;
+    this.bookService.searchBookByWriter(this.writerS).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+      console.log(this.bookS);
+      this.showSearchBook=true;
+      this.writerSearch=undefined;
+      this.bookS.writer.forEach((value)=>{
+        if(this.writerSearch==undefined){
+          this.writerSearch = value.toString();       
+        }
+        else{
+          this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+        }
+      })
+    }
+    })
+
+  }
+
+  searchName(){
+    this.bookS=undefined;
+    this.bookService.searchBookByName(this.nameS).subscribe((bookS:Book[])=>{
+      this.bookSN=bookS;
+      //this.bookS=this.bookSN[0];
+      if(this.bookSN==undefined){
+        alert("Nismo pronasli vasu knjigu, probajte ponovo da ukucate");
+        return;
+      }
+      else{
+        console.log(this.bookS);
+        this.showSearchBook=true;
+        this.writerSearch=undefined;
+        this.bookS.writer.forEach((value)=>{
+          if(this.writerSearch==undefined){
+            this.writerSearch = value.toString();       
+          }
+          else{
+            this.writerSearch = this.writerSearch + ',' + value.toString() ; 
+          }
+        })
+      }
+      
+    })
+
+  }
+
+  skociNaKnjigu(bok:Book){
+    localStorage.clear();
+    localStorage.setItem('knjiga',JSON.stringify(bok));
+    localStorage.setItem('ulogovan', JSON.stringify(this.user));
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=true;
+  }
+
+  writerSearch:string;
+  bookS:Book;
+  bookSN:Book[]=[];
+  showSearchBook:boolean;
+  nameS:string;
+  writerS:string;
+
+  borrowedBooks:BorrowBook[]=[];
+  bookB:Book[]=[];
+  joinBooks:JoinBook[]=[];
+  joinBook:JoinBook;
+
+  
+  showHistory(){
+    this.joinBooks=[];
+    this.showProf=false;
+    this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getAllBorrowedBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+
+    })
+  }
+
+  vodi(id){
+    this.bookService.getBookByID(id).subscribe((b:Book)=>{
+      this.skociNaKnjigu(b);
+    })
+  }
+
+  sortBook:JoinBook[]=[];
+  sorttmp:Book[]=[];
+  sortName(){
+    this.sortBook=[];
+    this.sorttmp=[];
+    this.showProf=false;
+    this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.bookService.getBorrowSortName().subscribe((bs:Book[])=>{
+      this.sorttmp=bs;
+
+      this.joinBooks.forEach((k)=>{
+        this.sortBook.push(k);
+      })
+      this.joinBooks=[];
+      this.sorttmp.forEach((value)=>{
+          this.sortBook.forEach((j)=>{
+            if(value._id==j._id){
+              this.joinBooks.push(j);
+              console.log(j)
+            }
+          })
+        })
+    })
+
+  }
+
+  sortWrite(){
+    
+
+    this.sortBook=[];
+    this.sorttmp=[];
+    this.showProf=false;
+    this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.bookService.getBorrowSortWriter().subscribe((bs:Book[])=>{
+      this.sorttmp=bs;
+      
+      this.joinBooks.forEach((k)=>{
+        this.sortBook.push(k);
+      })
+      this.joinBooks=[];
+      this.sorttmp.forEach((value)=>{
+          this.sortBook.forEach((j)=>{
+            if(value._id==j._id){
+              this.joinBooks.push(j);
+              console.log(j)
+            }
+          })
+        })
+    })
+
+  }
+
+  sortStart(){
+    this.joinBooks=[];
+    this.showProf=false;
+    this.history=true;
+    this.menjaj=false;
+    this.zaduzene=false;
+    this.search=false;
+    this.showB=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getBorrowSortStart(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+
+    })
+
+  }
+
+  brD1:number;
+  brD2:number;
+  brD3:number;
+  showZaduzene(){
+    this.joinBooks=[];
+    this.showProf=false;
+    this.history=false;
+    this.menjaj=false;
+    this.zaduzene=true;
+    this.search=false;
+    this.showB=false;
+    this.showBook=false;
+    this.addBook=false;
+    this.updateBook=false;
+    this.bookPageShow=false;
+    this.borrowBookService.getAllBorrowBooks(this.user.username).subscribe((borr:BorrowBook[])=>{
+      this.borrowedBooks=borr;
+      console.log(this.borrowedBooks);
+      this.borrowedBooks.forEach((value)=>{
+        this.bookService.getBookByID(value.bookId).subscribe((bok:Book)=>{
+          this.joinBook = new JoinBook();
+          this.joinBook._id=bok._id;
+          this.joinBook.name=bok.name;
+          this.joinBook.writer=bok.writer;
+          this.joinBook.startDate=value.startDate;
+          this.joinBook.endDate=value.endDate;
+          this.joinBook.picture=bok.picture;
+          this.joinBook.extended=value.extended;
+          let dat3=new Date(value.endDate);
+          this.joinBook.jos = (-1)* Math.floor((Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) - Date.UTC(dat3.getFullYear(), dat3.getMonth(), dat3.getDate()) ) /(1000 * 60 * 60 * 24));
+          this.joinBooks.push(this.joinBook);
+        })
+      })
+    })
+  }
+
+  zakasnio(a){
+    if(a<0){
+      return true;
+    }
+    else {return false;}
+  }
+
+  proveriTrue(a:boolean){
+    return a==true;
+  }
+
+  vrati(id){
+    this.borrowBookService.returnBorrowBook(this.user.username,id).subscribe(resp=>{
+      if(resp['message']=='ok'){ alert('Knjiga je vracena'); window.location.reload();}
+      else {alert(resp['message']); return;}
+    })
+
+  }
+  produzi(id,broj, b){
+    if(b==true){
+      alert('Vec ste produzili ovu knjigu, nije moguce');
+      return;
+    }
+    if(broj>0){
+      alert('Mozete produziti rok tek onda kad vam istekne prvi period');
+      return;
+    }
+    
+    let start= new Date();
+    let date = new Date();
+    date.setDate( date.getDate() + this.user.extendNumber);
+    this.borrowBookService.updateBorrowBook(this.user.username,id,start, date).subscribe(resp=>{
+      if(resp['message']=='ok'){ alert('Knjiga je produzena');this.ngOnInit();}
+      else {alert(resp['message']); return;}
+    })
+    
+
+  }
+
+
 }
